@@ -1,12 +1,12 @@
 language: java
 jdk:
   - oraclejdk8
-
+  
 sudo: true
 
 addons:
   code_climate:
-    repo_token: 8860173d24d4bee5353db985c3ef17bdfbf06ca038474f8b0b9f883410f32561
+    repo_token: 2ffed13086231cc79d1c1d1e8a7cf19c1c67c0a5e1cabc66f50c2bc61287f17d
 
 notifications:
   slack:
