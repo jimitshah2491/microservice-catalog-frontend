@@ -1,0 +1,9 @@
+.fieldKey{
+  text-transform: capitalize;
+  display: inline-block;
+  width:30%;
+  font-weight: bold;
+}
+.fieldValue{
+  display: inline-block;
+}

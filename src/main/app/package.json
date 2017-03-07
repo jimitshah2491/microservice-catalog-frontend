@@ -1,0 +1,32 @@
+{
+  "name": "catalog",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.9.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "react": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
+    "react-dom": "^15.4.2",
+    "react-fontawesome": "^1.5.0",
+    "react-redux": "^5.0.3",
+    "react-router": "^3.0.2",
+    "redux": "^3.6.0",
+    "redux-form": "^6.5.0",
+    "redux-logger": "^2.8.1",
+    "redux-thunk": "^2.2.0",
+    "webpack": "^2.2.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "watch": "NODE_ENV=production webpack --config config/webpack.config.prod.js --progress --colors --watch",
+    "watch-windows": "SET \"NODE_ENV=production\" && webpack --config config/webpack.config.prod.js --progress --colors --watch"
+  },
+  "homepage": ".",
+  "proxy": "http://localhost:8081/"
+}

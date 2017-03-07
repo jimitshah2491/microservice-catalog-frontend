@@ -1,0 +1,20 @@
+language: java
+jdk:
+  - oraclejdk8
+
+sudo: true
+
+addons:
+  code_climate:
+    repo_token: 8860173d24d4bee5353db985c3ef17bdfbf06ca038474f8b0b9f883410f32561
+
+notifications:
+  slack:
+    rooms:
+      - p632:20oR0X45QVtC9RACNHghchWR
+    on_success: change
+    on_failure: always
+
+after_success:
+   - yarn global add codeclimate-test-reporter
+   - codeclimate-test-reporter < src/main/app/coverage/lcov.info
