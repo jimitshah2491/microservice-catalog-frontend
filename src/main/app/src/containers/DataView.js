@@ -9,77 +9,71 @@ import {connect} from 'react-redux';
 
 import FontAwesome from 'react-fontawesome';
 const DataView = ( props ) => {
-const {dispatch,serviceData} = props;
-var open = false;
-var initHeight = 120;
-var intval = null;
+  const {dispatch,serviceData} = props;
+  var open = false;
+  var initHeight = 120;
+  var intval = null;
 
-const filterData =[
-    {title:'Microservice 1', description:'Description for Micro Service 1', url:'http://sample1.url'},
-    {title:'Microservice 2', description:'Description for Micro Service 2', url:'http://sample2.url'},
-    {title:'Microservice 3', description:'Description for Micro Service 3', url:'http://sample3.url'},
-    {title:'Microservice 4', description:'Description for Micro Service 4', url:'http://sample4.url'},
-    {title:'Microservice 5', description:'Description for Micro Service 5', url:'http://sample5.url'}
-  ];
-
-  // let tempData1 =[{title:'Microservice Dummy Data without Server', description:'Description for Micro Service 1', url:'http://sample1.url'}];
-  // let Data = serviceData;
-  // const filterData = Data;
-  // if(null == Data){
-  //   Data = tempData1;
-  //   fetch("api/catalog")
-  //     .then((response)=>{
-  //       console.log(response);
-  //       if(response.status === 200){
-  //         response.json().then((data)=>{
-  //           console.log(data);
-  //           dispatch(getDataOnStart(data))
-  //         })
-  //       }
-  //     })
-  //     .catch( e => console.log(e))
-  // }
+  let filterData = [{title:'Microservice Dummy Data without Server', description:'Description for Micro Service 1', url:'http://sample1.url'}];
+  let Data = serviceData;
+  if(null == Data){
+    Data = filterData;
+    fetch("api/catalog")
+    .then((response)=>{
+      console.log(response);
+      if(response.status === 200){
+        response.json().then((data)=>{
+          console.log(data);
+          dispatch(getDataOnStart(data))
+        })
+      }
+    })
+    .catch( e => console.log(e))
+  }
+  else{
+    filterData = Data;
+  }
 
 
   const slideToggle = (element) => {
-      window.clearInterval(intval);
-      var mdiv = document.getElementById('mdiv');
-      mdiv = element;
-      if(getComputedStyle(mdiv).getPropertyValue('display') === "none"){
-        open = false;
-      }
-      else{
-        open = true;
-      }
-      if(open) {
-        mdiv.style.visibility="hidden";
-          var h = mdiv.offsetHeight;
-          open = false;
-          intval = setInterval(function(){
-  			h--;
-  			mdiv.style.height = h + 'px';
-  			if(h <= 0){
-  				window.clearInterval(intval);
+    window.clearInterval(intval);
+    var mdiv = document.getElementById('mdiv');
+    mdiv = element;
+    if(getComputedStyle(mdiv).getPropertyValue('display') === "none"){
+      open = false;
+    }
+    else{
+      open = true;
+    }
+    if(open) {
+      mdiv.style.visibility="hidden";
+      var h = mdiv.offsetHeight;
+      open = false;
+      intval = setInterval(function(){
+        h--;
+        mdiv.style.height = h + 'px';
+        if(h <= 0){
+          window.clearInterval(intval);
           mdiv.style.display = 'none';
         }
       }, 1
-  		);
+    );
 
-      }
-      else {
-        mdiv.style.display = 'block';
-        mdiv.style.visibility = "visible";
-          h = 0;
-          open = true;
-  	    intval = setInterval(function(){
-  			h++;
-        mdiv.style.height = "auto";
-  			if(h >= initHeight)
-  				window.clearInterval(intval);
-  			}, 1
-  		);
-      }
   }
+  else {
+    mdiv.style.display = 'block';
+    mdiv.style.visibility = "visible";
+    h = 0;
+    open = true;
+    intval = setInterval(function(){
+      h++;
+      mdiv.style.height = "auto";
+      if(h >= initHeight)
+      window.clearInterval(intval);
+    }, 1
+  );
+}
+}
 
 const header = [{title:"Title", description:"Description", url:"URL"}];
 
@@ -98,19 +92,19 @@ const handleArrowClick = (event) => {
 
 let tableData = [];
 tableData = filterData.map((dataItem)=>{
-      return [
-              <tr>
-                <td> {dataItem.title} </td>
-                <td> {dataItem.description}</td>
-                <td> {dataItem.url}</td>
-              <td onClick = {handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
-              </tr>,
-              <tr className="details">
-              <DetailView serviceDetails={head}/>
-              </tr>
-            ];
-          }
-        );
+  return [
+    <tr>
+      <td> {dataItem.title} </td>
+    <td> {dataItem.description}</td>
+  <td> {dataItem.url}</td>
+<td onClick = {handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
+</tr>,
+<tr className="details">
+  <DetailView serviceDetails={head}/>
+</tr>
+];
+}
+);
 
 
 return (
@@ -121,19 +115,19 @@ return (
           header.map((entry,idx) => (
             <tr key={idx}>
               <th>{entry.title}</th>
-              <th>{entry.description}</th>
-              <th>{entry.url}</th>
-              <th></th>
-            </tr>
-          )
-        )
-      }
-      </thead>
-      <tbody>
-      {tableData}
-      </tbody>
-    </Table>
-  </div>
+            <th>{entry.description}</th>
+          <th>{entry.url}</th>
+        <th></th>
+    </tr>
+  )
+)
+}
+</thead>
+<tbody>
+  {tableData}
+</tbody>
+</Table>
+</div>
 );
 }
 
