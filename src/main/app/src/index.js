@@ -10,7 +10,7 @@ import './index.css';
 import reducer from './redux';
 import App from './component/App/App';
 import AddMicroService from './component/AddMicroservice/AddMicroServiceForm'
-import DataView from './containers/DataView';
+import DataView from './containers/DataView/DataView';
 
 const createStoreWithMiddleware = applyMiddleware(createLogger(),thunkMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducer);
