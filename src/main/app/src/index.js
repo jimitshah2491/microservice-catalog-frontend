@@ -5,14 +5,14 @@ import createLogger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Router , Route , IndexRoute, browserHistory } from 'react-router';
-
+import promiseMiddleware from 'redux-promise';
 import './index.css';
 import reducer from './redux';
 import App from './component/App/App';
 import AddMicroService from './component/AddMicroservice/AddMicroServiceForm'
 import DataView from './containers/DataView/DataView';
 
-const createStoreWithMiddleware = applyMiddleware(createLogger(),thunkMiddleware)(createStore);
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,thunkMiddleware,createLogger())(createStore);
 const store = createStoreWithMiddleware(reducer);
 
 ReactDOM.render(

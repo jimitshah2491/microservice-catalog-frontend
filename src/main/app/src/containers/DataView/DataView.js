@@ -125,8 +125,9 @@ return (
  * @property  {Object} state  - The state from the Redux store.
  */
 const mapStateToProps = (state) => {
+  console.log(state);
   return{
-    catalogData : state.fetchMicroservices.catalogData
+    catalogData : state.catalog.catalogData
   }
 }
 
