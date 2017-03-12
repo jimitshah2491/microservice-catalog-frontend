@@ -87,7 +87,7 @@ const handleArrowClick = (event) => {
   classes.remove('fa-caret-down','fa-caret-up');
   classes.add(classToAdd);
   let element = event.target.closest('tr').nextSibling;
-  {slideToggle(element)};
+  slideToggle(element);
 }
 
 let tableData = [];
