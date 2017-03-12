@@ -39,7 +39,8 @@ const receiveHandler = (state, action) => {
   };
 };
 
-const requestHandler = (state, action) => ({
+const requestHandler = (state, action) => (
+  {
   ...state,
   loading: LoadingStates.LOADING
 });
