@@ -5,9 +5,9 @@ import './SearchBox.css';
 import '../Fonts.css';
 
 const SearchBox = () =>  {
-  const handleChange = (e) => {
-    this.setState({ value: e.target.value });
-  }
+  // const handleChange = (e) => {
+  //   this.setState({ value: e.target.value });
+  // }
 
   const handleKeyPress = (e) => {
     this.props.filterRows(this.refs.searchbox.value);

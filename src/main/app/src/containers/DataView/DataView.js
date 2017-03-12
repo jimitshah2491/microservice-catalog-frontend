@@ -6,7 +6,7 @@ import { Table } from 'react-bootstrap/lib';
 
 import './DataView.css';
 import DetailView from '../../component/DetailView/DetailView';
-import {fetch} from '../../redux/modules/catalog';
+import {fetchMicroservices} from '../../redux/modules/catalog';
 
 import FontAwesome from 'react-fontawesome';
 const DataView = ( props ) => {
@@ -17,22 +17,9 @@ const DataView = ( props ) => {
 
   let filterData = [{title:'Microservice Dummy Data without Server', description:'Description for Micro Service 1', url:'http://sample1.url'}];
   let Data = catalogData;
+
   if(null == Data){
-    Data = filterData;
-    fetch("api/catalog")
-    .then((response)=>{
-      console.log(response);
-      if(response.status === 200){
-        response.json().then((data)=>{
-          console.log(data);
-          dispatch(fetch)
-        })
-      }
-    })
-    .catch( e => console.log(e))
-  }
-  else{
-    filterData = Data;
+    dispatch(fetchMicroservices);
   }
 
 
@@ -88,7 +75,7 @@ const handleArrowClick = (event) => {
   classes.remove('fa-caret-down','fa-caret-up');
   classes.add(classToAdd);
   let element = event.target.closest('tr').nextSibling;
-  {slideToggle(element)};
+  slideToggle(element);
 }
 
 let tableData = [];
@@ -98,7 +85,7 @@ tableData = filterData.map((dataItem)=>{
       <td> {dataItem.title} </td>
     <td> {dataItem.description}</td>
   <td> {dataItem.url}</td>
-<td onClick = {handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
+<td onClick={handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
 </tr>,
 <tr className="details">
   <DetailView serviceDetails={head}/>
@@ -132,9 +119,14 @@ return (
 );
 }
 
+/**
+ * Maps the Redux store state into props.
+ *
+ * @property  {Object} state  - The state from the Redux store.
+ */
 const mapStateToProps = (state) => {
   return{
-    catalogData : state.catalogData
+    catalogData : state.fetchMicroservices.catalogData
   }
 }
 

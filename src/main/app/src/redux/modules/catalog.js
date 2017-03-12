@@ -1,24 +1,59 @@
 import { createAction, handleActions } from 'redux-actions';
+import { LoadingStates } from '../../utils/common';
 
-// Action constants
-const FETCH = "microservice-catalog/microservices/FETCH";
-const ADD = "microservice-catalog/microservices/ADD";
+// region Action constants
+const REQUEST = 'microservice-catalog/microservices/REQUEST';
+const RECEIVE = 'microservice-catalog/microservices/RECEIVE';
+// end region
 
-// Action creators
-const fetchMicroservices = createAction(FETCH, fetch('/catalog'));
+// region Action creators
+export const request = createAction(REQUEST);
+/**
+ * Callback to receive the results of a REQUEST call and update the store.
+ */
+export const receive = createAction(RECEIVE, fetch('api/catalog')
+.then((response) =>{
+  console.log(response.json())
+}
+)
+);
+// end region
 
-// Action Handler for fetching Microservice data from server
-const handleFetchMicroservices = (state,action) =>({
+/**
+ * Convenience function to dispatch REQUEST and RECEIVE actions in sequence.
+ *
+ * @param {function(action: Object)} dispatch  - The dispatch function from the Redux store.
+ */
+export const fetchMicroservices = (dispatch) => {
+  dispatch(request());
+  dispatch(receive());
+};
+
+//region Action Handlers
+const receiveHandler = (state, action) => {
+  return {
     ...state,
+    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
+    loading: LoadingStates.LOADED,
     catalogData:action.payload._embedded.catalog
+  };
+};
+
+const requestHandler = (state, action) => ({
+  ...state,
+  loading: LoadingStates.LOADING
 });
+// end region
 
 // Default State
 const defaultState = {
-  catalogData: []
+  catalogData: [],
+  createUrl: undefined,
+  loading: LoadingStates.CLEAN
 };
 
 // Reducer
 export default handleActions({
-  [FETCH]: handleFetchMicroservices
+  [REQUEST]: requestHandler,
+  [RECEIVE]: receiveHandler
 },defaultState);
