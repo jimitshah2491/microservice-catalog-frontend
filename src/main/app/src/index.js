@@ -11,7 +11,7 @@ import reducer from './redux';
 import App from './component/App/App';
 import AddMicroService from './component/AddMicroservice/AddMicroServiceForm'
 import DataView from './containers/DataView/DataView';
-
+import ErrorPage from './component/Error';
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,thunkMiddleware,createLogger())(createStore);
 const store = createStoreWithMiddleware(reducer);
 
@@ -21,6 +21,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={DataView}></IndexRoute>
           <Route path="addService" component={AddMicroService}></Route>
+        <Route path="error" component={ErrorPage}></Route>
       </Route>
     </Router>
   </Provider>,

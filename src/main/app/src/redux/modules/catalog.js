@@ -11,7 +11,7 @@ export const request = createAction(REQUEST);
 /**
  * Callback to receive the results of a REQUEST call and update the store.
  */
-export const receive = createAction(RECEIVE,fetch('api/catalog'));
+export const receive = createAction(RECEIVE, () => fetch('api/catalog'));
 // end region
 
 /**
