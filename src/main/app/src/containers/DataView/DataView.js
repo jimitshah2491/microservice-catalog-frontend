@@ -18,7 +18,7 @@ const DataView = ( props ) => {
   let filterData = [{title:'Microservice Dummy Data without Server', description:'Description for Micro Service 1', url:'http://sample1.url'}];
   let Data = catalogData;
 
-  if(null == Data){
+  if(null === Data){
     dispatch(fetchMicroservices);
   }
 
