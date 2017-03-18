@@ -1,45 +1,49 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import './AddMicroServiceForm.css';
+import {Button , Label, PageHeader , Jumbotron , FormGroup} from 'react-bootstrap';
 
-
-let AddMicroServiceForm = () =>
-<div>
-  <h3>Add a New MicroService</h3>
-  <form>
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div>
+    <Label bsStyle="default">{label}</Label>
     <div>
-      <div className="labels">
-        <label>Title</label>
-      </div>
-      <div>
-        <Field name="title" component="input" />
-      </div>
-      <div className="labels">
-        <label>Description</label>
-      </div>
-      <div>
-        <Field name="description" component="input" />
-      </div>
-      <div className="labels">
-        <label>Url</label>
-      </div>
-      <div>
-        <Field name="url" component="input" />
-      </div>
-
-      <div className="labels">
-        <label>Email</label>
-      </div>
-      <div>
-        <Field name="email" component="input" />
-      </div>
-      <button type="button" className="btn btn-outline-primary">Submit</button>
-      <button type="button" className="btn btn-outline-danger">Cancel</button>
+      <input {...input} placeholder={label} type={type}/>
+      {touched && error && <span>{error}</span>}
     </div>
-  </form>
-</div>
+  </div>
+)
 
-AddMicroServiceForm = reduxForm({
-  form:'testForm'
+const doSubmit = values => fetch('api/addCatalog');
+
+let AddMicroServiceForm = (props) =>{
+  const { error, handleSubmit, pristine, reset, submitting } = props
+  return(
+    <div>
+      <PageHeader>Add a New MicroService</PageHeader>
+      <Jumbotron>
+        <form onSubmit={handleSubmit(doSubmit)}>
+            <FormGroup  bsSize="large">
+              <Field name="title" type="text" component={renderField} label="Title"/>
+                  {error && <strong>{error}</strong>}
+              <Field name="description" type="text" component={renderField} label="Description"/>
+                  {error && <strong>{error}</strong>}
+              <Field name="url" type="text" component={renderField} label="URL"/>
+                  {error && <strong>{error}</strong>}
+              <Field name="email" type="Email" component={renderField} label="Email"/>
+                  {error && <strong>{error}</strong>}
+                <br/>
+              <div>
+                <Button type="button" bsStyle="primary" disabled={submitting}>Submit</Button>
+                <Button type="button" bsStyle="danger">Cancel</Button>
+                <Button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
+              </div>
+            </FormGroup>
+          </form>
+      </Jumbotron>
+    </div>
+  );
+}
+
+
+export default reduxForm({
+  form:'addMicroservice'
 })(AddMicroServiceForm)
-export default AddMicroServiceForm

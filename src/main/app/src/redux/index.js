@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import getDataOnLoad from './modules/getDataOnLoad';
-import microServiceFormReducer from './modules/AddMicroServiceFormReducer';
+import catalog from './modules/catalog'
+import { reducer as reduxFormReducer } from 'redux-form'
 
 const appReducer = combineReducers({
-  getDataOnLoad,
-  microServiceFormReducer
+  catalog,
+  reduxFormReducer
 })
 
 export default appReducer;

@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import '../Fonts.css';
 
-import NavInstance from '../Navigation';
-import Header from '../Header';
+import NavInstance from '../layout/Navigation';
+import Header from '../layout/Header';
 import Search from '../SearchBox/SearchBox';
 
 const App = ({children})=> {
