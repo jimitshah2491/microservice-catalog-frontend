@@ -7,15 +7,15 @@ This is the Microservice Catalog project made under UITS for the P632 course.
 Steps to install Yarn:
 
 For macOS Users:
-'''
+```
 brew update
 brew install yarn
-'''
+```
 
 For Windows Users
-'''
+```
 npm install -g yarn
-'''
+```
 
 Steps to Run:
 1) Install Dependencies

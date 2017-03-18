@@ -16,4 +16,4 @@ notifications:
 
 after_success:
    - yarn global add codeclimate-test-reporter
-   - codeclimate-test-reporter < src/main/app/coverage/lcov.info
+   - codeclimate-test-reporter < ./src/main/app/coverage/lcov.info
