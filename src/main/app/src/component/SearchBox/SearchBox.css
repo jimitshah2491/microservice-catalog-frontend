@@ -9,7 +9,6 @@
   url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAQBJREFUeNqslI0RgyAMhdENWIEVWMEVXIGO0BW6Ah2hHcGOoCPYEewINFzBe9IA9id37w4kfEZesHHOCSYUqSPJML+RJlELDwN1pMHxMZNMkr8RTgyz2YPH5LmtwXpIHkOFmKhIlxowDmYAycKnHAHYcTCsSpXOJCie6YWDnXKLGeHLN2stGaqDsXXrX3GFcYcLrfhjtKEhffQ792gYT2nT6pJDjCw4z7ZGdGipOIqNbXIwFUARmCbKpMfYxsWJBmCEDoW7+gYUTAU2s3HJrK3AJvMLkqGHFLgWXTckm+SfSQexs+tLRqwVfgvjgMsvMAT689S5M/sk/I14kO5PAQYAuk6L1q+EdHMAAAAASUVORK5CYII=) no-repeat 14px 14px;
   text-indent: .75em;
   display: inline-block;
-  border: 0 none;
   width: 0;
   height: 3em;
   border-radius: 3em;
@@ -21,12 +20,13 @@
   color: #999;
   vertical-align: baseline;
   border: 1px solid #ccc;
-  margin:5px 0px;
+  margin:5px;
   padding: 24px;
   padding-left: 26px;
 }
 input[type=search]::-webkit-search-cancel-button {
   -webkit-appearance: none;
+  -moz-appearance:none;
 }
 
 #search:hover, #search:focus {
