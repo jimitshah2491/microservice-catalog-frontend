@@ -32,8 +32,8 @@ let AddMicroServiceForm = (props) =>{
                   {error && <strong>{error}</strong>}
                 <br/>
               <div>
-                <Button type="button" bsStyle ="primary" disabled={submitting}>Submit</Button>
-                <Button type="button" bsStyle ="danger">Cancel</Button>
+                <Button type="button" bsStyle="primary" disabled={submitting}>Submit</Button>
+                <Button type="button" bsStyle="danger">Cancel</Button>
                 <Button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
               </div>
             </FormGroup>
