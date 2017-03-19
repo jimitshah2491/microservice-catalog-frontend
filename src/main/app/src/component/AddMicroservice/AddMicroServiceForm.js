@@ -1,18 +1,28 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import {Button , Label, PageHeader , Jumbotron , FormGroup} from 'react-bootstrap';
-
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <Label bsStyle="default">{label}</Label>
-    <div>
-      <input {...input} placeholder={label} type={type}/>
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-)
+import {formFields, fieldHeading} from './AddServiceFields.js'
 
 const doSubmit = values => fetch('api/addCatalog');
+
+let handleAddService = () =>{
+  fetch('/api/catalog', {
+        method: 'POST',
+        data: {
+      
+          description:"test",
+          title:'test',
+          url:'test'
+        }
+      })
+      .then(function(response) {
+        debugger
+      }).then(function(body) {
+        debugger
+        console.log(body);
+      });
+  }
+
 
 let AddMicroServiceForm = (props) =>{
   const { error, handleSubmit, pristine, reset, submitting } = props
@@ -20,21 +30,16 @@ let AddMicroServiceForm = (props) =>{
     <div>
       <PageHeader>Add a New MicroService</PageHeader>
       <Jumbotron>
-        <form onSubmit={handleSubmit(doSubmit)}>
+        <form>
             <FormGroup  bsSize="large">
-              <Field name="title" type="text" component={renderField} label="Title"/>
-                  {error && <strong>{error}</strong>}
-              <Field name="description" type="text" component={renderField} label="Description"/>
-                  {error && <strong>{error}</strong>}
-              <Field name="url" type="text" component={renderField} label="URL"/>
-                  {error && <strong>{error}</strong>}
-              <Field name="email" type="Email" component={renderField} label="Email"/>
-                  {error && <strong>{error}</strong>}
-                <br/>
-              <div>
-                <Button type="button" bsStyle="primary" disabled={submitting}>Submit</Button>
-                <Button type="button" bsStyle="danger">Cancel</Button>
-                <Button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
+              {fieldHeading}
+              <div className="FieldContainer">
+                {formFields}
+              </div>
+              <div className="buttonContainer">
+                <Button onClick= {handleAddService} className="col-md-1 text-center" type="button" bsStyle="primary" disabled={submitting}>Submit</Button>
+                <Button className="col-md-1 text-center" type="button" bsStyle="danger">Cancel</Button>
+                <Button className="col-md-1 text-center" type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
               </div>
             </FormGroup>
           </form>
