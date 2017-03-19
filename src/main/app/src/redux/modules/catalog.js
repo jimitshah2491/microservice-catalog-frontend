@@ -11,7 +11,7 @@ export const request = createAction(REQUEST);
 /**
  * Callback to receive the results of a REQUEST call and update the store.
  */
-export const receive = createAction(RECEIVE, () => fetch('api/catalog'));
+export const receive = createAction(RECEIVE, () => fetch('api/catalog').then(response => response.json()));
 // end region
 
 /**
@@ -28,9 +28,8 @@ export const fetchMicroservices = (dispatch) => {
 const receiveHandler = (state, action) => {
   return {
     ...state,
-    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
-    catalogData:action.payload._embedded.catalog
+    catalogData:action.payload
   };
 };
 
