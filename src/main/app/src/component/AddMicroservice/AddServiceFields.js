@@ -1,12 +1,10 @@
 import React from 'react';
-import { reduxForm, Field } from 'redux-form';
-import {Label} from 'react-bootstrap';
+import { Field } from 'redux-form';
 import './AddService.css';
 
 const renderField = ({ input, placeholder, type, meta: { touched, error } }) => {
       return <div className="FieldControl"><input placeholder={placeholder} className="form-control" type={type}/></div>
-        {touched && error && <span>{error}</span>
-    }
+      //{touched && error && <span>{error}</span>}
 
 }
 
@@ -34,7 +32,7 @@ export let formFieldsData = [
   ]
 
 export let fieldHeading = formFieldsData[0].serviceData.map((data)=>{
-  return <div className = 'FieldHeading'> {data.placeholder} </div>
+  return <div className='FieldHeading'> {data.placeholder} </div>
 })
 
 
