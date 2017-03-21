@@ -36,7 +36,6 @@ export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.propert
 * @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
 */
 export const postMicroservice = (values, dispatch) => {
-    debugger;
     return new Promise((resolve, reject) => {
       fetch('/catalog', {
             method: 'POST',
@@ -46,8 +45,7 @@ export const postMicroservice = (values, dispatch) => {
             body: JSON.stringify(values)
           })
         .then(response => response.json()
-          .then(json => {
-            debugger;
+          .then(json => {            
             if (response.ok) {
               resolve(json);
             } else if (response.status === 400) {

@@ -181,8 +181,6 @@ class DataView extends React.Component {
  * @property  {Object} state  - The state from the Redux store.
  */
 const mapStateToProps = (state) => {
-  debugger;
-  console.log(state);
   return{
     catalogData : state.catalog.catalogData,
     loading : state.catalog.loading
