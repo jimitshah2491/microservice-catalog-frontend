@@ -28,7 +28,7 @@ export let formFieldsData = [
         name:'description',
         placeholder: 'Description'
       }
-    ]},
+    ]}
   ]
 
 export let fieldHeading = formFieldsData[0].serviceData.map((data)=>{

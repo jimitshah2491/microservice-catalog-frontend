@@ -13,9 +13,7 @@ let handleAddService = () =>{
         }
       })
       .then(function(response) {
-        debugger
-      }).then(function(body) {
-        debugger
+      }).then(function(body){
         console.log(body);
       });
   }
