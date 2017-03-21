@@ -73,7 +73,6 @@
 
 	<build>
 		<defaultGoal>clean spring-boot:run</defaultGoal>
-		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
@@ -171,7 +170,6 @@
 					</executions>
 				</plugin>
 			</plugins>
-		</pluginManagement>
 	</build>
 
 
