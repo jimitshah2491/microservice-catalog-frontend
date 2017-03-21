@@ -5,7 +5,7 @@ import { reducer as reduxFormReducer } from 'redux-form'
 const appReducer = combineReducers({
   catalog,
   form: reduxFormReducer.plugin({
-    addMicroservice: (state, action) => { // <------ 'account' is name of form given to reduxForm()
+    addMicroservice: (state, action) => { // <------ 'addMicroservice' is name of form given to reduxForm()
       debugger;
       switch(action.type) {
         case CREATE_MICROSERVICE_SUCCESS:
