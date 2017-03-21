@@ -6,7 +6,8 @@ sudo: true
 addons:
   code_climate:
     repo_token: 2ffed13086231cc79d1c1d1e8a7cf19c1c67c0a5e1cabc66f50c2bc61287f17d
-
+script:
+  - mvn clean package
 notifications:
   slack:
     rooms:
