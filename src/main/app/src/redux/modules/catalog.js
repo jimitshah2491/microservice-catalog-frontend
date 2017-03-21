@@ -6,6 +6,7 @@ import _ from 'lodash';
 // region Action constants
 const REQUEST = 'microservice-catalog/microservices/REQUEST';
 const RECEIVE = 'microservice-catalog/microservices/RECEIVE';
+export const CREATE_MICROSERVICE_SUCCESS = '@@redux-form/SET_SUBMIT_SUCCEEDED';
 // end region
 
 // region Action creators
@@ -34,12 +35,13 @@ export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.propert
 *
 * @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
 */
-export const postMicroservice = (values) => {
+export const postMicroservice = (values, dispatch) => {
+    debugger;
     return new Promise((resolve, reject) => {
       fetch('/catalog', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'              
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify(values)
           })
@@ -62,6 +64,7 @@ export const postMicroservice = (values) => {
 const receiveHandler = (state, action) => {
   return {
     ...state,
+    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
     catalogData:action.payload._embedded.catalog
   };

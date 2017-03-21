@@ -1,8 +1,10 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
+// import {connect} from 'react-redux';
 import { formFields, fieldHeading, validate } from './AddServiceFields'
 import { postMicroservice } from '../../redux/modules/catalog'
+
 
 let AddMicroServiceForm = (props) =>{
     const { error, handleSubmit, pristine, reset, submitting }=props
