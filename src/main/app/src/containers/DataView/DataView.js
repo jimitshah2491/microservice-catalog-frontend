@@ -33,7 +33,7 @@ class DataView extends React.Component {
     const { dispatch } = this.props
     dispatch(fetchMicroservices)
   }
-  
+
   componentDidUpdate(prevProps) {
     if(prevProps.catalogData.length !== this.props.catalogData.length) {
       const { dispatch } = this.props
