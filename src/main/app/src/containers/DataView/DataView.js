@@ -34,6 +34,13 @@ class DataView extends React.Component {
     dispatch(fetchMicroservices)
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.catalogData.length !== this.props.catalogData.length) {
+      const { dispatch } = this.props
+      dispatch(fetchMicroservices)
+    }
+  }
+
   // filters the data based on the keyword provided
   handleFilterRows(keyword) {
     keyword=keyword.trim();
@@ -123,7 +130,7 @@ class DataView extends React.Component {
           <td> {dataItem.title} </td>
           <td> {dataItem.description}</td>
           <td> {dataItem.url}</td>
-          <td onClick = {this.handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
+          <td onClick={this.handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
         </tr>,
         <tr className="details">
           <td colSpan="4">
@@ -174,6 +181,7 @@ class DataView extends React.Component {
  * @property  {Object} state  - The state from the Redux store.
  */
 const mapStateToProps = (state) => {
+  debugger;
   console.log(state);
   return{
     catalogData : state.catalog.catalogData,

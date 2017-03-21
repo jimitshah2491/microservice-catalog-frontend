@@ -4,7 +4,7 @@ import { reducer as reduxFormReducer } from 'redux-form'
 
 const appReducer = combineReducers({
   catalog,
-  reduxFormReducer
+  form: reduxFormReducer
 })
 
 export default appReducer;

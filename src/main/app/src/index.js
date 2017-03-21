@@ -9,9 +9,10 @@ import promiseMiddleware from 'redux-promise';
 import './index.css';
 import reducer from './redux';
 import App from './component/App/App';
-import AddMicroService from './component/AddMicroservice/AddMicroServiceForm'
+import AddMicroService from './component/AddMicroservice/AddMicroServiceForm';
 import DataView from './containers/DataView/DataView';
 import ErrorPage from './component/Error';
+
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,thunkMiddleware,createLogger())(createStore);
 const store = createStoreWithMiddleware(reducer);
 
