@@ -7,6 +7,7 @@ import { Table } from 'react-bootstrap/lib';
 import './DataView.css';
 import DetailView from '../../component/DetailView/DetailView';
 import {fetchMicroservices} from '../../redux/modules/catalog';
+import SearchBox from '../../component/SearchBox/SearchBox';
 
 import FontAwesome from 'react-fontawesome';
 const DataView = ( props ) => {
@@ -65,7 +66,7 @@ const DataView = ( props ) => {
 
 const header = [{title:"Title", description:"Description", url:"URL"}];
 
-const head =["Dummy" , "Data"];
+const head =["Dummy" , "Data", "Test"];
 const handleArrowClick = (event) => {
   let classes = event.target.classList;
   let classToAdd = 'fa-caret-down';
@@ -97,6 +98,7 @@ tableData = filterData.map((dataItem)=>{
 
 return (
   <div className="Div-container">
+    <SearchBox />
     <Table responsive hover className="Data">
       <thead>
         {

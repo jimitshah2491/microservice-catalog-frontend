@@ -6,14 +6,12 @@ import '../Fonts.css';
 
 import NavInstance from '../layout/Navigation';
 import Header from '../layout/Header';
-import Search from '../SearchBox/SearchBox';
 
 const App = ({children})=> {
     return (
       <div className="App">
         <Header/>
         <NavInstance/>
-        <Search/>
         <div>
           {children}
         </div>
