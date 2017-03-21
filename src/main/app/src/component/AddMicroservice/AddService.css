@@ -16,3 +16,7 @@
 .FieldContainer{
   margin:10px 0;
 }
+.Error{
+  margin: 2px;
+  color: Red;
+}
