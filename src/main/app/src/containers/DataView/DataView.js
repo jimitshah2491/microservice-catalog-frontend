@@ -13,7 +13,6 @@ import FontAwesome from 'react-fontawesome';
 
 // All the global variables
 const header = [{title:"Title", description:"Description", url:"URL"}];
-const head =["Dummy" , "Data"];
 let open = false;
 let initHeight = 120;
 let intval = null;
@@ -125,6 +124,16 @@ class DataView extends React.Component {
 
     // populate tableData
     tableData = catalogData.map((dataItem)=>{
+      let serviceDetailsObj = [
+        "Title",
+        dataItem.title,
+        "Description",
+        dataItem.description,
+        "URL",
+        dataItem.url,
+        "Email",
+        dataItem.email
+      ];
       return [
         <tr>
           <td> {dataItem.title} </td>
@@ -134,7 +143,7 @@ class DataView extends React.Component {
         </tr>,
         <tr className="details">
           <td colSpan="4">
-            <DetailView serviceDetails={head}/>
+            <DetailView serviceDetails={serviceDetailsObj}/>
           </td>
         </tr>
       ];
