@@ -5,7 +5,6 @@ import './DetailView.css';
 
 const DetailView = (serviceDetails) => {
   let detailHtml = [];
-  debugger;
   let data = serviceDetails.serviceDetails;
   for(let i=0;i<data.length-1;i+=2){
     if(data[i+1] === null) {

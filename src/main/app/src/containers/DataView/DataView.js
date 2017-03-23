@@ -124,7 +124,7 @@ class DataView extends React.Component {
 
     // populate tableData
     tableData = catalogData.map((dataItem)=>{
-      let serviceDetailsObj = [
+      let serviceDetailsArr = [
         "Title",
         dataItem.title,
         "Description",
@@ -143,7 +143,7 @@ class DataView extends React.Component {
         </tr>,
         <tr className="details">
           <td colSpan="4">
-            <DetailView serviceDetails={serviceDetailsObj}/>
+            <DetailView serviceDetails={serviceDetailsArr}/>
           </td>
         </tr>
       ];

@@ -1,21 +1,30 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
-// import {connect} from 'react-redux';
+import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
+
 import { formFields, fieldHeading, validate } from './AddServiceFields'
 import { postMicroservice } from '../../redux/modules/catalog'
 
 
 let AddMicroServiceForm = (props) =>{
-    const { error, handleSubmit, pristine, reset, submitting }=props
+    const { submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props
+    debugger;
     return(
       <div>
         <PageHeader>Add a New MicroService</PageHeader>
+        { submitSucceeded &&
+          <Alert bsStyle="success">
+            <strong>Successfully Submitted!</strong>
+          </Alert>
+        }
+        {
+          error &&
+          <Alert bsStyle="danger">
+            <strong>Sorry!</strong> Some error has occurred...
+          </Alert>
+        }
         <Jumbotron>
           <form onSubmit={handleSubmit(postMicroservice)}>
-              {
-                error && <span className="Error">{error}</span>
-              }
               <FormGroup  bsSize="large">
                 {fieldHeading}
                 <div className="FieldContainer">
