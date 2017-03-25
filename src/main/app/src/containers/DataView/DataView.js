@@ -125,20 +125,17 @@ class DataView extends React.Component {
     // populate tableData
     tableData = catalogData.map((dataItem)=>{
       let serviceDetailsArr = [
-        "Title",
-        dataItem.title,
-        "Description",
-        dataItem.description,
-        "URL",
-        dataItem.url,
-        "Email",
-        dataItem.email
+        {title: dataItem.catalog.title},
+        {description: dataItem.catalog.description},
+        {url: dataItem.catalog.url},
+        {email: dataItem.catalog.email},
+        {id: dataItem.id}
       ];
       return [
         <tr>
-          <td> {dataItem.title} </td>
-          <td> {dataItem.description}</td>
-          <td> {dataItem.url}</td>
+          <td> {dataItem.catalog.title} </td>
+          <td> {dataItem.catalog.description}</td>
+          <td> {dataItem.catalog.url}</td>
           <td onClick={this.handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
         </tr>,
         <tr className="details">

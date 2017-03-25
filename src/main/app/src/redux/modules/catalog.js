@@ -45,7 +45,7 @@ export const postMicroservice = (values, dispatch) => {
             body: JSON.stringify(values)
           })
         .then(response => response.json()
-          .then(json => {            
+          .then(json => {
             if (response.ok) {
               resolve(json);
             } else if (response.status === 400) {
@@ -64,7 +64,12 @@ const receiveHandler = (state, action) => {
     ...state,
     createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
-    catalogData:action.payload._embedded.catalog
+    catalogData:action.payload._embedded.catalog.map(function(obj, id){
+      return {
+        id: id,
+        catalog: obj
+      }
+    })
   };
 };
 
