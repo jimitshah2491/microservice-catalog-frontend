@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
 
@@ -7,11 +8,23 @@ import { postMicroservice } from '../../redux/modules/catalog'
 
 
 let AddMicroServiceForm = (props) =>{
-    const { submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props
+    const { location, catalogData, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props
     debugger;
+    console.log(catalogData);
+    if(location.query.action === "edit") {
+      console.log("Edit action called");
+      // dispatch action to populate form data
+    }
     return(
       <div>
-        <PageHeader>Add a New MicroService</PageHeader>
+        {
+          location.query.action !== undefined && location.query.action === "edit" &&
+          <PageHeader>Edit MicroService</PageHeader>
+        }
+        {
+          location.query.action === undefined &&
+          <PageHeader>Add a New MicroService</PageHeader>
+        }
         { submitSucceeded &&
           <Alert bsStyle="success">
             <strong>Successfully Submitted!</strong>
@@ -36,13 +49,24 @@ let AddMicroServiceForm = (props) =>{
                   <Button className="col-md-1 text-center" type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
                 </div>
               </FormGroup>
-            </form>
-        </Jumbotron>
+         </form>
+       </Jumbotron>
       </div>
     );
 }
 
-export default reduxForm({
+AddMicroServiceForm = reduxForm({
   form:'addMicroservice',
   validate
 })(AddMicroServiceForm)
+
+const mapStateToProps = (state) => {
+  debugger;
+  return{
+    catalogData: state.catalog.catalogData
+  }
+}
+
+AddMicroServiceForm = connect(mapStateToProps)(AddMicroServiceForm);
+
+export default AddMicroServiceForm;
