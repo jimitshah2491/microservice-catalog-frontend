@@ -4,16 +4,14 @@ import { reduxForm } from 'redux-form';
 import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
 
 import { formFields, fieldHeading, validate } from './AddServiceFields'
-import { postMicroservice } from '../../redux/modules/catalog'
-
+import { postMicroservice, initializeEditForm } from '../../redux/modules/catalog'
 
 let AddMicroServiceForm = (props) =>{
-    const { location, catalogData, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props
+    const { initialValues, dispatch, location, catalogData, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props
     debugger;
-    console.log(catalogData);
-    if(location.query.action === "edit") {
-      console.log("Edit action called");
+    if(location.query.action === "edit" && initialValues === undefined && catalogData.length>0) {
       // dispatch action to populate form data
+      dispatch(initializeEditForm(location.query.id, catalogData));
     }
     return(
       <div>
@@ -57,13 +55,15 @@ let AddMicroServiceForm = (props) =>{
 
 AddMicroServiceForm = reduxForm({
   form:'addMicroservice',
+  enableReinitialize : true,
   validate
 })(AddMicroServiceForm)
 
 const mapStateToProps = (state) => {
   debugger;
   return{
-    catalogData: state.catalog.catalogData
+    catalogData: state.catalog.catalogData,
+    initialValues: state.catalog.formData
   }
 }
 

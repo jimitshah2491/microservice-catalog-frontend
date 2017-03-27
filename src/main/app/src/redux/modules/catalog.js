@@ -6,6 +6,7 @@ import _ from 'lodash';
 // region Action constants
 const REQUEST = 'microservice-catalog/microservices/REQUEST';
 const RECEIVE = 'microservice-catalog/microservices/RECEIVE';
+const INITIALIZE_EDIT_FORM = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM';
 export const CREATE_MICROSERVICE_SUCCESS = '@@redux-form/SET_SUBMIT_SUCCEEDED';
 // end region
 
@@ -15,6 +16,7 @@ export const request = createAction(REQUEST);
  * Callback to receive the results of a REQUEST call and update the store.
  */
 export const receive = createAction(RECEIVE, () => fetch('/catalog').then(response => response.json()));
+export const initializeEditForm = createAction(INITIALIZE_EDIT_FORM, (id, catalogData) => catalogData[id].catalog);
 // end region
 
 /**
@@ -35,7 +37,8 @@ export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.propert
 *
 * @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
 */
-export const postMicroservice = (values, dispatch) => {
+export const postMicroservice = (values, dispatch, method) => {
+    debugger;
     return new Promise((resolve, reject) => {
       fetch('/catalog', {
             method: 'POST',
@@ -79,6 +82,11 @@ const requestHandler = (state, action) => (
   loading: LoadingStates.LOADING
 });
 
+const initializeFormHandler = (state, action) => (
+  {
+    formData: action.payload
+  }
+)
 // end region
 
 // Default State
@@ -91,5 +99,6 @@ const defaultState = {
 // Reducer
 export default handleActions({
   [REQUEST]: requestHandler,
-  [RECEIVE]: receiveHandler
+  [RECEIVE]: receiveHandler,
+  [INITIALIZE_EDIT_FORM]: initializeFormHandler
 },defaultState);
