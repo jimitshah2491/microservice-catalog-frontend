@@ -30,21 +30,15 @@ export const fetchMicroservices = (dispatch) => {
 };
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
-/**
-* Attempts to POST a new MicroService and handles any errors by formatting them to Redux form to display
-*
-* @param {string} url - The location where the form should be patched
-*
-* @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
-*/
-export const postMicroservice = (values, dispatch, method) => {
+
+export const submitForm = (values, method) => {
     debugger;
     return new Promise((resolve, reject) => {
       fetch('/catalog', {
-            method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
+            method,
             body: JSON.stringify(values)
           })
         .then(response => response.json()
@@ -60,6 +54,25 @@ export const postMicroservice = (values, dispatch, method) => {
         .catch(error => reject(new SubmissionError({ _error: [ error.message ] })));
     });
 };
+
+/**
+* Attempts to POST a new MicroService and handles any errors by formatting them to Redux form to display
+*
+* @param {string} url - The location where the form should be patched
+*
+* @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
+*/
+export const postMicroservice = (values, method) => submitForm(values, 'POST');
+
+/**
+* Attempts to PATCH the changes to MicroService and handles any errors by formatting them to Redux form to display
+*
+* @param {string} url - The location where the form should be patched
+*
+* @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
+*/
+export const patchMicroservice = (values, method) => submitForm(values, 'PATCH');
+
 
 //region Action Handlers
 const receiveHandler = (state, action) => {
