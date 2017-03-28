@@ -2,10 +2,9 @@ import React from 'react';
 import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
 
 import { formFields, fieldHeading } from './AddServiceFields';
-import { patchMicroservice } from '../../redux/modules/catalog'
 
 let EditForm = (props) => {
-  const { submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props.props
+  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props.props.props;
 
   return(
     <div>
@@ -22,7 +21,7 @@ let EditForm = (props) => {
         </Alert>
       }
       <Jumbotron>
-          <form onSubmit={handleSubmit(patchMicroservice)}>
+          <form onSubmit={handleSubmit(onSubmitEdit)}>
             <FormGroup  bsSize="large">
               {fieldHeading}
               <div className="FieldContainer">

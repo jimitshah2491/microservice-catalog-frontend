@@ -9,7 +9,6 @@ import SearchBox from '../../component/SearchBox/SearchBox'
 import './DataView.css';
 import DetailView from '../../component/DetailView/DetailView';
 import {fetchMicroservices} from '../../redux/modules/catalog';
-import { Button } from 'react-bootstrap';
 
 import FontAwesome from 'react-fontawesome';
 
@@ -94,16 +93,14 @@ const CatalogDataView = (props) => {
         <td> {dataItem.catalog.title} </td>
         <td> {dataItem.catalog.description}</td>
         <td> {dataItem.catalog.url}</td>
-        <td onClick={handleArrowClick.bind(this)} > <FontAwesome className="caret-down" name="caret-down" size="lg" /> </td>
+        <td><LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id, action: "edit" } }}>
+          <FontAwesome title="Edit" name="pencil-square-o" className="fa-lg" />
+        </LinkContainer></td>
+        <td onClick={handleArrowClick.bind(this)} > <FontAwesome title="Expand/Collapse" className="caret-down" name="caret-down" size="lg" /> </td>
       </tr>,
       <tr className="details">
         <td colSpan="4">
           <DetailView serviceDetails={serviceDetailsArr}/>
-          <div className="editButton">
-            <LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id, action: "edit" } }}>
-              <Button className="col-md-1 text-center" type="button" bsStyle="primary">Edit</Button>
-            </LinkContainer>
-          </div>
         </td>
       </tr>
     ];
@@ -128,6 +125,7 @@ const CatalogDataView = (props) => {
                     <th>{entry.description}</th>
                   <th>{entry.url}</th>
                   <th></th>
+                  <th></th>
                 </tr>
               ))
             }
@@ -149,7 +147,6 @@ const CatalogDataView = (props) => {
  * @property  {Object} state  - The state from the Redux store.
  */
 const mapStateToProps = (state) => {
-  debugger;
   return{
     catalogData : state.catalog.catalogData,
     loading : state.catalog.loading

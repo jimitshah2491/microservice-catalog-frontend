@@ -31,10 +31,9 @@ export const fetchMicroservices = (dispatch) => {
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
 
-export const submitForm = (values, method) => {
-    debugger;
+export const submitForm = (url, method) => (values) => {
     return new Promise((resolve, reject) => {
-      fetch('/catalog', {
+      fetch(url, {
             headers: {
               'Content-Type': 'application/json'
             },
@@ -62,7 +61,7 @@ export const submitForm = (values, method) => {
 *
 * @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
 */
-export const postMicroservice = (values, method) => submitForm(values, 'POST');
+export const postMicroservice = (url='/catalog') => submitForm(url, 'POST');
 
 /**
 * Attempts to PATCH the changes to MicroService and handles any errors by formatting them to Redux form to display
@@ -71,7 +70,7 @@ export const postMicroservice = (values, method) => submitForm(values, 'POST');
 *
 * @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
 */
-export const patchMicroservice = (values, method) => submitForm(values, 'PATCH');
+export const patchMicroservice = (url) => submitForm('/catalog'+url, 'PATCH');
 
 
 //region Action Handlers
@@ -95,11 +94,12 @@ const requestHandler = (state, action) => (
   loading: LoadingStates.LOADING
 });
 
-const initializeFormHandler = (state, action) => (
-  {
+const initializeFormHandler = (state, action) => {
+  ;
+  return {
     formData: action.payload
   }
-)
+}
 // end region
 
 // Default State

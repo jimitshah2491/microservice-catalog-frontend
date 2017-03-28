@@ -9,11 +9,12 @@ const DetailView = (serviceDetails) => {
   let i=0;
   for(i=0;i<data.length;i++){
     let keys = Object.keys(data[i]);
-    if(data[i][keys[0]] === null) continue;
-    detailHtml.push(<div key={i}>
-                        <div className="fieldKey">{keys[0]}</div>
-                        <div className="fieldValue">{data[i][keys[0]]}</div>
-                    </div>);
+    if(data[i][keys[0]] !== null){
+      detailHtml.push(<div key={i}>
+                          <div className="fieldKey">{keys[0]}</div>
+                          <div className="fieldValue">{data[i][keys[0]]}</div>
+                      </div>);
+    }
   }
   return(
     <div>{detailHtml}</div>
