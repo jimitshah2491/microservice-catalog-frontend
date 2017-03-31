@@ -10,7 +10,7 @@ let AddForm = (props) => {
       <PageHeader>Add a New MicroService</PageHeader>
       { submitSucceeded &&
         <Alert bsStyle="success">
-          <strong>Successfully Submitted!</strong>
+          <strong>Microservice Successfully Added!</strong>
         </Alert>
       }
       {

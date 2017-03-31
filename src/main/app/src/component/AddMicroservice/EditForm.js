@@ -11,7 +11,7 @@ let EditForm = (props) => {
       <PageHeader>Edit MicroService</PageHeader>
       { submitSucceeded &&
         <Alert bsStyle="success">
-          <strong>Successfully Submitted!</strong>
+          <strong>Microservice Successfully Edited!</strong>
         </Alert>
       }
       {

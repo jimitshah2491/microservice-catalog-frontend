@@ -16,7 +16,7 @@ export const request = createAction(REQUEST);
  * Callback to receive the results of a REQUEST call and update the store.
  */
 export const receive = createAction(RECEIVE, () => fetch('/catalog').then(response => response.json()));
-export const initializeEditForm = createAction(INITIALIZE_EDIT_FORM, (id, catalogData) => catalogData[id].catalog);
+export const initializeEditForm = createAction(INITIALIZE_EDIT_FORM, (id) => fetch('/catalog/'+id).then(response => response.json()));
 // end region
 
 /**
@@ -79,9 +79,10 @@ const receiveHandler = (state, action) => {
     ...state,
     createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
-    catalogData:action.payload._embedded.catalog.map(function(obj, id){
+    catalogData:action.payload._embedded.catalog.map(function(obj){
+      debugger;
       return {
-        id: id,
+        id: obj._links.self.href.substring(obj._links.self.href.lastIndexOf("/")+1, obj._links.self.href.length),
         catalog: obj
       }
     })
@@ -95,7 +96,7 @@ const requestHandler = (state, action) => (
 });
 
 const initializeFormHandler = (state, action) => {
-  ;
+  debugger;
   return {
     formData: action.payload
   }
@@ -106,7 +107,7 @@ const initializeFormHandler = (state, action) => {
 const defaultState = {
   catalogData: [],
   createUrl: undefined,
-  loading: LoadingStates.CLEAN
+  loading: LoadingStates.CLEAN  
 };
 
 // Reducer

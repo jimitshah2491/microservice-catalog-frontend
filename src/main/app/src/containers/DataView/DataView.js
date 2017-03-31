@@ -63,7 +63,7 @@ const CatalogDataView = (props) => {
   }
   }
 
-  const header = [{title:"Title", description:"Description", url:"URL"}];
+  const header = [{title:"Title", description:"Description", url:"URL", edit:"Edit"}];
 
   const handleArrowClick = (event) => {
     let classes = event.target.classList;
@@ -82,6 +82,7 @@ const CatalogDataView = (props) => {
 
   // populate tableData
   tableData = catalogData.map((dataItem)=>{
+    debugger;
     let serviceDetailsArr = [
       {title: dataItem.catalog.title},
       {description: dataItem.catalog.description},
@@ -93,9 +94,11 @@ const CatalogDataView = (props) => {
         <td> {dataItem.catalog.title} </td>
         <td> {dataItem.catalog.description}</td>
         <td> {dataItem.catalog.url}</td>
-        <td><LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id, action: "edit" } }}>
-          <FontAwesome title="Edit" name="pencil-square-o" className="fa-lg" />
-        </LinkContainer></td>
+        <td>
+          <LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id } }}>
+            <FontAwesome title="Edit" name="pencil-square-o" className="fa-lg" />
+          </LinkContainer>
+        </td>
         <td onClick={handleArrowClick.bind(this)} > <FontAwesome title="Expand/Collapse" className="caret-down" name="caret-down" size="lg" /> </td>
       </tr>,
       <tr className="details">
@@ -124,7 +127,7 @@ const CatalogDataView = (props) => {
                   <th>{entry.title}</th>
                     <th>{entry.description}</th>
                   <th>{entry.url}</th>
-                  <th></th>
+                  <th>{entry.edit}</th>
                   <th></th>
                 </tr>
               ))
