@@ -1,7 +1,11 @@
 import {combineReducers} from 'redux';
-import catalog, { CREATE_MICROSERVICE_SUCCESS } from './modules/catalog'
-import { reducer as reduxFormReducer } from 'redux-form'
+import { reducer as reduxFormReducer } from 'redux-form';
 
+import catalog, { CREATE_MICROSERVICE_SUCCESS } from './modules/catalog';
+
+/**
+ * A helper function to join multiple reducers into a single reducing funtion that can be passed to store
+ */
 const appReducer = combineReducers({
   catalog,
   form: reduxFormReducer.plugin({
