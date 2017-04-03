@@ -82,7 +82,6 @@ const CatalogDataView = (props) => {
 
   // populate tableData
   tableData = catalogData.map((dataItem)=>{
-    debugger;
     let serviceDetailsArr = [
       {title: dataItem.catalog.title},
       {description: dataItem.catalog.description},
@@ -149,8 +148,7 @@ const CatalogDataView = (props) => {
  *
  * @property  {Object} state  - The state from the Redux store.
  */
-const mapStateToProps = (state) => {
-  debugger;
+const mapStateToProps = (state) => {  
   return{
     catalogData : state.catalog.catalogData,
     loading : state.catalog.loading

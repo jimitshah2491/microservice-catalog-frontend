@@ -16,8 +16,7 @@ import AddForm from './AddForm'
  * @param {[type]} reset
  * @param {[type]} submitting
  */
-let AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{
-    debugger;
+let AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{    
     const { initialValues, dispatch, location }=props;
     if(location.query.id !== undefined && initialValues === undefined) {
       // dispatch action to populate form data
