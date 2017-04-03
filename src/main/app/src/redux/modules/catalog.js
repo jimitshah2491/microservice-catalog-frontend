@@ -31,7 +31,12 @@ export const fetchMicroservices = (dispatch) => {
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
 
-
+/**
+ * [submitForm description]
+ * @param  {[type]} url    [description]
+ * @param  {[type]} method [description]
+ * @return {[type]}        [description]
+ */
 export const submitForm = (url, method) => (values) => {
     return new Promise((resolve, reject) => {
       fetch(url, {
@@ -91,7 +96,6 @@ const requestHandler = (state, action) => (
 );
 
 const initializeFormHandler = (state, action) => {
-  debugger;
   return {
     formData: action.payload
   }

@@ -39,4 +39,6 @@ let EditForm = (props) => {
   );
 }
 
+EditForm.displayName = 'EditForm';
+
 export default EditForm;

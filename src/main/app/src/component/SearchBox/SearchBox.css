@@ -24,10 +24,6 @@
   padding: 24px;
   padding-left: 26px;
 }
-input[type=search]::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  -moz-appearance:none;
-}
 
 #search:hover, #search:focus {
   background: #fff

@@ -3,7 +3,11 @@ import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootst
 
 import { formFields, fieldHeading } from './AddServiceFields';
 
-let AddForm = (props) => {
+/**
+ * [AddForm description]
+ * @param {[type]} props [description]
+ */
+const AddForm = (props) => {
   const { onSubmitAdd, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props.props;
   return(
     <div>
@@ -37,5 +41,7 @@ let AddForm = (props) => {
     </div>
   );
 }
+
+AddForm.displayName = 'AddForm';
 
 export default AddForm;

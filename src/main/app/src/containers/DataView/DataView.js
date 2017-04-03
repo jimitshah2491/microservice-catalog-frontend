@@ -13,7 +13,7 @@ import {fetchMicroservices} from '../../redux/modules/catalog';
   * CatalogDataView is Smart component
   * @param {[type]} dispatch    [description]
   * @param {[type]} catalogData [description]
-  * @param {[type]} loading     [description]
+  * @param {string} loading - State of data being loaded. It can be CLEAN, LOADING or LOADED 
   */
 const CatalogDataView = (dispatch, catalogData, loading) => {
     let open = false;
@@ -65,7 +65,7 @@ const CatalogDataView = (dispatch, catalogData, loading) => {
   }
 
   const header = [{title:"Title", description:"Description", url:"URL", edit:"Edit"}];
-  
+
   /**
    * [handleArrowClick description]
    * @param  {[type]} event [description]
@@ -148,6 +148,9 @@ const CatalogDataView = (dispatch, catalogData, loading) => {
     </div>
   );
 }
+
+
+CatalogDataView.displayName = 'CatalogDataView';
 
 /**
  * Maps the Redux store state into props.

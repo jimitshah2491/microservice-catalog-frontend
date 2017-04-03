@@ -24,4 +24,6 @@ const DetailView = (serviceDetails) => {
   );
 }
 
+DetailView.displayName = 'DetailView';
+
 export default DetailView;

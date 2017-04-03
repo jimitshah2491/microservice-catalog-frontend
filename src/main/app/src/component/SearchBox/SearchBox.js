@@ -3,6 +3,9 @@ import React from 'react';
 import './SearchBox.css';
 import '../Fonts.css';
 
+/**
+ * [SearchBox description]
+ */
 const SearchBox = () =>  {
   // const handleChange = (e) => {
   //   this.setState({ value: e.target.value });
@@ -17,5 +20,7 @@ const SearchBox = () =>  {
     </div>
   )
 }
+
+SearchBox.displayName = 'SearchBox';
 
 export default SearchBox;
