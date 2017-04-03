@@ -1,48 +1,46 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
 
-import { formFields, fieldHeading, validate } from './AddServiceFields'
-import { postMicroservice } from '../../redux/modules/catalog'
-
+import { validate } from './AddServiceFields';
+import { initializeEditForm, patchMicroservice, postMicroservice } from '../../redux/modules/catalog';
+import AddForm from './AddForm';
+import EditForm from './EditForm';
 
 let AddMicroServiceForm = (props) =>{
-    const { submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props
-    debugger;
+    const { initialValues, dispatch, location }=props
+    if(location.query.id !== undefined && initialValues === undefined) {
+      // dispatch action to populate form data
+      dispatch(initializeEditForm(location.query.id));
+    }
     return(
       <div>
-        <PageHeader>Add a New MicroService</PageHeader>
-        { submitSucceeded &&
-          <Alert bsStyle="success">
-            <strong>Successfully Submitted!</strong>
-          </Alert>
+        {
+          location.query.id !== undefined &&
+          <EditForm props={{props, id:location.query.id}} />
         }
         {
-          error &&
-          <Alert bsStyle="danger">
-            <strong>Sorry!</strong> Some error has occurred...
-          </Alert>
+          location.query.id === undefined &&
+          <AddForm props={props} />
         }
-        <Jumbotron>
-          <form onSubmit={handleSubmit(postMicroservice)}>
-              <FormGroup  bsSize="large">
-                {fieldHeading}
-                <div className="FieldContainer">
-                  {formFields}
-                </div>
-                <div className="buttonContainer">
-                  <Button className="col-md-1 text-center" type="submit" bsStyle="primary" disabled={submitting}>Submit</Button>
-                  <Button className="col-md-1 text-center" type="button" bsStyle="danger">Cancel</Button>
-                  <Button className="col-md-1 text-center" type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
-                </div>
-              </FormGroup>
-            </form>
-        </Jumbotron>
       </div>
     );
 }
 
-export default reduxForm({
+AddMicroServiceForm = reduxForm({
   form:'addMicroservice',
+  enableReinitialize : true,
   validate
 })(AddMicroServiceForm)
+
+const mapStateToProps = (state) => {
+  return{
+    initialValues: state.catalog.formData,
+    onSubmitEdit: state.catalog.formData===undefined?patchMicroservice:patchMicroservice(state.catalog.formData._links.self.href.substring(state.catalog.formData._links.self.href.lastIndexOf("/"), state.catalog.formData._links.self.href.length)),
+    onSubmitAdd: postMicroservice('/catalog')
+  }
+}
+
+AddMicroServiceForm = connect(mapStateToProps)(AddMicroServiceForm);
+
+export default AddMicroServiceForm;
