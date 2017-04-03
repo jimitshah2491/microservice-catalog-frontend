@@ -6,6 +6,7 @@ import _ from 'lodash';
 // region Action constants
 const REQUEST = 'microservice-catalog/microservices/REQUEST';
 const RECEIVE = 'microservice-catalog/microservices/RECEIVE';
+const INITIALIZE_EDIT_FORM = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM';
 export const CREATE_MICROSERVICE_SUCCESS = '@@redux-form/SET_SUBMIT_SUCCEEDED';
 // end region
 
@@ -15,6 +16,7 @@ export const request = createAction(REQUEST);
  * Callback to receive the results of a REQUEST call and update the store.
  */
 export const receive = createAction(RECEIVE, () => fetch('/catalog').then(response => response.json()));
+export const initializeEditForm = createAction(INITIALIZE_EDIT_FORM, (id) => fetch('/catalog/'+id).then(response => response.json()));
 // end region
 
 /**
@@ -28,24 +30,19 @@ export const fetchMicroservices = (dispatch) => {
 };
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
-/**
-* Attempts to POST a new MicroService and handles any errors by formatting them to Redux form to display
-*
-* @param {string} url - The location where the form should be patched
-*
-* @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
-*/
-export const postMicroservice = (values, dispatch) => {
+
+
+export const submitForm = (url, method) => (values) => {
     return new Promise((resolve, reject) => {
-      fetch('/catalog', {
-            method: 'POST',
+      fetch(url, {
             headers: {
               'Content-Type': 'application/json'
             },
+            method,
             body: JSON.stringify(values)
           })
         .then(response => response.json()
-          .then(json => {            
+          .then(json => {
             if (response.ok) {
               resolve(json);
             } else if (response.status === 400) {
@@ -58,33 +55,58 @@ export const postMicroservice = (values, dispatch) => {
     });
 };
 
+/**
+* Attempts to POST a new MicroService and handles any errors by formatting them to Redux form to display
+*
+* @param {string} url - The location where the form should be patched
+*
+* @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
+*/
+export const postMicroservice = (url='/catalog') => submitForm(url, 'POST');
+
+/**
+* Attempts to PATCH the changes to MicroService and handles any errors by formatting them to Redux form to display
+*
+* @param {string} url - The location where the form should be patched
+*
+* @return {function(resetForm: function)}  - A function which accepts the reset function from Redux forms and returns a function which accepts parameters in the shape of Redux forms' handleSubmit that POSTs a MicroService and handles any errors.
+*/
+export const patchMicroservice = (url) => submitForm('/catalog'+url, 'PATCH');
+
+
 //region Action Handlers
-const receiveHandler = (state, action) => {
-  return {
+const receiveHandler = (state, action) => (
+  {
     ...state,
-    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
     catalogData:action.payload._embedded.catalog
-  };
-};
+  }
+);
 
 const requestHandler = (state, action) => (
   {
   ...state,
   loading: LoadingStates.LOADING
-});
+}
+);
 
+const initializeFormHandler = (state, action) => {
+  debugger;
+  return {
+    formData: action.payload
+  }
+}
 // end region
 
 // Default State
 const defaultState = {
   catalogData: [],
-  createUrl: undefined,
   loading: LoadingStates.CLEAN
 };
 
 // Reducer
 export default handleActions({
   [REQUEST]: requestHandler,
-  [RECEIVE]: receiveHandler
+  [RECEIVE]: receiveHandler,
+  [INITIALIZE_EDIT_FORM]: initializeFormHandler
 },defaultState);

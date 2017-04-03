@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 import '../Fonts.css';
 
 import NavInstance from '../layout/Navigation';
 import Header from '../layout/Header';
 
+/**
+ * Basic Application Page comprising of Page Layout and Child pages
+ * @param {Object} children - Page to be rendered as child
+ */
 const App = ({children})=> {
     return (
       <div className="App">
@@ -18,5 +20,7 @@ const App = ({children})=> {
       </div>
     );
 }
+
+App.displayName = 'App';
 
 export default App;
