@@ -150,6 +150,7 @@ const CatalogDataView = (props) => {
  * @property  {Object} state  - The state from the Redux store.
  */
 const mapStateToProps = (state) => {
+  debugger;
   return{
     catalogData : state.catalog.catalogData,
     loading : state.catalog.loading

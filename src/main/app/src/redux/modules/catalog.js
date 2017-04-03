@@ -75,13 +75,19 @@ export const patchMicroservice = (url) => submitForm('/catalog'+url, 'PATCH');
 
 
 //region Action Handlers
-const receiveHandler = (state, action) => (
-  {
+const receiveHandler = (state, action) => {
+  return {
     ...state,
+    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
-    catalogData:action.payload._embedded.catalog
-  }
-);
+    catalogData:action.payload._embedded.catalog.map(function(obj){      
+      return {
+        id: obj._links.self.href.substring(obj._links.self.href.lastIndexOf("/")+1, obj._links.self.href.length),
+        catalog: obj
+      }
+    })
+  };
+};
 
 const requestHandler = (state, action) => (
   {
@@ -90,12 +96,9 @@ const requestHandler = (state, action) => (
 }
 );
 
-const initializeFormHandler = (state, action) => {
-  debugger;
-  return {
+const initializeFormHandler = (state, action) => ({
     formData: action.payload
-  }
-}
+})
 // end region
 
 // Default State

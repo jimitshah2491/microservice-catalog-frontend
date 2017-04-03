@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
 
-import { formFields, fieldHeading, validate } from './AddServiceFields';
-import { postMicroservice } from '../../redux/modules/catalog';
+import { validate } from './AddServiceFields';
+import { patchMicroservice, postMicroservice, initializeEditForm } from '../../redux/modules/catalog';
+import EditForm from './EditForm'
+import AddForm from './AddForm'
 
 /**
  * This function uses a redux-form to allow users to add new MicroService
@@ -15,11 +16,17 @@ import { postMicroservice } from '../../redux/modules/catalog';
  * @param {[type]} reset
  * @param {[type]} submitting
  */
-const AddMicroServiceForm = (submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{
+let AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{
+    debugger;
+    const { initialValues, dispatch, location }=props;
+    if(location.query.id !== undefined && initialValues === undefined) {
+      // dispatch action to populate form data
+      dispatch(initializeEditForm(location.query.id));
+    }
     return(
       <div>
         {
-          location.query.id !== undefined &&
+          location.query !== undefined && location.query.id !== undefined &&
           <EditForm props={{props, id:location.query.id}} />
         }
         {
