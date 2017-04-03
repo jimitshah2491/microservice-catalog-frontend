@@ -3,8 +3,8 @@ import React from 'react';
 import './DetailView.css';
 
 /**
- *
- * @param {[type]} serviceDetails
+ * Component to display all fields of a microservice
+ * @param {[type]} serviceDetails [description]
  */
 const DetailView = (serviceDetails) => {
   let detailHtml = [];
