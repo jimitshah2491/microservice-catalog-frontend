@@ -1,24 +1,27 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Table } from 'react-bootstrap/lib';
 import { LinkContainer } from 'react-router-bootstrap';
-import FontAwesome from 'react-fontawesome';
 
 import SearchBox from '../../component/SearchBox/SearchBox'
 import './DataView.css';
 import DetailView from '../../component/DetailView/DetailView';
 import {fetchMicroservices} from '../../redux/modules/catalog';
 
- /**
-  * CatalogDataView is Smart component
-  * @param {[type]} dispatch    [description]
-  * @param {[type]} catalogData [description]
-  * @param {string} loading - State of data being loaded. It can be CLEAN, LOADING or LOADED 
-  */
-const CatalogDataView = (dispatch, catalogData, loading) => {
+import FontAwesome from 'react-fontawesome';
+
+/**
+ * CatalogDataView is Smart component
+ * @param {[type]} props [description]
+ */
+const CatalogDataView = (props) => {
+    const { dispatch, catalogData, loading } = props;
     let open = false;
-    var initHeight = 120;
-    var intval = null;
+    let initHeight = 120;
+    let intval = null;
+    let h;
 
     if(catalogData.length === 0){
       dispatch(fetchMicroservices);
@@ -26,7 +29,7 @@ const CatalogDataView = (dispatch, catalogData, loading) => {
 
     const slideToggle = (element) => {
       window.clearInterval(intval);
-      var mdiv = document.getElementById('mdiv');
+      let mdiv = document.getElementById('mdiv');
       mdiv = element;
       if(getComputedStyle(mdiv).getPropertyValue('display') === "none"){
         open = false;
@@ -36,7 +39,7 @@ const CatalogDataView = (dispatch, catalogData, loading) => {
       }
       if(open) {
         mdiv.style.visibility="hidden";
-        var h = mdiv.offsetHeight;
+        h = mdiv.offsetHeight;
         open = false;
         intval = setInterval(function(){
           h--;
@@ -66,11 +69,6 @@ const CatalogDataView = (dispatch, catalogData, loading) => {
 
   const header = [{title:"Title", description:"Description", url:"URL", edit:"Edit"}];
 
-  /**
-   * [handleArrowClick description]
-   * @param  {[type]} event [description]
-   * @return {[type]}       [description]
-   */
   const handleArrowClick = (event) => {
     let classes = event.target.classList;
     let classToAdd = 'fa-caret-down';
@@ -148,9 +146,6 @@ const CatalogDataView = (dispatch, catalogData, loading) => {
     </div>
   );
 }
-
-
-CatalogDataView.displayName = 'CatalogDataView';
 
 /**
  * Maps the Redux store state into props.
