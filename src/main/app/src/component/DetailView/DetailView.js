@@ -1,8 +1,11 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+
 import './DetailView.css';
 
+/**
+ * Component to display all fields of a microservice
+ * @param {[type]} serviceDetails [description]
+ */
 const DetailView = (serviceDetails) => {
   let detailHtml = [];
   let data = serviceDetails.serviceDetails;

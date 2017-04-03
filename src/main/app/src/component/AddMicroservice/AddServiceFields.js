@@ -3,8 +3,10 @@ import { Field } from 'redux-form';
 import './AddService.css';
 
 /**
-* validate function to validate form fields
-*/
+ * Function to validate form fields
+ * @param  {[type]} values [description]
+ * @return {[type]}        [description]
+ */
 export const validate = values => {
   const errors = {}
   if (!values.title) {
@@ -28,6 +30,11 @@ export const validate = values => {
   return errors
 }
 
+/**
+ * React component for rendering Field
+ * @param  {[type]} props [description]
+ * @return {[type]}       [description]
+ */
 const renderField = (props) => {
       return <div className="FieldControl">
               <input {...props.input} placeholder={props.placeholder} type={props.type} />

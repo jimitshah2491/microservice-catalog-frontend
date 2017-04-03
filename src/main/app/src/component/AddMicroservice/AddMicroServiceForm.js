@@ -1,18 +1,21 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { reduxForm } from 'redux-form';
+import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
 
-import { validate } from './AddServiceFields';
-import { initializeEditForm, patchMicroservice, postMicroservice } from '../../redux/modules/catalog';
-import AddForm from './AddForm';
-import EditForm from './EditForm';
+import { formFields, fieldHeading, validate } from './AddServiceFields';
+import { postMicroservice } from '../../redux/modules/catalog';
 
-let AddMicroServiceForm = (props) =>{
-    const { initialValues, dispatch, location }=props
-    if(location.query.id !== undefined && initialValues === undefined) {
-      // dispatch action to populate form data
-      dispatch(initializeEditForm(location.query.id));
-    }
+/**
+ * This function uses a redux-form to allow users to add new MicroService
+ * @param {[type]} submitSucceeded
+ * @param {[type]} error
+ * @param {[type]} handleSubmit
+ * @param {[type]} pristine
+ * @param {[type]} reset
+ * @param {[type]} submitting
+ */
+const AddMicroServiceForm = (submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{
     return(
       <div>
         {
@@ -26,6 +29,17 @@ let AddMicroServiceForm = (props) =>{
       </div>
     );
 }
+
+AddMicroServiceForm.displayName = 'AddMicroServiceForm';
+
+// AddMicroServiceForm.propTypes = {
+//   submitSucceeded: React.PropTypes.object.isRequired,
+//   error: React.PropTypes.string,
+//   handleSubmit: React.PropTypes.string,
+//   pristine: React.PropTypes.string,
+//   reset: React.PropTypes.bool,
+//   submitting: React.PropTypes.string
+// };
 
 AddMicroServiceForm = reduxForm({
   form:'addMicroservice',

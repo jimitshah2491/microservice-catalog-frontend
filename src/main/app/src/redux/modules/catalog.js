@@ -31,6 +31,7 @@ export const fetchMicroservices = (dispatch) => {
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
 
+
 export const submitForm = (url, method) => (values) => {
     return new Promise((resolve, reject) => {
       fetch(url, {
@@ -74,26 +75,20 @@ export const patchMicroservice = (url) => submitForm('/catalog'+url, 'PATCH');
 
 
 //region Action Handlers
-const receiveHandler = (state, action) => {
-  return {
+const receiveHandler = (state, action) => (
+  {
     ...state,
-    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
-    catalogData:action.payload._embedded.catalog.map(function(obj){
-      debugger;
-      return {
-        id: obj._links.self.href.substring(obj._links.self.href.lastIndexOf("/")+1, obj._links.self.href.length),
-        catalog: obj
-      }
-    })
-  };
-};
+    catalogData:action.payload._embedded.catalog
+  }
+);
 
 const requestHandler = (state, action) => (
   {
   ...state,
   loading: LoadingStates.LOADING
-});
+}
+);
 
 const initializeFormHandler = (state, action) => {
   debugger;
@@ -106,8 +101,7 @@ const initializeFormHandler = (state, action) => {
 // Default State
 const defaultState = {
   catalogData: [],
-  createUrl: undefined,
-  loading: LoadingStates.CLEAN  
+  loading: LoadingStates.CLEAN
 };
 
 // Reducer
