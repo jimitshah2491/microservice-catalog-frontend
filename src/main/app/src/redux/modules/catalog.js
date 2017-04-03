@@ -28,6 +28,7 @@ export const fetchMicroservices = (dispatch) => {
 };
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
+
 /**
 * Attempts to POST a new MicroService and handles any errors by formatting them to Redux form to display
 *
@@ -45,7 +46,7 @@ export const postMicroservice = (values, dispatch) => {
             body: JSON.stringify(values)
           })
         .then(response => response.json()
-          .then(json => {            
+          .then(json => {
             if (response.ok) {
               resolve(json);
             } else if (response.status === 400) {
@@ -59,27 +60,27 @@ export const postMicroservice = (values, dispatch) => {
 };
 
 //region Action Handlers
-const receiveHandler = (state, action) => {
-  return {
+const receiveHandler = (state, action) => (
+  {
     ...state,
-    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
     catalogData:action.payload._embedded.catalog
-  };
-};
+  }
+);
+
 
 const requestHandler = (state, action) => (
   {
   ...state,
   loading: LoadingStates.LOADING
-});
+}
+);
 
 // end region
 
 // Default State
 const defaultState = {
   catalogData: [],
-  createUrl: undefined,
   loading: LoadingStates.CLEAN
 };
 

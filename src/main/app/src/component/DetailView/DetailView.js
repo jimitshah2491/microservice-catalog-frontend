@@ -1,8 +1,11 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+
 import './DetailView.css';
 
+/**
+ *
+ * @param {[type]} serviceDetails
+ */
 const DetailView = (serviceDetails) => {
   let detailHtml = [];
   let data = serviceDetails.serviceDetails;

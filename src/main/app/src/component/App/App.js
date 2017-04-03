@@ -6,7 +6,10 @@ import '../Fonts.css';
 
 import NavInstance from '../layout/Navigation';
 import Header from '../layout/Header';
-
+/**
+ * [App description]
+ * @param {[type]} children [description]
+ */
 const App = ({children})=> {
     return (
       <div className="App">
