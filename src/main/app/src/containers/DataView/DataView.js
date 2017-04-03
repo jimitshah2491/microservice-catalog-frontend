@@ -1,20 +1,21 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Table } from 'react-bootstrap/lib';
 import { LinkContainer } from 'react-router-bootstrap';
+import FontAwesome from 'react-fontawesome';
 
 import SearchBox from '../../component/SearchBox/SearchBox'
 import './DataView.css';
 import DetailView from '../../component/DetailView/DetailView';
 import {fetchMicroservices} from '../../redux/modules/catalog';
 
-import FontAwesome from 'react-fontawesome';
-
-// CatalogDataView is Smart component
-const CatalogDataView = (props) => {
-    const { dispatch, catalogData, loading } = props;
+ /**
+  * CatalogDataView is Smart component
+  * @param {[type]} dispatch    [description]
+  * @param {[type]} catalogData [description]
+  * @param {[type]} loading     [description]
+  */
+const CatalogDataView = (dispatch, catalogData, loading) => {
     let open = false;
     var initHeight = 120;
     var intval = null;
@@ -64,7 +65,12 @@ const CatalogDataView = (props) => {
   }
 
   const header = [{title:"Title", description:"Description", url:"URL", edit:"Edit"}];
-
+  
+  /**
+   * [handleArrowClick description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   const handleArrowClick = (event) => {
     let classes = event.target.classList;
     let classToAdd = 'fa-caret-down';
@@ -82,7 +88,6 @@ const CatalogDataView = (props) => {
 
   // populate tableData
   tableData = catalogData.map((dataItem)=>{
-    debugger;
     let serviceDetailsArr = [
       {title: dataItem.catalog.title},
       {description: dataItem.catalog.description},

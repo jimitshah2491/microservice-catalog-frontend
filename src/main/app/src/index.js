@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Router , Route , IndexRoute, browserHistory } from 'react-router';
 import promiseMiddleware from 'redux-promise';
+
 import './index.css';
 import reducer from './redux';
 import App from './component/App/App';
