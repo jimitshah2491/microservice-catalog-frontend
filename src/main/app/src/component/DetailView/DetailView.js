@@ -9,14 +9,15 @@ import './DetailView.css';
 const DetailView = (serviceDetails) => {
   let detailHtml = [];
   let data = serviceDetails.serviceDetails;
-  for(let i=0;i<data.length-1;i+=2){
-    if(data[i+1] === null) {
-      continue;
-    }
-    detailHtml.push(<div key={i}>
-                        <div className="fieldKey">{data[i]}</div>
-                        <div className="fieldValue">{data[i+1]}</div>
+  let i=0;
+  for(i=0;i<data.length;i++){
+    let keys = Object.keys(data[i]);
+    if(data[i][keys[0]] !== null){
+      detailHtml.push(<div key={i}>
+                          <div className="fieldKey">{keys[0]}</div>
+                          <div className="fieldValue">{data[i][keys[0]]}</div>
                       </div>);
+    }
   }
   return(
     <div>{detailHtml}</div>
