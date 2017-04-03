@@ -36,3 +36,13 @@ mvn spring-boot:run
 ```
 mvn spring-boot:stop
 ```
+
+Steps to generate documentation using esdoc hosting service:
+
+Go to: https://doc.esdoc.org/-/generate.html
+
+Input: "git@github.com:p632-sp-2017/microservice-catalog-frontend.git"
+
+Click the "Generate" button
+
+View documentation on: https://doc.esdoc.org/github.com/p632-sp-2017/microservice-catalog-frontend/
