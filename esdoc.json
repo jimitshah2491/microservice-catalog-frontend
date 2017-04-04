@@ -1,9 +1,5 @@
 {
   "source": "./src",
   "destination": "./doc",
-  "lint": true,
-  "test": {
-    "type": "enzyme",
-    "source": "./test"
-  }
+  "lint": true
 }
