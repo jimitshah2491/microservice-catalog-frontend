@@ -83,7 +83,6 @@ export const patchMicroservice = (url) => submitForm('/catalog'+url, 'PATCH');
 const receiveHandler = (state, action) => {
   return {
     ...state,
-    createUrl: !action.error && action.payload._links.create && action.payload._links.create.href,
     loading: LoadingStates.LOADED,
     catalogData:action.payload._embedded.catalog.map(function(obj){
       return {

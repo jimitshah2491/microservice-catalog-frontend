@@ -20,7 +20,7 @@ const DetailView = (serviceDetails) => {
     }
   }
   return(
-    <div>{detailHtml}</div>
+    <div className="DetailView">{detailHtml}</div>
   );
 }
 
