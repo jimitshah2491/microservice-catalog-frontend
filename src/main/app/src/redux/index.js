@@ -5,6 +5,7 @@ import catalog, { CREATE_MICROSERVICE_SUCCESS } from './modules/catalog';
 
 /**
  * A helper function to join multiple reducers into a single reducing funtion that can be passed to store
+ * @type {[type]}
  */
 const appReducer = combineReducers({
   catalog,

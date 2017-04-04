@@ -147,6 +147,8 @@ const CatalogDataView = (props) => {
   );
 }
 
+CatalogDataView.displayName = 'CatalogDataView';
+
 /**
  * Maps the Redux store state into props.
  *

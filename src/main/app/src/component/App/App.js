@@ -6,19 +6,19 @@ import NavInstance from '../layout/Navigation';
 import Header from '../layout/Header';
 
 /**
- * Basic Application Page comprising of Page Layout and Child pages
- * @param {Object} children - Page to be rendered as child
+ * This is the basic application page which comprises of Layout components and children components to be rendered.
+ * @param {Object} children - Page to be rendered as a child component
  */
 const App = ({children})=> {
-    return (
-      <div className="App">
-        <Header/>
-        <NavInstance/>
-        <div>
-          {children}
-        </div>
+  return (
+    <div className="App">
+      <Header/>
+      <NavInstance/>
+      <div>
+        {children}
       </div>
-    );
+    </div>
+  );
 }
 
 App.displayName = 'App';
