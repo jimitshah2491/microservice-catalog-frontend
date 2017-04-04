@@ -4,11 +4,11 @@ import { Field } from 'redux-form';
 import './AddService.css';
 
 /**
- * Function to validate form fields
- * @param  {[type]} values [description]
- * @return {[type]}        [description]
+ * A helper function to validate the various form fields
+ * @param  {Object} values - A object that comprises of the values of the details entered in the add new Microservice form.
+ * @return {Object} - A Object that specifies all the different errors that are discovered while performing validations.
  */
-export const validate = values => {
+export const validate = values=>{
   const errors = {}
   if (!values.title) {
     errors.title = 'Required'
@@ -22,8 +22,8 @@ export const validate = values => {
   }
   if (!values.description) {
     errors.description = 'Required'
-  } else if (values.description !== undefined && values.description.length > 50) {
-    errors.description = 'Must be 50 characters or less'
+  } else if (values.description !== undefined && values.description.length > 250) {
+    errors.description = 'Must be 250 characters or less'
   }
   if (!values.url) {
     errors.url = 'Required'
@@ -43,7 +43,10 @@ const renderField = (props) => {
              </div>
 }
 
-
+/**
+ * A array that comprises of all the different fields of a Microservice that can be added while creating a new Microservice
+ * @type {Array}
+ */
 export let formFieldsData = [
     {
       serviceData:[
@@ -63,14 +66,12 @@ export let formFieldsData = [
         name:'description',
         placeholder: 'Description'
       }
-    ]},
+    ]}
   ]
 
 export let fieldHeading = formFieldsData[0].serviceData.map((data, i)=>{
   return <div key={i} className='FieldHeading'> {data.placeholder} </div>
 })
-
-
 
 export let formFields = formFieldsData.map((service)=>{
   return  service.serviceData.map((field)=>{

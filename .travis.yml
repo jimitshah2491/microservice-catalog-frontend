@@ -16,5 +16,5 @@ notifications:
     on_failure: always
 
 after_success:
-   - yarn global add codeclimate-test-reporter
-   - codeclimate-test-reporter < src/main/app/coverage/lcov.info
+   - npm install -g codeclimate-test-reporter
+   - codeclimate-test-reporter < ./src/main/app/coverage/lcov.info
