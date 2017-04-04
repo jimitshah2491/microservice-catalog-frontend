@@ -8,7 +8,7 @@ import { formFields, fieldHeading } from './AddServiceFields';
  * @param {[type]} props [description]
  */
 const AddForm = (props) => {
-  const { onSubmitAdd, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props.props;
+  const { onSubmitAdd, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props;
   return(
     <div>
       <PageHeader>Add a New MicroService</PageHeader>

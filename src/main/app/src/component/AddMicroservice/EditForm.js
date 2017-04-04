@@ -4,7 +4,7 @@ import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootst
 import { formFields, fieldHeading } from './AddServiceFields';
 
 let EditForm = (props) => {
-  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props.props.props;
+  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props;
 
   return(
     <div>
