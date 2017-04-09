@@ -17,7 +17,7 @@ import FontAwesome from 'react-fontawesome';
  * @param {[type]} props [description]
  */
 const CatalogDataView = (props) => {
-    const { dispatch, catalogData, loading } = props;
+    const { dispatch, catalogData, loading, filterText } = props;
     let open = false;
     let initHeight = 120;
     let intval = null;
@@ -86,36 +86,41 @@ const CatalogDataView = (props) => {
 
   // populate tableData
   tableData = catalogData.map((dataItem)=>{
-    let serviceDetailsArr = [
-      {title: dataItem.catalog.title},
-      {description: dataItem.catalog.description},
-      {url: dataItem.catalog.url},
-      {email: dataItem.catalog.email}
-    ];
-    return [
-      <tr>
-        <td> {dataItem.catalog.title} </td>
-        <td> {dataItem.catalog.description}</td>
-        <td> {dataItem.catalog.url}</td>
-        <td>
-          <LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id } }}>
-            <FontAwesome title="Edit" name="pencil-square-o" className="fa-lg" />
-          </LinkContainer>
-        </td>
-        <td onClick={handleArrowClick.bind(this)} > <FontAwesome title="Expand/Collapse" className="caret-down" name="caret-down" size="lg" /> </td>
-      </tr>,
-      <tr className="details">
-        <td colSpan="4">
-          <DetailView serviceDetails={serviceDetailsArr}/>
-        </td>
-      </tr>
-    ];
+    if(filterText==='' || (filterText!=='' && (dataItem.catalog.title.toUpperCase().indexOf(filterText.toUpperCase())!==-1 || dataItem.catalog.description.toUpperCase().indexOf(filterText.toUpperCase())!==-1))){
+      let serviceDetailsArr = [
+        {title: dataItem.catalog.title},
+        {description: dataItem.catalog.description},
+        {url: dataItem.catalog.url},
+        {email: dataItem.catalog.email}
+      ];
+      return [
+        <tr>
+          <td> {dataItem.catalog.title} </td>
+          <td> {dataItem.catalog.description}</td>
+          <td> {dataItem.catalog.url}</td>
+          <td>
+            <LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id } }}>
+              <FontAwesome title="Edit" name="pencil-square-o" className="fa-lg" />
+            </LinkContainer>
+          </td>
+          <td onClick={handleArrowClick.bind(this)} > <FontAwesome title="Expand/Collapse" className="caret-down" name="caret-down" size="lg" /> </td>
+        </tr>,
+        <tr className="details">
+          <td colSpan="4">
+            <DetailView serviceDetails={serviceDetailsArr}/>
+          </td>
+        </tr>
+      ];
+    }
+    else {
+      return undefined;
+    }
   }, this)
 
   // return the virtual DOM
   return (
     <div className="Div-container">
-      <SearchBox />
+      <SearchBox {...props} />
       {
         loading === "LOADING" && catalogData.length<=0 &&
         <FontAwesome name="pulse fa-spinner" className="fa-4x" />
@@ -136,7 +141,7 @@ const CatalogDataView = (props) => {
               ))
             }
           </thead>
-          { catalogData.length > 0 &&
+          { catalogData.length > 0 && tableData!==undefined &&
             <tbody>
               { tableData }
             </tbody>
@@ -157,7 +162,8 @@ CatalogDataView.displayName = 'CatalogDataView';
 const mapStateToProps = (state) => {
   return{
     catalogData : state.catalog.catalogData,
-    loading : state.catalog.loading
+    loading : state.catalog.loading,
+    filterText: state.catalog.filterText
   }
 }
 
