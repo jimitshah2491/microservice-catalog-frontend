@@ -86,7 +86,7 @@ const CatalogDataView = (props) => {
 
   // populate tableData
   tableData = catalogData.map((dataItem)=>{
-    if(filterText==='' || (filterText!=='' && (dataItem.catalog.title.toUpperCase().indexOf(filterText.toUpperCase())!==-1 || dataItem.catalog.description.toUpperCase().indexOf(filterText.toUpperCase())!==-1))){
+    if(filterText==='' || (filterText!=='' && (dataItem.catalog.title.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1 || dataItem.catalog.description.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1))){
       let serviceDetailsArr = [
         {title: dataItem.catalog.title},
         {description: dataItem.catalog.description},
