@@ -40,6 +40,9 @@
   padding-right:20px;
   cursor: pointer;
 }
+.Div-container table tbody tr td:nth-child(4){
+  text-align: left;
+}
 .details{
   display: none;
   height: auto;
