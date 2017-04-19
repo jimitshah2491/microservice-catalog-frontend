@@ -4,7 +4,7 @@ import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootst
 import { formFields, fieldHeading } from './AddServiceFields';
 
 let EditForm = (props) => {
-  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props.props.props;
+  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props;
 
   return(
     <div>
@@ -17,7 +17,7 @@ let EditForm = (props) => {
       {
         error &&
         <Alert bsStyle="danger">
-          <strong>Sorry!</strong> Some error has occurred...
+          <strong>Sorry! Some error has occurred...</strong>
         </Alert>
       }
       <Jumbotron>
@@ -30,7 +30,7 @@ let EditForm = (props) => {
               <div className="buttonContainer">
                 <Button className="col-md-1 text-center" type="submit" bsStyle="primary" disabled={submitting}>Submit</Button>
                 <Button className="col-md-1 text-center" type="button" bsStyle="danger">Cancel</Button>
-                <Button className="col-md-1 text-center" type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
+                <Button className="col-md-1 text-center" type="reset" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
               </div>
             </FormGroup>
           </form>

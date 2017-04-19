@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+ import { createAction, handleActions } from 'redux-actions';
 import { LoadingStates } from '../../utils/common';
 import { SubmissionError } from 'redux-form';
 import _ from 'lodash';
@@ -8,6 +8,7 @@ const REQUEST = 'microservice-catalog/microservices/REQUEST';
 const RECEIVE = 'microservice-catalog/microservices/RECEIVE';
 const INITIALIZE_EDIT_FORM = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM';
 export const CREATE_MICROSERVICE_SUCCESS = '@@redux-form/SET_SUBMIT_SUCCEEDED';
+const FILTER_DATA = 'micorservices-catalog/microservices/FILTER_DATA';
 // end region
 
 // region Action creators
@@ -17,6 +18,7 @@ export const request = createAction(REQUEST);
  */
 export const receive = createAction(RECEIVE, () => fetch('/catalog').then(response => response.json()));
 export const initializeEditForm = createAction(INITIALIZE_EDIT_FORM, (id) => fetch('/catalog/'+id).then(response => response.json()));
+export const filterText = createAction(FILTER_DATA, (text)=>text);
 // end region
 
 /**
@@ -103,17 +105,25 @@ const requestHandler = (state, action) => (
 const initializeFormHandler = (state, action) => ({
     formData: action.payload
 })
+
+const filterDataHandler = (state, action)=>({
+    ...state,
+    filterText: action.payload
+})
+
 // end region
 
 // Default State
 const defaultState = {
   catalogData: [],
-  loading: LoadingStates.CLEAN
+  loading: LoadingStates.CLEAN,
+  filterText: ''
 };
 
 // Reducer
 export default handleActions({
   [REQUEST]: requestHandler,
   [RECEIVE]: receiveHandler,
-  [INITIALIZE_EDIT_FORM]: initializeFormHandler
+  [INITIALIZE_EDIT_FORM]: initializeFormHandler,
+  [FILTER_DATA]:filterDataHandler
 },defaultState);

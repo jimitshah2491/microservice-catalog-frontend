@@ -16,7 +16,7 @@ import AddForm from './AddForm'
  * @param {[type]} reset
  * @param {[type]} submitting
  */
-let AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{    
+export const AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{
     const { initialValues, dispatch, location }=props;
     if(location.query.id !== undefined && initialValues === undefined) {
       // dispatch action to populate form data
@@ -26,11 +26,11 @@ let AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine
       <div>
         {
           location.query !== undefined && location.query.id !== undefined &&
-          <EditForm props={{props, id:location.query.id}} />
+          <EditForm {...props} />
         }
         {
           location.query.id === undefined &&
-          <AddForm props={props} />
+          <AddForm {...props} />
         }
       </div>
     );
@@ -47,7 +47,7 @@ AddMicroServiceForm.displayName = 'AddMicroServiceForm';
 //   submitting: React.PropTypes.string
 // };
 
-AddMicroServiceForm = reduxForm({
+const AddMicroServiceReduxForm = reduxForm({
   form:'addMicroservice',
   enableReinitialize : true,
   validate
@@ -61,6 +61,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-AddMicroServiceForm = connect(mapStateToProps)(AddMicroServiceForm);
+const AddMicroserviceForm = connect(mapStateToProps)(AddMicroServiceReduxForm);
 
-export default AddMicroServiceForm;
+export default AddMicroserviceForm;

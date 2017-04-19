@@ -8,7 +8,7 @@ import { formFields, fieldHeading } from './AddServiceFields';
  * @param {[type]} props [description]
  */
 const AddForm = (props) => {
-  const { onSubmitAdd, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props.props;
+  const { onSubmitAdd, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props;
   return(
     <div>
       <PageHeader>Add a New MicroService</PageHeader>
@@ -20,7 +20,7 @@ const AddForm = (props) => {
       {
         error &&
         <Alert bsStyle="danger">
-          <strong>Sorry!</strong> Some error has occurred...
+          <strong>Sorry! Some error has occurred...</strong>
         </Alert>
       }
       <Jumbotron>
@@ -33,7 +33,7 @@ const AddForm = (props) => {
               <div className="buttonContainer">
                 <Button className="col-md-1 text-center" type="submit" bsStyle="primary" disabled={submitting}>Submit</Button>
                 <Button className="col-md-1 text-center" type="button" bsStyle="danger">Cancel</Button>
-                <Button className="col-md-1 text-center" type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
+                <Button className="col-md-1 text-center" type="reset" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
               </div>
             </FormGroup>
           </form>

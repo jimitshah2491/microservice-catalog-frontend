@@ -3,16 +3,19 @@ import React from 'react';
 import './SearchBox.css';
 import '../Fonts.css';
 
+import {filterText} from '../../redux/modules/catalog';
+
 /**
  * [SearchBox description]
  */
-const SearchBox = () =>  {
+const SearchBox = (props) =>  {
+  const {dispatch} = props;
   // const handleChange = (e) => {
   //   this.setState({ value: e.target.value });
   // }
 
   const handleKeyPress = (e) => {
-    this.props.filterRows(this.refs.searchbox.value);
+    dispatch(filterText(e.target.value));
   }
   return(
     <div className="Search-box">
