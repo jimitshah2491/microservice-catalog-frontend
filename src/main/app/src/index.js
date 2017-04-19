@@ -14,7 +14,7 @@ import AddMicroService from './component/AddMicroservice/AddMicroServiceForm';
 import DataView from './containers/DataView/DataView';
 import ErrorPage from './component/Error';
 
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,thunkMiddleware,createLogger())(createStore);
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,thunkMiddleware,createLogger)(createStore);
 const store = createStoreWithMiddleware(reducer);
 
 ReactDOM.render(

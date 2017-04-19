@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Table } from 'react-bootstrap/lib';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Alert } from 'react-bootstrap';
 
 import SearchBox from '../../component/SearchBox/SearchBox'
 import './DataView.css';
@@ -17,13 +18,13 @@ import FontAwesome from 'react-fontawesome';
  * @param {[type]} props [description]
  */
 const CatalogDataView = (props) => {
-    const { dispatch, catalogData, loading, filterText } = props;
+    const { dispatch, catalogData, loading, filterText, errorfetching } = props;
     let open = false;
     let initHeight = 120;
     let intval = null;
     let h;
 
-    if(catalogData.length === 0){
+    if(catalogData.length === 0 && !errorfetching){
       dispatch(fetchMicroservices);
     }
 
@@ -126,7 +127,15 @@ const CatalogDataView = (props) => {
         <FontAwesome name="pulse fa-spinner" className="fa-4x" />
       }
       {
-        loading === "LOADED" && catalogData.length>0 &&
+        errorfetching &&
+        <div>
+          <Alert bsStyle="danger">
+            <strong>Sorry! Some error has occurred. Please refresh the page or try again after sometime.</strong>
+          </Alert>
+        </div>
+      }
+      {
+        loading === "LOADED" && catalogData.length>0 && !errorfetching &&
         <Table responsive hover className="Data">
           <thead>
             {
@@ -163,7 +172,8 @@ const mapStateToProps = (state) => {
   return{
     catalogData : state.catalog.catalogData,
     loading : state.catalog.loading,
-    filterText: state.catalog.filterText
+    filterText: state.catalog.filterText,
+    errorfetching: state.catalog.errorfetching
   }
 }
 
