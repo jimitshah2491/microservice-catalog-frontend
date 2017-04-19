@@ -4,7 +4,7 @@ import { SubmissionError } from 'redux-form';
 import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
 
-import BACKEND_URL from '../../env-config.js';
+// import BACKEND_URL from '../../env-config.js';
 
 // region Action constants
 export const REQUEST = 'microservice-catalog/microservices/REQUEST';

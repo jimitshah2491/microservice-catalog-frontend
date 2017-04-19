@@ -7,7 +7,7 @@ import nock from 'nock';
 
 import * as catalog from './catalog';
 import catalogJSONData from 'json!/../../../fixtures/catalog.json';
-import BACKEND_URL from '../../env-config.js';
+// import BACKEND_URL from '../../env-config.js';
 import reducer from './catalog';
 import { LoadingStates } from '../../utils/common';
 
