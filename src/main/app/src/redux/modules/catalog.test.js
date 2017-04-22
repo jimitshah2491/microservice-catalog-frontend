@@ -7,7 +7,7 @@ import nock from 'nock';
 
 import * as catalog from './catalog';
 import catalogJSONData from 'json!/../../../fixtures/catalog.json';
-// import BACKEND_URL from '../../env-config.js';
+import BACKEND_URL from '../../env-config.js';
 import reducer from './catalog';
 import { LoadingStates } from '../../utils/common';
 
@@ -27,25 +27,62 @@ describe("actions", () => {
   });
 
   // async action
-  it("should create an action to receive catalog", ()=> {
-    // nock(BACKEND_URL).get('/catalog').reply(200, catalogJSONData);
-    //
-    // const expectedAction = [
-    //   { type: catalog.REQUEST },
-    //   { type: catalog.RECEIVE_SUCCESS, payload: catalogJSONData }
-    // ]
-    // const store = mockStore({catalogData: []});
-    //
-    // return store.dispatch(catalog.fetchMicroservices)
-    //   .then(() => {
-    //     expect(store.getActions()).toEqual(expectedAction);
-    //   })
-  });
-
-  // async action
-  it("should create an action to initialize the edit form", ()=> {
-
-  });
+  // it("should create an action to receive catalog", ()=> {
+  //   nock(BACKEND_URL).get('/catalog').reply(200, catalogJSONData);
+  //
+  //   const expectedAction = [
+  //     { type: catalog.REQUEST },
+  //     { type: catalog.RECEIVE_SUCCESS, payload: catalogJSONData }
+  //   ]
+  //   const store = mockStore({catalogData: []});
+  //
+  //   return store.dispatch(catalog.fetchMicroservices)
+  //     .then(() => {
+  //       expect(store.getActions()).toEqual(expectedAction);
+  //     })
+  // });
+  //
+  // // async action
+  // it("should create an action to handle errors while receiving catalog", () => {
+  //   nock(BACKEND_URL).get('/catalog').reply(400, "Error");
+  //
+  //   const expectedAction = [
+  //     { type: catalog.REQUEST },
+  //     { type: catalog.RECEIVE_ERROR }
+  //   ]
+  //   const store = mockStore({catalogData: []});
+  //
+  //   return store.dispatch(catalog.fetchMicroservices)
+  //     .then(() => {
+  //       expect(store.getActions()).toEqual(expectedAction);
+  //     })
+  // })
+  //
+  // // async action
+  // it("should create an action to initialize the edit form", ()=> {
+  //   let id = "58b201896a0d9170dbb7768e"; // sample Id of microservice
+  //   nock(BACKEND_URL).get('/catalog/'+id).reply(200, catalogJSONData);
+  //   const expectedAction = [{ type: catalog.INITIALIZE_EDIT_FORM_SUCCESS, payload: catalogJSONData }];
+  //   const store = mockStore({catalogData: []});
+  //
+  //   return store.dispatch(catalog.initializeEditForm(id))
+  //     .then(() => {
+  //       expect(store.getActions()).toEqual(expectedAction);
+  //     })
+  // });
+  //
+  // // async action
+  // it("should create an action to handle errors while receiving edit form contents", () => {
+  //   let id = "58b201896a0d9170dbb7768e"; // sample Id of microservice
+  //   nock(BACKEND_URL).get('/catalog/'+id).reply(400, "Error");
+  //   const expectedAction = [{ type: catalog.INITIALIZE_EDIT_FORM_ERROR }];
+  //   const store = mockStore({catalogData: []});
+  //
+  //   return store.dispatch(catalog.initializeEditForm(id))
+  //     .then(() => {
+  //       expect(store.getActions()).toEqual(expectedAction);
+  //     })
+  // })
 
   it("should create an action to filter data for search", ()=> {
     const payload="searched text";
@@ -128,10 +165,24 @@ describe("reducers", () => {
       filterText: '',
       errorfetching: false
     }, {
-      type:catalog.INITIALIZE_EDIT_FORM,
+      type:catalog.INITIALIZE_EDIT_FORM_SUCCESS,
       payload: catalogJSONData
     })).toEqual({
-      formData: catalogJSONData
+      formData: catalogJSONData,
+      errorfetching: false
+    })
+  });
+
+  it("should handle initializeFormErrorHandler reducer", () => {
+    expect(reducer({
+      catalogData: [],
+      loading: LoadingStates.CLEAN,
+      filterText: '',
+      errorfetching: false
+    }, {
+      type:catalog.INITIALIZE_EDIT_FORM_ERROR
+    })).toEqual({
+      errorfetching: true
     })
   });
 

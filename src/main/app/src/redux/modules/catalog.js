@@ -10,7 +10,8 @@ import fetch from 'isomorphic-fetch';
 export const REQUEST = 'microservice-catalog/microservices/REQUEST';
 export const RECEIVE_SUCCESS = 'microservice-catalog/microservices/RECEIVE_SUCCESS';
 export const RECEIVE_ERROR = 'microservice-catalog/microservices/RECEIVE_ERROR';
-export const INITIALIZE_EDIT_FORM = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM';
+export const INITIALIZE_EDIT_FORM_SUCCESS = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM_SUCCESS';
+export const INITIALIZE_EDIT_FORM_ERROR = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM_ERROR';
 export const CREATE_MICROSERVICE_SUCCESS = '@@redux-form/SET_SUBMIT_SUCCEEDED';
 export const FILTER_DATA = 'micorservices-catalog/microservices/FILTER_DATA';
 // end region
@@ -22,9 +23,23 @@ export const request = createAction(REQUEST);
  */
 export const receiveSuccess = createAction(RECEIVE_SUCCESS, (catalogData) => catalogData);
 export const receiveError = createAction(RECEIVE_ERROR, () => {});
-export const initializeEditForm = createAction(INITIALIZE_EDIT_FORM, (id) => fetch('/catalog/'+id).then(response => response.json()));
+export const initializeEditFormSuccess = createAction(INITIALIZE_EDIT_FORM_SUCCESS, (catalogData) => catalogData);
+export const initializeEditFormError = createAction(INITIALIZE_EDIT_FORM_ERROR, () => {});
 export const filterText = createAction(FILTER_DATA, (text)=>text);
 // end region
+
+/**
+ * Convenience function to dispatch REQUEST and RECEIVE  to initialize edit form actions in sequence.
+ *
+ * @param {function(action: Object)} dispatch  - The dispatch function from the Redux store.
+ */
+export const initializeEditForm = (id) => (dispatch) => {
+    // return fetch(BACKEND_URL+'/catalog/'+id)
+    return fetch('/catalog/'+id)
+      .then(response => response.json())
+      .then(json => dispatch(initializeEditFormSuccess(json)))
+      .catch(ex => dispatch(initializeEditFormError()))
+}
 
 /**
  * Convenience function to dispatch REQUEST and RECEIVE actions in sequence.
@@ -33,10 +48,11 @@ export const filterText = createAction(FILTER_DATA, (text)=>text);
  */
 export const fetchMicroservices = (dispatch) => {
     dispatch(request());
+    // return fetch(BACKEND_URL+'/catalog')
     return fetch('/catalog')
       .then(response => response.json())
       .then(json => dispatch(receiveSuccess(json)))
-      .catch(ex => dispatch(receiveError(ex)))
+      .catch(ex => dispatch(receiveError()))
 }
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
@@ -119,10 +135,15 @@ export const requestHandler = (state, action) => (
   }
 );
 
+
 export const initializeFormHandler = (state, action) => ({
-    formData: action.payload
+  formData: action.payload,
+  errorfetching: false
 })
 
+export const initializeFormErrorHandler = (state, action) => ({
+    errorfetching: true
+})
 export const filterDataHandler = (state, action)=>({
     ...state,
     filterText: action.payload
@@ -143,6 +164,7 @@ export default handleActions({
   [REQUEST]: requestHandler,
   [RECEIVE_SUCCESS]: receiveHandler,
   [RECEIVE_ERROR]: receiveErrorHandler,
-  [INITIALIZE_EDIT_FORM]: initializeFormHandler,
+  [INITIALIZE_EDIT_FORM_SUCCESS]: initializeFormHandler,
+  [INITIALIZE_EDIT_FORM_ERROR] : initializeFormErrorHandler,
   [FILTER_DATA]:filterDataHandler
 },defaultState);
