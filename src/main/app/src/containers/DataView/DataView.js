@@ -88,12 +88,12 @@ const CatalogDataView = (props) => {
   // populate tableData
   tableData = catalogData.map((dataItem)=>{
     if(filterText==='' || (filterText!=='' && (dataItem.catalog.title.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1 || dataItem.catalog.description.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1))){
-      let serviceDetailsArr = [
-        {title: dataItem.catalog.title},
-        {description: dataItem.catalog.description},
-        {url: dataItem.catalog.url},
-        {email: dataItem.catalog.email}
-      ];
+      let serviceDetails = {
+        title: dataItem.catalog.title,
+        description: dataItem.catalog.description,
+        url: dataItem.catalog.url,
+        email: dataItem.catalog.email
+      };
       return [
         <tr>
           <td> {dataItem.catalog.title} </td>
@@ -108,7 +108,7 @@ const CatalogDataView = (props) => {
         </tr>,
         <tr className="details">
           <td colSpan="4">
-            <DetailView serviceDetails={serviceDetailsArr}/>
+            <DetailView { ...serviceDetails }/>
           </td>
         </tr>
       ];

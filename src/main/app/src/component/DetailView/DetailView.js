@@ -6,16 +6,15 @@ import './DetailView.css';
  * Component to display all fields of a microservice
  * @param {[type]} serviceDetails [description]
  */
-const DetailView = (serviceDetails) => {
+const DetailView = (serviceDetails) => {  
   let detailHtml = [];
-  let data = serviceDetails.serviceDetails;
-  let i=0;
-  for(i=0;i<data.length;i++){
-    let keys = Object.keys(data[i]);
-    if(data[i][keys[0]] !== null){
+  let data = serviceDetails;
+  let keys = Object.keys(data);
+  for(let i=0;i<keys.length;i++){
+    if(data[keys[0]] !== null){
       detailHtml.push(<div key={i}>
-                          <div className="fieldKey">{keys[0]}</div>
-                          <div className="fieldValue">{data[i][keys[0]]}</div>
+                          <div className="fieldKey">{keys[i]}</div>
+                          <div className="fieldValue">{data[keys[i]]}</div>
                       </div>);
     }
   }
