@@ -49,6 +49,10 @@
   padding:10px 40px;
 }
 
+.serviceDetails{
+  width: 100% !important
+}
+
 .editButton{
   width:295%;
 }

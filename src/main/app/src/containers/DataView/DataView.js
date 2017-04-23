@@ -98,7 +98,7 @@ const CatalogDataView = (props) => {
         <tr>
           <td> {dataItem.catalog.title} </td>
           <td> {dataItem.catalog.description}</td>
-          <td> {dataItem.catalog.url}</td>
+          <td> {dataItem.catalog.url[0]}</td>
           <td>
             <LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id } }}>
               <FontAwesome title="Edit" name="pencil-square-o" className="fa-lg" />
@@ -107,7 +107,7 @@ const CatalogDataView = (props) => {
           <td onClick={handleArrowClick.bind(this)} > <FontAwesome title="Expand/Collapse" className="caret-down" name="caret-down" size="lg" /> </td>
         </tr>,
         <tr className="details">
-          <td colSpan="4">
+          <td colSpan="4" className="serviceDetails">
             <DetailView { ...serviceDetails }/>
           </td>
         </tr>
@@ -142,7 +142,7 @@ const CatalogDataView = (props) => {
               header.map((entry,idx) => (
                 <tr key={idx}>
                   <th>{entry.title}</th>
-                    <th>{entry.description}</th>
+                  <th>{entry.description}</th>
                   <th>{entry.url}</th>
                   <th>{entry.edit}</th>
                   <th></th>

@@ -37,5 +37,5 @@
     "watch-windows": "SET \"NODE_ENV=production\" && webpack --config config/webpack.config.prod.js --progress --colors --watch"
   },
   "homepage": ".",
-  "proxy": "http://localhost:8081/"
+  "proxy": "http://ms-catalog.herokuapp.com"
 }
