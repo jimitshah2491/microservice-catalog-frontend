@@ -1,14 +1,19 @@
- import { createAction, handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 import { LoadingStates } from '../../utils/common';
 import { SubmissionError } from 'redux-form';
 import _ from 'lodash';
+import fetch from 'isomorphic-fetch';
+
+// import BACKEND_URL from '../../env-config.js';
 
 // region Action constants
-const REQUEST = 'microservice-catalog/microservices/REQUEST';
-const RECEIVE = 'microservice-catalog/microservices/RECEIVE';
-const INITIALIZE_EDIT_FORM = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM';
+export const REQUEST = 'microservice-catalog/microservices/REQUEST';
+export const RECEIVE_SUCCESS = 'microservice-catalog/microservices/RECEIVE_SUCCESS';
+export const RECEIVE_ERROR = 'microservice-catalog/microservices/RECEIVE_ERROR';
+export const INITIALIZE_EDIT_FORM_SUCCESS = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM_SUCCESS';
+export const INITIALIZE_EDIT_FORM_ERROR = 'microservice-catalog/microservices/INITIALIZE_EDIT_FORM_ERROR';
 export const CREATE_MICROSERVICE_SUCCESS = '@@redux-form/SET_SUBMIT_SUCCEEDED';
-const FILTER_DATA = 'micorservices-catalog/microservices/FILTER_DATA';
+export const FILTER_DATA = 'micorservices-catalog/microservices/FILTER_DATA';
 // end region
 
 // region Action creators
@@ -16,10 +21,25 @@ export const request = createAction(REQUEST);
 /**
  * Callback to receive the results of a REQUEST call and update the store.
  */
-export const receive = createAction(RECEIVE, () => fetch('/catalog').then(response => response.json()));
-export const initializeEditForm = createAction(INITIALIZE_EDIT_FORM, (id) => fetch('/catalog/'+id).then(response => response.json()));
+export const receiveSuccess = createAction(RECEIVE_SUCCESS, (catalogData) => catalogData);
+export const receiveError = createAction(RECEIVE_ERROR, () => {});
+export const initializeEditFormSuccess = createAction(INITIALIZE_EDIT_FORM_SUCCESS, (catalogData) => catalogData);
+export const initializeEditFormError = createAction(INITIALIZE_EDIT_FORM_ERROR, () => {});
 export const filterText = createAction(FILTER_DATA, (text)=>text);
 // end region
+
+/**
+ * Convenience function to dispatch REQUEST and RECEIVE  to initialize edit form actions in sequence.
+ *
+ * @param {function(action: Object)} dispatch  - The dispatch function from the Redux store.
+ */
+export const initializeEditForm = (id) => (dispatch) => {
+    // return fetch(BACKEND_URL+'/catalog/'+id)
+    return fetch('/catalog/'+id)
+      .then(response => response.json())
+      .then(json => dispatch(initializeEditFormSuccess(json)))
+      .catch(ex => dispatch(initializeEditFormError()))
+}
 
 /**
  * Convenience function to dispatch REQUEST and RECEIVE actions in sequence.
@@ -27,9 +47,13 @@ export const filterText = createAction(FILTER_DATA, (text)=>text);
  * @param {function(action: Object)} dispatch  - The dispatch function from the Redux store.
  */
 export const fetchMicroservices = (dispatch) => {
-  dispatch(request());
-  dispatch(receive());
-};
+    dispatch(request());
+    // return fetch(BACKEND_URL+'/catalog')
+    return fetch('/catalog')
+      .then(response => response.json())
+      .then(json => dispatch(receiveSuccess(json)))
+      .catch(ex => dispatch(receiveError()))
+}
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
 
@@ -58,7 +82,7 @@ export const submitForm = (url, method) => (values) => {
               throw new Error('A system error has occurred. Please try again later.');
             }
           }))
-        .catch(error => reject(new SubmissionError({ _error: [ error.message ] })));
+        .catch(error => reject(new SubmissionError({ error: [ error.message ] })));
     });
 };
 
@@ -82,10 +106,11 @@ export const patchMicroservice = (url) => submitForm('/catalog'+url, 'PATCH');
 
 
 //region Action Handlers
-const receiveHandler = (state, action) => {
+export const receiveHandler = (state, action) => {
   return {
     ...state,
     loading: LoadingStates.LOADED,
+    errorfetching: false,
     catalogData:action.payload._embedded.catalog.map(function(obj){
       return {
         id: obj._links.self.href.substring(obj._links.self.href.lastIndexOf("/")+1, obj._links.self.href.length),
@@ -95,18 +120,31 @@ const receiveHandler = (state, action) => {
   };
 };
 
-const requestHandler = (state, action) => (
+export const receiveErrorHandler = (state, action) => (
   {
-  ...state,
-  loading: LoadingStates.LOADING
-}
+    ...state,
+    loading: LoadingStates.LOADED,
+    errorfetching: true
+  }
 );
 
-const initializeFormHandler = (state, action) => ({
-    formData: action.payload
+export const requestHandler = (state, action) => (
+  {
+    ...state,
+    loading: LoadingStates.LOADING
+  }
+);
+
+
+export const initializeFormHandler = (state, action) => ({
+  formData: action.payload,
+  errorfetching: false
 })
 
-const filterDataHandler = (state, action)=>({
+export const initializeFormErrorHandler = (state, action) => ({
+    errorfetching: true
+})
+export const filterDataHandler = (state, action)=>({
     ...state,
     filterText: action.payload
 })
@@ -114,16 +152,19 @@ const filterDataHandler = (state, action)=>({
 // end region
 
 // Default State
-const defaultState = {
+export const defaultState = {
   catalogData: [],
   loading: LoadingStates.CLEAN,
-  filterText: ''
+  filterText: '',
+  errorfetching: false
 };
 
 // Reducer
 export default handleActions({
   [REQUEST]: requestHandler,
-  [RECEIVE]: receiveHandler,
-  [INITIALIZE_EDIT_FORM]: initializeFormHandler,
+  [RECEIVE_SUCCESS]: receiveHandler,
+  [RECEIVE_ERROR]: receiveErrorHandler,
+  [INITIALIZE_EDIT_FORM_SUCCESS]: initializeFormHandler,
+  [INITIALIZE_EDIT_FORM_ERROR] : initializeFormErrorHandler,
   [FILTER_DATA]:filterDataHandler
 },defaultState);

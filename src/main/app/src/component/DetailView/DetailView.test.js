@@ -3,19 +3,13 @@ import {shallow} from 'enzyme';
 
 import DetailView from './DetailView';
 
-const serviceDetailsArr = [
-  {title:'Title'}
-];
-
-const minProps ={
-  serviceDetails:serviceDetailsArr
-}
-const wrapper = shallow(<DetailView {...minProps}/>);
+const serviceDetails = {
+    title:'Title'
+};
 
 describe('Component : DetailView', () =>{
-
-  it('Expands component properly',()=>{
-
+  const wrapper = shallow(<DetailView {...serviceDetails}/>);
+  it('Renders without exploding',()=>{
     expect(wrapper.contains(
       <div className="DetailView">
         <div>

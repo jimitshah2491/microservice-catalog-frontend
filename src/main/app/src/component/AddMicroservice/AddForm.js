@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
 
-import { formFields, fieldHeading } from './AddServiceFields';
+import { formFields } from './AddServiceFields';
 
 /**
  * [AddForm description]
@@ -26,7 +26,7 @@ const AddForm = (props) => {
       <Jumbotron>
           <form onSubmit={handleSubmit(onSubmitAdd)}>
             <FormGroup  bsSize="large">
-              {fieldHeading}
+
               <div className="FieldContainer">
                 {formFields}
               </div>

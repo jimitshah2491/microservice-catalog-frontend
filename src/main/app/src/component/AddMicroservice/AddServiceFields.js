@@ -37,10 +37,11 @@ export const validate = values=>{
  * @return {[type]}       [description]
  */
 const renderField = (props) => {
-      return <div className="FieldControl">
-              <input {...props.input} placeholder={props.placeholder} type={props.type} />
-              {props.meta.touched && props.meta.error && <span className="Error">*{props.meta.error}</span>}
-             </div>
+  let control = <div className="FieldControl">
+          <input {...props.input} test="{...props.input}" className="fieldText" placeholder={props.placeholder} type={props.type} />
+          {props.meta.touched && props.meta.error && <span className="Error">*{props.meta.error}</span>}
+         </div>;
+      return control;
 }
 
 /**
@@ -73,8 +74,9 @@ export let fieldHeading = formFieldsData[0].serviceData.map((data, i)=>{
   return <div key={i} className='FieldHeading'> {data.placeholder} </div>
 })
 
-export let formFields = formFieldsData.map((service)=>{
+export let formFields = formFieldsData.map((service,i)=>{
   return  service.serviceData.map((field)=>{
-    return <Field name={field.name} type="text" component={renderField} placeholder={field.placeholder} />
+    return <div className="fieldContainer"><div key={i} className='FieldHeading'> {field.placeholder} </div>
+    <Field name={field.name} type="text" component={renderField} placeholder={field.placeholder} /></div>
   })
 })

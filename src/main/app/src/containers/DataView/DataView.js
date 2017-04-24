@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Table } from 'react-bootstrap/lib';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Alert } from 'react-bootstrap';
 
 import SearchBox from '../../component/SearchBox/SearchBox'
 import './DataView.css';
@@ -17,13 +18,13 @@ import FontAwesome from 'react-fontawesome';
  * @param {[type]} props [description]
  */
 const CatalogDataView = (props) => {
-    const { dispatch, catalogData, loading, filterText } = props;
+    const { dispatch, catalogData, loading, filterText, errorfetching } = props;
     let open = false;
     let initHeight = 120;
     let intval = null;
     let h;
 
-    if(catalogData.length === 0){
+    if(catalogData.length === 0 && !errorfetching){
       dispatch(fetchMicroservices);
     }
 
@@ -87,17 +88,17 @@ const CatalogDataView = (props) => {
   // populate tableData
   tableData = catalogData.map((dataItem)=>{
     if(filterText==='' || (filterText!=='' && (dataItem.catalog.title.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1 || dataItem.catalog.description.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1))){
-      let serviceDetailsArr = [
-        {title: dataItem.catalog.title},
-        {description: dataItem.catalog.description},
-        {url: dataItem.catalog.url},
-        {email: dataItem.catalog.email}
-      ];
+      let serviceDetails = {
+        title: dataItem.catalog.title,
+        description: dataItem.catalog.description,
+        url: dataItem.catalog.url,
+        email: dataItem.catalog.email
+      };
       return [
         <tr>
           <td> {dataItem.catalog.title} </td>
           <td> {dataItem.catalog.description}</td>
-          <td> {dataItem.catalog.url}</td>
+          <td> {dataItem.catalog.url[0]}</td>
           <td>
             <LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id } }}>
               <FontAwesome title="Edit" name="pencil-square-o" className="fa-lg" />
@@ -106,8 +107,8 @@ const CatalogDataView = (props) => {
           <td onClick={handleArrowClick.bind(this)} > <FontAwesome title="Expand/Collapse" className="caret-down" name="caret-down" size="lg" /> </td>
         </tr>,
         <tr className="details">
-          <td colSpan="4">
-            <DetailView serviceDetails={serviceDetailsArr}/>
+          <td colSpan="4" className="serviceDetails">
+            <DetailView { ...serviceDetails }/>
           </td>
         </tr>
       ];
@@ -126,14 +127,22 @@ const CatalogDataView = (props) => {
         <FontAwesome name="pulse fa-spinner" className="fa-4x" />
       }
       {
-        loading === "LOADED" && catalogData.length>0 &&
+        errorfetching &&
+        <div>
+          <Alert bsStyle="danger">
+            <strong>Sorry! Some error has occurred. Please refresh the page or try again after sometime.</strong>
+          </Alert>
+        </div>
+      }
+      {
+        loading === "LOADED" && catalogData.length>0 && !errorfetching &&
         <Table responsive hover className="Data">
           <thead>
             {
               header.map((entry,idx) => (
                 <tr key={idx}>
                   <th>{entry.title}</th>
-                    <th>{entry.description}</th>
+                  <th>{entry.description}</th>
                   <th>{entry.url}</th>
                   <th>{entry.edit}</th>
                   <th></th>
@@ -163,7 +172,8 @@ const mapStateToProps = (state) => {
   return{
     catalogData : state.catalog.catalogData,
     loading : state.catalog.loading,
-    filterText: state.catalog.filterText
+    filterText: state.catalog.filterText,
+    errorfetching: state.catalog.errorfetching
   }
 }
 

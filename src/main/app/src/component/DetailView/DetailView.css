@@ -1,9 +1,34 @@
 .fieldKey{
   text-transform: capitalize;
   display: inline-block;
-  width:30%;
+  width:12%;
   font-weight: bold;
 }
 .fieldValue{
   display: inline-block;
+}
+
+.fieldKeyTable{
+  text-transform: capitalize;
+  display: inline-block;
+  width:12% !important;
+  font-weight: bold;
+}
+.fieldValueTable{
+  display: inline-block;
+}
+.serviceTable {
+  width: 100%;
+  overflow: auto !important;
+}
+
+table.serviceTable tr td {
+  width: 50%;
+}
+
+.DetailView .DetailViewRow{
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 5px;
+  padding: 5px 0px;
+  width: 80%;
 }

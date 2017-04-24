@@ -9,7 +9,8 @@ import { Provider } from 'react-redux';
 import AddForm from './AddForm';
 import AddMicroServiceForm from './AddMicroServiceForm';
 
-describe("AddForm component", () => {
+describe("Component AddForm :", () => {
+
   let onSubmitResponse, onSubmitAdd, submitSucceeded, error, handleSubmit, submitting, reset, pristine;
   onSubmitResponse = Promise.resolve();
   let mockStore = configureStore([]);
@@ -26,10 +27,9 @@ describe("AddForm component", () => {
       reset,
       handleSubmit:()=>{},
       pristine:true
-      // initialValues:{}
     }
     return props;
-  }
+  };
 
   describe("when form rendered initially", () => {
     it("should render the initial state of form correctly", ()=>{
@@ -68,11 +68,6 @@ describe("AddForm component", () => {
           }
         }
       }
-
-      // const wrapper = mount(<Provider store={store}>
-      //                        <AddMicroServiceForm {...props} />
-      //                       </Provider>);
-      // wrapper.find('form').simulate("submit");
     });
 
     it("should display Success message on successful form submisison", ()=> {
@@ -80,6 +75,7 @@ describe("AddForm component", () => {
       props.submitSucceeded=true;
       const wrapper = shallow(<AddForm {...props} />);
       const successMessage = wrapper.find("Alert");
+      expect(successMessage.find("strong").length).toEqual(1);
       expect(successMessage.find("strong").text()).toBe("Microservice Successfully Added!");
       expect(successMessage.length).toBe(1);
     });
@@ -89,9 +85,10 @@ describe("AddForm component", () => {
       props.error = "error";
       const wrapper = shallow(<AddForm {...props} />);
       const successMessage = wrapper.find("Alert");
+      expect(successMessage.find("strong").length).toEqual(1);
       expect(successMessage.find("strong").text()).toBe("Sorry! Some error has occurred...");
       expect(successMessage.length).toBe(1);
     });
 
   })
-})
+});
