@@ -8,6 +8,8 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "enzyme": "^2.8.0",
+    "esdoc": "^0.5.2",
+    "esdoc-es7-plugin": "^0.0.3",
     "lodash": "^4.17.4",
     "nock": "^9.0.11",
     "react": "^15.4.2",
@@ -34,7 +36,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "watch": "NODE_ENV=production webpack --config config/webpack.config.prod.js --progress --colors --watch",
-    "watch-windows": "SET \"NODE_ENV=production\" && webpack --config config/webpack.config.prod.js --progress --colors --watch"
+    "watch-windows": "SET \"NODE_ENV=production\" && webpack --config config/webpack.config.prod.js --progress --colors --watch",
+    "docs": "esdoc -c ../../../esdoc.json"
   },
   "homepage": ".",
   "proxy": "http://ms-catalog.herokuapp.com"

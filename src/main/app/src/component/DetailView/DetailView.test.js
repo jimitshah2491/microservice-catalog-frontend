@@ -8,8 +8,8 @@ const serviceDetails = {
 };
 
 describe('Component : DetailView', () =>{
+  const wrapper = shallow(<DetailView {...serviceDetails}/>);
   it('Renders without exploding',()=>{
-    const wrapper = shallow(<DetailView {...serviceDetails}/>);
     expect(wrapper.contains(
       <div className="DetailView">
         <div>
@@ -18,6 +18,10 @@ describe('Component : DetailView', () =>{
         </div>
       </div>
     ));
+  });
+
+  it('Renders without crashing',()=>{
+    expect(wrapper.length).toBe(1);
   });
 
 });
