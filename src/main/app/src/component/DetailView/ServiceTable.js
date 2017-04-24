@@ -16,13 +16,14 @@ const ServiceTable = (props) => {
              </tr>;
     } else {
       return <tr>
+              <td className="fieldKeyTable"></td>
               <td className="fieldValueTable"><a>{url}</a></td>
              </tr>;
       }
   })
 
   return (
-    <div>
+    <div className="DetailViewRow">
       <table className="serviceTable">
         {trs}
       </table>
