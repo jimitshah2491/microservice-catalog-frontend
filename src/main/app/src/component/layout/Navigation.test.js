@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Header from './Header';
+import Navigation from './Navigation';
 
-const wrapper = shallow(<Header/>);
+const wrapper = shallow(<Navigation/>);
 
-describe('Component : Header', ()=>{
+describe('Component : Navigation', ()=>{
   it('Renders without crashing',()=>{
     expect(wrapper.length).toBe(1);
   });
