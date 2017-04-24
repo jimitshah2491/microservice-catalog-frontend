@@ -1,7 +1,13 @@
 import { validate } from './AddServiceFields'
 
+let fieldValues ={};
+const init = () =>{
+  fieldValues.email= "joesmith@domain.com";
+  fieldValues.description= "Description";
+  fieldValues.url= "http://sample.com";
+  fieldValues.title= "Title";
+};
 describe("AddServiceFields functions", () => {
-  let fieldValues = {}
   const invalidEmails = [
     "plainaddress",
     "#@%^%#$@#$@#.com",
@@ -43,10 +49,7 @@ describe("AddServiceFields functions", () => {
     });
 
     it("should return error if title is more than 50 characters", () => {
-      fieldValues.email= "joesmith@domain.com";
-      fieldValues.description= "Description";
-      fieldValues.url= "http://sample.com";
-      fieldValues.title= "Title";
+      init();
       let errors = {}
       errors.title = "Enter 50 characters or less";
       for(let i=0; i < 11; i++) {
@@ -56,10 +59,7 @@ describe("AddServiceFields functions", () => {
     });
 
     it("should return error if description is more than 250 characters", () => {
-      fieldValues.email= "joesmith@domain.com";
-      fieldValues.description= "Description";
-      fieldValues.url= "http://sample.com";
-      fieldValues.title= "Title";
+      init();
       let errors = {}
       errors.description = "Must be 250 characters or less";
       for(let i=0; i < 23; i++) {
