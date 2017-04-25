@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 
 import { validate } from './AddServiceFields';
 import { patchMicroservice, postMicroservice, initializeEditForm } from '../../redux/modules/catalog';
@@ -39,12 +40,12 @@ export const AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit,
 AddMicroServiceForm.displayName = 'AddMicroServiceForm';
 
 // AddMicroServiceForm.propTypes = {
-//   submitSucceeded: React.PropTypes.object.isRequired,
-//   error: React.PropTypes.string,
-//   handleSubmit: React.PropTypes.string,
-//   pristine: React.PropTypes.string,
-//   reset: React.PropTypes.bool,
-//   submitting: React.PropTypes.string
+//   submitSucceeded: PropTypes.object.isRequired,
+//   error: PropTypes.string,
+//   handleSubmit: PropTypes.string,
+//   pristine: PropTypes.string,
+//   reset: PropTypes.bool,
+//   submitting: PropTypes.string
 // };
 
 const AddMicroServiceReduxForm = reduxForm({

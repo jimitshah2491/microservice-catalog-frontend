@@ -68,4 +68,4 @@ describe("AddServiceFields functions", () => {
       expect(validate(fieldValues)).toEqual(errors);
     });
   })
-})
+});
