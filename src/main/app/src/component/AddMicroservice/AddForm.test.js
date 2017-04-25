@@ -55,7 +55,7 @@ describe("Component AddForm :", () => {
       const submitButton = wrapper.find('Button[type="submit"]');
       expect(submitButton.props().disabled).toBe(true);
     });
-  })
+  });
 
   describe("when form submitted", () => {
     it("should call reset after form submitted", ()=> {
@@ -89,6 +89,5 @@ describe("Component AddForm :", () => {
       expect(successMessage.find("strong").text()).toBe("Sorry! Some error has occurred...");
       expect(successMessage.length).toBe(1);
     });
-
-  })
+  });
 });
