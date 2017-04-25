@@ -29,6 +29,6 @@ table.serviceTable tr td {
 .DetailView .DetailViewRow{
   border-bottom: 1px solid #ccc;
   margin-bottom: 5px;
-  padding: 5px 0px;
+  padding: 5px;
   width: 80%;
 }

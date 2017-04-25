@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { validate } from './AddServiceFields';
 import { patchMicroservice, postMicroservice, initializeEditForm } from '../../redux/modules/catalog';
