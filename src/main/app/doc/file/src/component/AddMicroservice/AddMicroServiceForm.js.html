@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/component/AddMicroservice/AddMicroServiceForm.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BACKEND_URL">BACKEND_URL</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ErrorPage">ErrorPage</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/AddMicroservice</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-AddForm">AddForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-AddMicroServiceForm">AddMicroServiceForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EditForm">EditForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AddMicroserviceForm">AddMicroserviceForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fieldHeading">fieldHeading</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-formFields">formFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-formFieldsData">formFieldsData</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/App</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-App">App</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/DetailView</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-DetailView">DetailView</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ServiceTable">ServiceTable</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/SearchBox</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-SearchBox">SearchBox</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/layout</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Header">Header</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NavInstance">NavInstance</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">redux</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-appReducer">appReducer</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LoadingStates">LoadingStates</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LoadingStatesValues">LoadingStatesValues</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/component/AddMicroservice/AddMicroServiceForm.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React from &apos;react&apos;;
+import {connect} from &apos;react-redux&apos;;
+import { reduxForm } from &apos;redux-form&apos;;
+// import PropTypes from &apos;prop-types&apos;;
+
+import { validate } from &apos;./AddServiceFields&apos;;
+import { patchMicroservice, postMicroservice, initializeEditForm } from &apos;../../redux/modules/catalog&apos;;
+import EditForm from &apos;./EditForm&apos;
+import AddForm from &apos;./AddForm&apos;
+
+/**
+ * This function uses a redux-form to allow users to add new MicroService
+ * @param {[type]} submitSucceeded
+ * @param {[type]} error
+ * @param {[type]} handleSubmit
+ * @param {[type]} pristine
+ * @param {[type]} reset
+ * @param {[type]} submitting
+ */
+export const AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine, reset, submitting) =&gt;{
+    const { initialValues, dispatch, location }=props;
+    if(location.query.id !== undefined &amp;&amp; initialValues === undefined) {
+      // dispatch action to populate form data
+      dispatch(initializeEditForm(location.query.id));
+    }
+    return(
+      &lt;div&gt;
+        {
+          location.query !== undefined &amp;&amp; location.query.id !== undefined &amp;&amp;
+          &lt;EditForm {...props} /&gt;
+        }
+        {
+          location.query.id === undefined &amp;&amp;
+          &lt;AddForm {...props} /&gt;
+        }
+      &lt;/div&gt;
+    );
+}
+
+AddMicroServiceForm.displayName = &apos;AddMicroServiceForm&apos;;
+
+// AddMicroServiceForm.propTypes = {
+//   submitSucceeded: PropTypes.object.isRequired,
+//   error: PropTypes.string,
+//   handleSubmit: PropTypes.string,
+//   pristine: PropTypes.string,
+//   reset: PropTypes.bool,
+//   submitting: PropTypes.string
+// };
+
+const AddMicroServiceReduxForm = reduxForm({
+  form:&apos;addMicroservice&apos;,
+  enableReinitialize : true,
+  validate
+})(AddMicroServiceForm)
+
+const mapStateToProps = (state) =&gt; {
+  return{
+    initialValues: state.catalog.formData,
+    onSubmitEdit: state.catalog.formData===undefined?patchMicroservice:patchMicroservice(state.catalog.formData._links.self.href.substring(state.catalog.formData._links.self.href.lastIndexOf(&quot;/&quot;), state.catalog.formData._links.self.href.length)),
+    onSubmitAdd: postMicroservice(&apos;/catalog&apos;)
+  }
+}
+
+const AddMicroserviceForm = connect(mapStateToProps)(AddMicroServiceReduxForm);
+
+export default AddMicroserviceForm;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

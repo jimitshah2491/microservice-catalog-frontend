@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/containers/DataView/DataView.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BACKEND_URL">BACKEND_URL</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ErrorPage">ErrorPage</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/AddMicroservice</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-AddForm">AddForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-AddMicroServiceForm">AddMicroServiceForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EditForm">EditForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AddMicroserviceForm">AddMicroserviceForm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fieldHeading">fieldHeading</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-formFields">formFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-formFieldsData">formFieldsData</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/App</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-App">App</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/DetailView</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-DetailView">DetailView</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ServiceTable">ServiceTable</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/SearchBox</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-SearchBox">SearchBox</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">component/layout</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Header">Header</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NavInstance">NavInstance</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">redux</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-appReducer">appReducer</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LoadingStates">LoadingStates</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LoadingStatesValues">LoadingStatesValues</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/containers/DataView/DataView.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React from &apos;react&apos;;
+import {connect} from &apos;react-redux&apos;;
+import &apos;bootstrap/dist/css/bootstrap.css&apos;;
+import &apos;bootstrap/dist/css/bootstrap-theme.css&apos;;
+import { Table } from &apos;react-bootstrap/lib&apos;;
+import { LinkContainer } from &apos;react-router-bootstrap&apos;;
+import { Alert } from &apos;react-bootstrap&apos;;
+
+import SearchBox from &apos;../../component/SearchBox/SearchBox&apos;
+import &apos;./DataView.css&apos;;
+import DetailView from &apos;../../component/DetailView/DetailView&apos;;
+import {fetchMicroservices} from &apos;../../redux/modules/catalog&apos;;
+
+import FontAwesome from &apos;react-fontawesome&apos;;
+
+/**
+ * CatalogDataView is Smart component
+ * @param {[type]} props [description]
+ */
+const CatalogDataView = (props) =&gt; {
+    const { dispatch, catalogData, loading, filterText, errorfetching } = props;
+    let open = false;
+    let initHeight = 120;
+    let intval = null;
+    let h;
+
+    if(catalogData.length === 0 &amp;&amp; !errorfetching){
+      dispatch(fetchMicroservices);
+    }
+
+    const slideToggle = (element) =&gt; {
+      window.clearInterval(intval);
+      let mdiv = document.getElementById(&apos;mdiv&apos;);
+      mdiv = element;
+      if(getComputedStyle(mdiv).getPropertyValue(&apos;display&apos;) === &quot;none&quot;){
+        open = false;
+      }
+      else{
+        open = true;
+      }
+      if(open) {
+        mdiv.style.visibility=&quot;hidden&quot;;
+        h = mdiv.offsetHeight;
+        open = false;
+        intval = setInterval(function(){
+          h--;
+          mdiv.style.height = h + &apos;px&apos;;
+          if(h &lt;= 0){
+            window.clearInterval(intval);
+            mdiv.style.display = &apos;none&apos;;
+          }
+        }, 1
+      );
+
+    }
+    else {
+      mdiv.style.display = &apos;block&apos;;
+      mdiv.style.visibility = &quot;visible&quot;;
+      h = 0;
+      open = true;
+      intval = setInterval(function(){
+        h++;
+        mdiv.style.height = &quot;auto&quot;;
+        if(h &gt;= initHeight)
+        window.clearInterval(intval);
+      }, 1
+    );
+  }
+  }
+
+  const header = [{title:&quot;Title&quot;, description:&quot;Description&quot;, url:&quot;URL&quot;, edit:&quot;Edit&quot;}];
+
+  const handleArrowClick = (event) =&gt; {
+    let classes = event.target.classList;
+    let classToAdd = &apos;fa-caret-down&apos;;
+    if(classes.contains(&apos;fa-caret-down&apos;)){
+      classToAdd = &apos;fa-caret-up&apos;;
+    }
+    classes.remove(&apos;fa-caret-down&apos;,&apos;fa-caret-up&apos;);
+    classes.add(classToAdd);
+    let element = event.target.closest(&apos;tr&apos;).nextSibling;
+    slideToggle(element);
+  }
+
+  // tableData stores the microservices catalog data
+  let tableData = [];
+
+  // populate tableData
+  tableData = catalogData.map((dataItem)=&gt;{
+    if(filterText===&apos;&apos; || (filterText!==&apos;&apos; &amp;&amp; (dataItem.catalog.title.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1 || dataItem.catalog.description.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1))){
+      let serviceDetails = {
+        title: dataItem.catalog.title,
+        description: dataItem.catalog.description,
+        url: dataItem.catalog.url,
+        email: dataItem.catalog.email
+      };
+      return [
+        &lt;tr&gt;
+          &lt;td&gt; {dataItem.catalog.title} &lt;/td&gt;
+          &lt;td&gt; {dataItem.catalog.description}&lt;/td&gt;
+          &lt;td&gt; {dataItem.catalog.url[0]}&lt;/td&gt;
+          &lt;td&gt;
+            &lt;LinkContainer to={{ pathname: &apos;/addService&apos;, query: { id: dataItem.id } }}&gt;
+              &lt;FontAwesome title=&quot;Edit&quot; name=&quot;pencil-square-o&quot; className=&quot;fa-lg&quot; /&gt;
+            &lt;/LinkContainer&gt;
+          &lt;/td&gt;
+          &lt;td onClick={handleArrowClick.bind(this)} &gt; &lt;FontAwesome title=&quot;Expand/Collapse&quot; className=&quot;caret-down&quot; name=&quot;caret-down&quot; size=&quot;lg&quot; /&gt; &lt;/td&gt;
+        &lt;/tr&gt;,
+        &lt;tr className=&quot;details&quot;&gt;
+          &lt;td colSpan=&quot;4&quot; className=&quot;serviceDetails&quot;&gt;
+            &lt;DetailView { ...serviceDetails }/&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      ];
+    }
+    else {
+      return undefined;
+    }
+  }, this)
+
+  // return the virtual DOM
+  return (
+    &lt;div className=&quot;Div-container&quot;&gt;
+      &lt;SearchBox {...props} /&gt;
+      {
+        loading === &quot;LOADING&quot; &amp;&amp; catalogData.length&lt;=0 &amp;&amp;
+        &lt;FontAwesome name=&quot;pulse fa-spinner&quot; className=&quot;fa-4x&quot; /&gt;
+      }
+      {
+        errorfetching &amp;&amp;
+        &lt;div&gt;
+          &lt;Alert bsStyle=&quot;danger&quot;&gt;
+            &lt;strong&gt;Sorry! Some error has occurred. Please refresh the page or try again after sometime.&lt;/strong&gt;
+          &lt;/Alert&gt;
+        &lt;/div&gt;
+      }
+      {
+        loading === &quot;LOADED&quot; &amp;&amp; catalogData.length&gt;0 &amp;&amp; !errorfetching &amp;&amp;
+        &lt;Table responsive hover className=&quot;Data&quot;&gt;
+          &lt;thead&gt;
+            {
+              header.map((entry,idx) =&gt; (
+                &lt;tr key={idx}&gt;
+                  &lt;th&gt;{entry.title}&lt;/th&gt;
+                  &lt;th&gt;{entry.description}&lt;/th&gt;
+                  &lt;th&gt;{entry.url}&lt;/th&gt;
+                  &lt;th&gt;{entry.edit}&lt;/th&gt;
+                  &lt;th&gt;&lt;/th&gt;
+                &lt;/tr&gt;
+              ))
+            }
+          &lt;/thead&gt;
+          { catalogData.length &gt; 0 &amp;&amp; tableData!==undefined &amp;&amp;
+            &lt;tbody&gt;
+              { tableData }
+            &lt;/tbody&gt;
+          }
+        &lt;/Table&gt;
+      }
+    &lt;/div&gt;
+  );
+}
+
+CatalogDataView.displayName = &apos;CatalogDataView&apos;;
+
+/**
+ * Maps the Redux store state into props.
+ *
+ * @property  {Object} state  - The state from the Redux store.
+ */
+const mapStateToProps = (state) =&gt; {
+  return{
+    catalogData : state.catalog.catalogData,
+    loading : state.catalog.loading,
+    filterText: state.catalog.filterText,
+    errorfetching: state.catalog.errorfetching
+  }
+}
+
+export default connect(mapStateToProps)(CatalogDataView);
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

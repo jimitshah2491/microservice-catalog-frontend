@@ -1,0 +1,2004 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "src/component/AddMicroservice/AddForm.js",
+    "content": "import React from 'react';\nimport { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';\n\nimport { formFields } from './AddServiceFields';\n\n/**\n * [AddForm description]\n * @param {[type]} props [description]\n */\nconst AddForm = (props) => {\n  const { onSubmitAdd, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props;\n  return(\n    <div>\n      <PageHeader>Add a New MicroService</PageHeader>\n      { submitSucceeded &&\n        <Alert bsStyle=\"success\">\n          <strong>Microservice Successfully Added!</strong>\n        </Alert>\n      }\n      {\n        error &&\n        <Alert bsStyle=\"danger\">\n          <strong>Sorry! Some error has occurred...</strong>\n        </Alert>\n      }\n      <Jumbotron>\n          <form onSubmit={handleSubmit(onSubmitAdd)}>\n            <FormGroup  bsSize=\"large\">\n\n              <div className=\"FieldContainer\">\n                {formFields}\n              </div>\n              <div className=\"buttonContainer\">\n                <Button className=\"col-md-1 text-center\" type=\"submit\" bsStyle=\"primary\" disabled={submitting}>Submit</Button>\n                <Button className=\"col-md-1 text-center\" type=\"button\" bsStyle=\"danger\">Cancel</Button>\n                <Button className=\"col-md-1 text-center\" type=\"reset\" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>\n              </div>\n            </FormGroup>\n          </form>\n     </Jumbotron>\n    </div>\n  );\n}\n\nAddForm.displayName = 'AddForm';\n\nexport default AddForm;\n",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddForm.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "function",
+    "name": "AddForm",
+    "memberof": "src/component/AddMicroservice/AddForm.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddForm.js~AddForm",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/AddForm.js",
+    "importStyle": "AddForm",
+    "description": "[AddForm description]",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "props",
+        "description": "[description]"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 2,
+    "kind": "file",
+    "name": "src/component/AddMicroservice/AddMicroServiceForm.js",
+    "content": "import React from 'react';\nimport {connect} from 'react-redux';\nimport { reduxForm } from 'redux-form';\n// import PropTypes from 'prop-types';\n\nimport { validate } from './AddServiceFields';\nimport { patchMicroservice, postMicroservice, initializeEditForm } from '../../redux/modules/catalog';\nimport EditForm from './EditForm'\nimport AddForm from './AddForm'\n\n/**\n * This function uses a redux-form to allow users to add new MicroService\n * @param {[type]} submitSucceeded\n * @param {[type]} error\n * @param {[type]} handleSubmit\n * @param {[type]} pristine\n * @param {[type]} reset\n * @param {[type]} submitting\n */\nexport const AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit, pristine, reset, submitting) =>{\n    const { initialValues, dispatch, location }=props;\n    if(location.query.id !== undefined && initialValues === undefined) {\n      // dispatch action to populate form data\n      dispatch(initializeEditForm(location.query.id));\n    }\n    return(\n      <div>\n        {\n          location.query !== undefined && location.query.id !== undefined &&\n          <EditForm {...props} />\n        }\n        {\n          location.query.id === undefined &&\n          <AddForm {...props} />\n        }\n      </div>\n    );\n}\n\nAddMicroServiceForm.displayName = 'AddMicroServiceForm';\n\n// AddMicroServiceForm.propTypes = {\n//   submitSucceeded: PropTypes.object.isRequired,\n//   error: PropTypes.string,\n//   handleSubmit: PropTypes.string,\n//   pristine: PropTypes.string,\n//   reset: PropTypes.bool,\n//   submitting: PropTypes.string\n// };\n\nconst AddMicroServiceReduxForm = reduxForm({\n  form:'addMicroservice',\n  enableReinitialize : true,\n  validate\n})(AddMicroServiceForm)\n\nconst mapStateToProps = (state) => {\n  return{\n    initialValues: state.catalog.formData,\n    onSubmitEdit: state.catalog.formData===undefined?patchMicroservice:patchMicroservice(state.catalog.formData._links.self.href.substring(state.catalog.formData._links.self.href.lastIndexOf(\"/\"), state.catalog.formData._links.self.href.length)),\n    onSubmitAdd: postMicroservice('/catalog')\n  }\n}\n\nconst AddMicroserviceForm = connect(mapStateToProps)(AddMicroServiceReduxForm);\n\nexport default AddMicroserviceForm;\n",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 3,
+    "kind": "function",
+    "name": "AddMicroServiceForm",
+    "memberof": "src/component/AddMicroservice/AddMicroServiceForm.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.js~AddMicroServiceForm",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/AddMicroServiceForm.js",
+    "importStyle": "{AddMicroServiceForm}",
+    "description": "This function uses a redux-form to allow users to add new MicroService",
+    "lineNumber": 20,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "submitSucceeded",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "error",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "handleSubmit",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pristine",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "reset",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "submitting",
+        "description": ""
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "variable",
+    "name": "AddMicroServiceReduxForm",
+    "memberof": "src/component/AddMicroservice/AddMicroServiceForm.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.js~AddMicroServiceReduxForm",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/AddMicroservice/AddMicroServiceForm.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 51,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "function",
+    "name": "mapStateToProps",
+    "memberof": "src/component/AddMicroservice/AddMicroServiceForm.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.js~mapStateToProps",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/AddMicroservice/AddMicroServiceForm.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 57,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "state",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"initialValues\": *, \"onSubmitEdit\": *, \"onSubmitAdd\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "variable",
+    "name": "AddMicroserviceForm",
+    "memberof": "src/component/AddMicroservice/AddMicroServiceForm.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.js~AddMicroserviceForm",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/AddMicroServiceForm.js",
+    "importStyle": "AddMicroserviceForm",
+    "description": null,
+    "lineNumber": 65,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 7,
+    "kind": "file",
+    "name": "src/component/AddMicroservice/AddMicroServiceForm.test.js",
+    "content": "import React from 'react';\nimport thunk from 'redux-thunk';\nimport configureMockStore from 'redux-mock-store';\nimport nock from 'nock';\nimport { shallow } from 'enzyme';\n\nimport { AddMicroServiceForm } from './AddMicroServiceForm';\nimport EditForm from './EditForm';\nimport AddForm from './AddForm';\n\nconst middlewares = [ thunk ]\nconst mockStore = configureMockStore(middlewares)\n\ndescribe(\"AddMicroServiceForm Component\", () => {\n  describe(\"render()\", () => {\n    it(\"should render the edit user form\", () => {\n      const props = {\n        initialValues: {\n          title:\"Title\",\n          description: \"Description\",\n          url: \"http://sample.com\",\n          email: \"sample@email.com\"\n        },\n        handleSubmit: () => {},\n        dispatch: () => {},\n        invalid: true,\n        submitting: false,\n        location: {\n          query: {\n            id: \"5891a9e1896ef39672afa257\"\n          }\n        }\n      }\n      const wrapper = shallow(<AddMicroServiceForm {...props} />);\n      expect(wrapper.contains(<EditForm />));\n    });\n\n    it(\"should render the add user form\", () => {\n      const props = {\n        initialValues: {\n        },\n        handleSubmit: () => {},\n        invalid: true,\n        submitting: false,\n        location: {\n          query: {\n          }\n        }\n      }\n      const wrapper = shallow(<AddMicroServiceForm {...props} />);\n      expect(wrapper.contains(<AddForm />));\n    });\n  });\n})\n",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 8,
+    "kind": "variable",
+    "name": "middlewares",
+    "memberof": "src/component/AddMicroservice/AddMicroServiceForm.test.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.test.js~middlewares",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/AddMicroservice/AddMicroServiceForm.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "undefined[]"
+      ]
+    }
+  },
+  {
+    "__docId__": 9,
+    "kind": "variable",
+    "name": "mockStore",
+    "memberof": "src/component/AddMicroservice/AddMicroServiceForm.test.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddMicroServiceForm.test.js~mockStore",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/AddMicroservice/AddMicroServiceForm.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 10,
+    "kind": "file",
+    "name": "src/component/AddMicroservice/AddServiceFields.js",
+    "content": "import React from 'react';\nimport { Field } from 'redux-form';\nimport FontAwesome from \"react-fontawesome\";\n\nimport './AddService.css';\n\n/**\n * A helper function to validate the various form fields\n * @param  {Object} values - A object that comprises of the values of the details entered in the add new Microservice form.\n * @return {Object} - A Object that specifies all the different errors that are discovered while performing validations.\n */\nexport const validate = values=>{\n  const errors = {}\n  if (!values.title) {\n    errors.title = 'Required'\n  } else if (values.title !== undefined && values.title.length > 50) {\n    errors.title = 'Enter 50 characters or less'\n  }\n  if (!values.email) {\n    errors.email = 'Required'\n  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i.test(values.email)) {\n    errors.email = 'Invalid email address'\n  }\n  if (!values.description) {\n    errors.description = 'Required'\n  } else if (values.description !== undefined && values.description.length > 250) {\n    errors.description = 'Must be 250 characters or less'\n  }\n  if (!values.url) {\n    errors.url = 'Required'\n  }\n  return errors\n}\n\n/**\n * React component for rendering Field\n * @param  {[type]} props [description]\n * @return {[type]}       [description]\n */\nconst renderField = (props) => {\n    let control = <input {...props.input} className=\"fieldText\" placeholder={props.placeholder} type={props.type} />;\n      let type=props.input.name.toUpperCase();\n      if(type === \"URL\" || type === \"DESCRIPTION\")\n      {\n        control = <textarea {...props.input} className=\"fieldText\" placeholder={props.placeholder} type={props.type} ></textarea>;\n      }\n      return <div className=\"FieldControl\"> {control}{props.meta.touched && props.meta.error && <span className=\"Error\">*{props.meta.error}</span>}</div>;\n}\n\n/**\n * A array that comprises of all the different fields of a Microservice that can be added while creating a new Microservice\n * @type {Array}\n */\nexport let formFieldsData = [\n    {\n      serviceData:[\n      {\n        name:'title',\n        placeholder: 'Title',\n        tooltip: 'Enter 1-50 characters'\n      },\n      {\n        name:'url',\n        placeholder: 'URL',\n        tooltip: 'Comma separated URL(s)'\n      },\n      {\n        name:'email',\n        placeholder: 'Email',\n        tooltip: 'Valid Email Address'\n      },\n      {\n        name:'description',\n        placeholder: 'Description',\n        tooltip: 'Enter 1-250 characters'\n      }\n    ]}\n  ]\n\nexport let fieldHeading = formFieldsData[0].serviceData.map((data, i)=>{\n  return <div key={i} className='FieldHeading'> {data.placeholder} </div>\n})\n\nexport let formFields = formFieldsData.map((service,i)=>{\n  return  service.serviceData.map((field)=>{\n    return <div className=\"fieldContainer\"><div key={i} className='FieldHeading'> {field.placeholder} <sup> <FontAwesome title={field.tooltip} name=\"question\" /> </sup> </div>\n    <Field name={field.name} type=\"text\" component={renderField} placeholder={field.placeholder} /></div>\n  })\n})\n",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 11,
+    "kind": "function",
+    "name": "validate",
+    "memberof": "src/component/AddMicroservice/AddServiceFields.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.js~validate",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/AddServiceFields.js",
+    "importStyle": "{validate}",
+    "description": "A helper function to validate the various form fields",
+    "lineNumber": 12,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "values",
+        "description": "A object that comprises of the values of the details entered in the add new Microservice form."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "A Object that specifies all the different errors that are discovered while performing validations."
+    }
+  },
+  {
+    "__docId__": 12,
+    "kind": "function",
+    "name": "renderField",
+    "memberof": "src/component/AddMicroservice/AddServiceFields.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.js~renderField",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/AddMicroservice/AddServiceFields.js",
+    "importStyle": null,
+    "description": "React component for rendering Field",
+    "lineNumber": 40,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "props",
+        "description": "[description]"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "[type]"
+      ],
+      "spread": false,
+      "description": "[description]"
+    }
+  },
+  {
+    "__docId__": 13,
+    "kind": "variable",
+    "name": "formFieldsData",
+    "memberof": "src/component/AddMicroservice/AddServiceFields.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.js~formFieldsData",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/AddServiceFields.js",
+    "importStyle": "{formFieldsData}",
+    "description": "A array that comprises of all the different fields of a Microservice that can be added while creating a new Microservice",
+    "lineNumber": 54,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "variable",
+    "name": "fieldHeading",
+    "memberof": "src/component/AddMicroservice/AddServiceFields.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.js~fieldHeading",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/AddServiceFields.js",
+    "importStyle": "{fieldHeading}",
+    "description": null,
+    "lineNumber": 80,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 15,
+    "kind": "variable",
+    "name": "formFields",
+    "memberof": "src/component/AddMicroservice/AddServiceFields.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.js~formFields",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/AddServiceFields.js",
+    "importStyle": "{formFields}",
+    "description": null,
+    "lineNumber": 84,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 16,
+    "kind": "file",
+    "name": "src/component/AddMicroservice/AddServiceFields.test.js",
+    "content": "import { validate } from './AddServiceFields'\n\nlet fieldValues ={};\n\ndescribe(\"AddServiceFields functions\", () => {\n\n  let fieldValues = { title:\"\", description: \"\", email: \"\", url: \"\"};\n  const invalidEmails = [\n    \"plainaddress\",\n    \"#@%^%#$@#$@#.com\",\n    \"@domain.com\",\n    \"Joe Smith <email@domain.com>\",\n    \"email.domain.com\",\n    \"email@domain@domain.com\",\n    \"email@domain.com (Joe Smith)\",\n    \"email@domain\",\n    \"email@111.222.333.44444\"\n  ]\n\n  const validData = () => {\n    fieldValues = {\n      email: \"joesmith@domain.com\",\n      description: \"Description\",\n      url: \"http://sample.com\",\n      title: \"Title\"\n    };\n    return fieldValues;\n  }\n\n  describe(\"validate() \", () => {\n    it(\"should return error for empty fields\", () => {\n      // errors that should be displayed for empty field values\n      let errors = {}\n      errors.title = \"Required\";\n      errors.email = \"Required\";\n      errors.description = \"Required\";\n      errors.url = \"Required\";\n      expect(validate(fieldValues)).toEqual(errors);\n    });\n\n    it(\"should return error for invalid email field\", () => {\n      fieldValues = validData();\n      let errors = {}\n      errors.email = \"Invalid email address\";\n      for (let i = 0; i < invalidEmails.length; i++) {\n        fieldValues.email = invalidEmails[i];\n        expect(validate(fieldValues)).toEqual(errors);\n      }\n    });\n\n    it(\"should return error if title is more than 50 characters\", () => {\n      fieldValues = validData();\n      let errors = {}\n      errors.title = \"Enter 50 characters or less\";\n      for(let i=0; i < 11; i++) {\n        fieldValues.title += \"Title\";\n      }\n      expect(validate(fieldValues)).toEqual(errors);\n    });\n\n    it(\"should return error if description is more than 250 characters\", () => {\n      fieldValues = validData();\n      let errors = {}\n      errors.description = \"Must be 250 characters or less\";\n      for(let i=0; i < 23; i++) {\n        fieldValues.description += \"Description\";\n      }\n      expect(validate(fieldValues)).toEqual(errors);\n    });\n  })\n});\n",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 17,
+    "kind": "variable",
+    "name": "fieldValues",
+    "memberof": "src/component/AddMicroservice/AddServiceFields.test.js",
+    "static": true,
+    "longname": "src/component/AddMicroservice/AddServiceFields.test.js~fieldValues",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/AddMicroservice/AddServiceFields.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{}"
+      ]
+    }
+  },
+  {
+    "__docId__": 18,
+    "kind": "file",
+    "name": "src/component/AddMicroservice/EditForm.js",
+    "content": "import React from 'react';\nimport { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';\nimport FontAwesome from 'react-fontawesome';\n\nimport { formFields } from './AddServiceFields';\n\nlet EditForm = (props) => {\n  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting, initialValues }=props;\n\n  return(\n    <div>\n      <PageHeader>Edit MicroService</PageHeader>\n      { submitSucceeded &&\n        <Alert bsStyle=\"success\">\n          <strong>Microservice Successfully Edited!</strong>\n        </Alert>\n      }\n      {\n        error &&\n        <Alert bsStyle=\"danger\">\n          <strong>Sorry! Some error has occurred...</strong>\n        </Alert>\n      }\n      <Jumbotron>\n          {\n            initialValues === undefined &&\n            <FontAwesome name=\"pulse fa-spinner\" className=\"fa-4x\" />\n          }\n          {\n            initialValues !== undefined &&\n            <form onSubmit={handleSubmit(onSubmitEdit)}>\n              <FormGroup  bsSize=\"large\">\n                <div className=\"FieldContainer\">\n                  {formFields}\n                </div>\n                <div className=\"buttonContainer\">\n                  <Button className=\"col-md-1 text-center\" type=\"submit\" bsStyle=\"primary\" disabled={submitting}>Submit</Button>\n                  <Button className=\"col-md-1 text-center\" type=\"button\" bsStyle=\"danger\">Cancel</Button>\n                  <Button className=\"col-md-1 text-center\" type=\"reset\" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>\n                </div>\n              </FormGroup>\n            </form>\n          }\n     </Jumbotron>\n    </div>\n  );\n}\n\nEditForm.displayName = 'EditForm';\n\nexport default EditForm;\n",
+    "static": true,
+    "longname": "src/component/AddMicroservice/EditForm.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 19,
+    "kind": "function",
+    "name": "EditForm",
+    "memberof": "src/component/AddMicroservice/EditForm.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/AddMicroservice/EditForm.js~EditForm",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/AddMicroservice/EditForm.js",
+    "importStyle": "EditForm",
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "props",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 20,
+    "kind": "file",
+    "name": "src/component/AddMicroservice/RenderedForm.js",
+    "content": "import React from 'react';\n\nimport EditForm from './EditForm';\nimport AddForm from '.AddForm';\n\nconst RenderedForm = (props) => {\n  const editForm = props.isEdit;\n  if(editForm){\n    return <EditForm/>\n  }\n  else {\n    return <AddForm/>\n  }\n};\n",
+    "static": true,
+    "longname": "src/component/AddMicroservice/RenderedForm.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 21,
+    "kind": "function",
+    "name": "RenderedForm",
+    "memberof": "src/component/AddMicroservice/RenderedForm.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/AddMicroservice/RenderedForm.js~RenderedForm",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/AddMicroservice/RenderedForm.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "props",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 22,
+    "kind": "file",
+    "name": "src/component/App/App.js",
+    "content": "import React from 'react';\nimport './App.css';\nimport '../Fonts.css';\n\nimport NavInstance from '../layout/Navigation';\nimport Header from '../layout/Header';\n\n/**\n * This is the basic application page which comprises of Layout components and children components to be rendered.\n * @param {Object} children - Page to be rendered as a child component\n */\nconst App = ({children})=> {\n  return (\n    <div className=\"App\">\n      <Header/>\n      <NavInstance/>\n      <div>\n        {children}\n      </div>\n    </div>\n  );\n}\n\nApp.displayName = 'App';\n\nexport default App;\n",
+    "static": true,
+    "longname": "src/component/App/App.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 23,
+    "kind": "function",
+    "name": "App",
+    "memberof": "src/component/App/App.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/App/App.js~App",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/App/App.js",
+    "importStyle": "App",
+    "description": "This is the basic application page which comprises of Layout components and children components to be rendered.",
+    "lineNumber": 12,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "children",
+        "description": "Page to be rendered as a child component"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 24,
+    "kind": "file",
+    "name": "src/component/App/App.test.js",
+    "content": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport { createStore, applyMiddleware } from 'redux';\nimport { shallow } from 'enzyme';\nimport {Provider} from 'react-redux';\nimport configureStore from 'redux-mock-store';\n\nimport App from './App';\nimport reducer from '../../redux';\n\ndescribe(\"Component App :\" , () =>{\n  const wrapper = shallow(<App/>);\n\n  it('renders without crashing', () => {\n    const div = document.createElement('div');\n    const mockStore = configureStore([]);\n    const store = mockStore({});\n    ReactDOM.render(\n      <Provider store={store}>\n        <App />\n      </Provider>,div);\n  });\n\n});\n",
+    "static": true,
+    "longname": "src/component/App/App.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 25,
+    "kind": "file",
+    "name": "src/component/DetailView/DetailView.js",
+    "content": "import React from 'react';\n\nimport './DetailView.css';\nimport ServiceTable from './ServiceTable'\n\n/**\n * Component to display all fields of a microservice\n * @param {[type]} serviceDetails [description]\n */\nconst DetailView = (serviceDetails) => {\n  let detailHtml = [];\n  let data = serviceDetails;\n  let keys = Object.keys(data);\n  for(let i=0; i<keys.length; i++){\n    if(data[keys[i]] !== null && !(data[keys[i]] instanceof Array)){\n      detailHtml.push(<div className=\"DetailViewRow\" key={i}>\n                          <div className=\"fieldKey\">{keys[i]}</div>\n                          <div className=\"fieldValue\">{data[keys[i]]}</div>\n                      </div>);\n    }\n    if(data[keys[i]] instanceof Array) {\n      let tableObj = {\n        keyVal: keys[i],\n        tableData: data[keys[i]]\n      }\n      detailHtml.push(<ServiceTable {...tableObj} />)\n    }\n  }\n\n  return(\n    <div className=\"DetailView\">{detailHtml}</div>\n  );\n}\n\nDetailView.displayName = 'DetailView';\n\nexport default DetailView;\n",
+    "static": true,
+    "longname": "src/component/DetailView/DetailView.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 26,
+    "kind": "function",
+    "name": "DetailView",
+    "memberof": "src/component/DetailView/DetailView.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/DetailView/DetailView.js~DetailView",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/DetailView/DetailView.js",
+    "importStyle": "DetailView",
+    "description": "Component to display all fields of a microservice",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "serviceDetails",
+        "description": "[description]"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "file",
+    "name": "src/component/DetailView/DetailView.test.js",
+    "content": "import React from 'react';\nimport {shallow} from 'enzyme';\n\nimport DetailView from './DetailView';\n\nconst serviceDetails = {\n    title:'Title'\n};\n\ndescribe('Component : DetailView', () =>{\n  const wrapper = shallow(<DetailView {...serviceDetails}/>);\n  it('Renders without exploding',()=>{\n    expect(wrapper.contains(\n      <div className=\"DetailView\">\n        <div>\n          <div className=\"fieldKey\">title</div>\n          <div className=\"fieldValue\">Title</div>\n        </div>\n      </div>\n    ));\n  });\n\n  it('Renders without crashing',()=>{\n    expect(wrapper.length).toBe(1);\n  });\n\n});\n",
+    "static": true,
+    "longname": "src/component/DetailView/DetailView.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 28,
+    "kind": "variable",
+    "name": "serviceDetails",
+    "memberof": "src/component/DetailView/DetailView.test.js",
+    "static": true,
+    "longname": "src/component/DetailView/DetailView.test.js~serviceDetails",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/DetailView/DetailView.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{\"title\": string}"
+      ]
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "file",
+    "name": "src/component/DetailView/ServiceTable.js",
+    "content": "import React from 'react';\n\nimport './DetailView.css';\n/**\n * Renders the table\n */\nconst ServiceTable = (props) => {\n  const { keyVal, tableData } = props;\n  let trs = [];\n  trs = tableData.map((url, i)=>{\n    if(i===0) {\n      return <tr>\n               <td rowSpan={tableData.length} className=\"fieldKeyTable\"> {keyVal} </td>\n               <td className=\"fieldValueTable\"><a>{url}</a></td>\n             </tr>;\n    } else {\n      return <tr>\n              <td className=\"fieldKeyTable\"></td>\n              <td className=\"fieldValueTable\"><a>{url}</a></td>\n             </tr>;\n      }\n  })\n\n  return (\n    <div className=\"DetailViewRow\">\n      <table className=\"serviceTable\">\n        {trs}\n      </table>\n    </div>\n  );\n}\n\nServiceTable.displayName = 'ServiceTable'\n\nexport default ServiceTable;\n",
+    "static": true,
+    "longname": "src/component/DetailView/ServiceTable.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 30,
+    "kind": "function",
+    "name": "ServiceTable",
+    "memberof": "src/component/DetailView/ServiceTable.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/DetailView/ServiceTable.js~ServiceTable",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/DetailView/ServiceTable.js",
+    "importStyle": "ServiceTable",
+    "description": "Renders the table",
+    "lineNumber": 7,
+    "params": [
+      {
+        "name": "props",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 31,
+    "kind": "file",
+    "name": "src/component/Error.js",
+    "content": "import React from 'react'\n\n/**\n * Error Page\n */\nconst ErrorPage = () =>{\n  return(\n    <p>This is error Page</p>\n  )\n}\n\nErrorPage.displayName = 'ErrorPage';\n\nexport default ErrorPage;\n",
+    "static": true,
+    "longname": "src/component/Error.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 32,
+    "kind": "function",
+    "name": "ErrorPage",
+    "memberof": "src/component/Error.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/Error.js~ErrorPage",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/Error.js",
+    "importStyle": "ErrorPage",
+    "description": "Error Page",
+    "lineNumber": 6,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 33,
+    "kind": "file",
+    "name": "src/component/SearchBox/SearchBox.js",
+    "content": "import React from 'react';\n\nimport './SearchBox.css';\nimport '../Fonts.css';\n\nimport {filterText} from '../../redux/modules/catalog';\n\n/**\n * [SearchBox description]\n */\nconst SearchBox = (props) =>  {\n  const {dispatch} = props;\n  // const handleChange = (e) => {\n  //   this.setState({ value: e.target.value });\n  // }\n\n  const handleKeyPress = (e) => {\n    dispatch(filterText(e.target.value));\n  }\n  return(\n    <div className=\"Search-box\">\n      <input type=\"search\" onKeyUp={handleKeyPress.bind(this)} id=\"search\" placeholder=\"Search\"/>\n    </div>\n  )\n}\n\nSearchBox.displayName = 'SearchBox';\n\nexport default SearchBox;\n",
+    "static": true,
+    "longname": "src/component/SearchBox/SearchBox.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 34,
+    "kind": "function",
+    "name": "SearchBox",
+    "memberof": "src/component/SearchBox/SearchBox.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/SearchBox/SearchBox.js~SearchBox",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/SearchBox/SearchBox.js",
+    "importStyle": "SearchBox",
+    "description": "[SearchBox description]",
+    "lineNumber": 11,
+    "params": [
+      {
+        "name": "props",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 35,
+    "kind": "file",
+    "name": "src/component/SearchBox/SearchBox.test.js",
+    "content": "import React from 'react';\nimport { shallow } from 'enzyme';\n\nimport SearchBox from './SearchBox';\n\nconst wrapper = shallow(<SearchBox/>);\n\ndescribe('Component : SearchBox', ()=>{\n  it('Renders without crashing',()=>{\n      expect(wrapper.length).toBe(1);\n  });\n});\n",
+    "static": true,
+    "longname": "src/component/SearchBox/SearchBox.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 36,
+    "kind": "variable",
+    "name": "wrapper",
+    "memberof": "src/component/SearchBox/SearchBox.test.js",
+    "static": true,
+    "longname": "src/component/SearchBox/SearchBox.test.js~wrapper",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/SearchBox/SearchBox.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 37,
+    "kind": "file",
+    "name": "src/component/layout/Header.js",
+    "content": "import React from 'react';\nimport logo from '../../logo.svg';\n\n/**\n * Renders the branded Header at the top of the page\n */\nconst Header = () => (\n  <div className=\"App-header\">\n    <img src={logo} className=\"App-logo\" alt=\"logo\" />\n    <h2>Micro Service Catalog</h2>\n  </div>\n);\n\nHeader.displayName = 'Header'\n\nexport default Header;\n",
+    "static": true,
+    "longname": "src/component/layout/Header.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 38,
+    "kind": "function",
+    "name": "Header",
+    "memberof": "src/component/layout/Header.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/layout/Header.js~Header",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/layout/Header.js",
+    "importStyle": "Header",
+    "description": "Renders the branded Header at the top of the page",
+    "lineNumber": 7,
+    "params": []
+  },
+  {
+    "__docId__": 39,
+    "kind": "file",
+    "name": "src/component/layout/Header.test.js",
+    "content": "import React from 'react';\nimport { shallow } from 'enzyme';\n\nimport Header from './Header';\n\nconst wrapper = shallow(<Header/>);\n\ndescribe('Component : Header', ()=>{\n  it('Renders without crashing',()=>{\n    expect(wrapper.length).toBe(1);\n  });\n});\n",
+    "static": true,
+    "longname": "src/component/layout/Header.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 40,
+    "kind": "variable",
+    "name": "wrapper",
+    "memberof": "src/component/layout/Header.test.js",
+    "static": true,
+    "longname": "src/component/layout/Header.test.js~wrapper",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/layout/Header.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 41,
+    "kind": "file",
+    "name": "src/component/layout/Navigation.js",
+    "content": "import React from 'react';\nimport {Nav , NavItem} from 'react-bootstrap';\n\n/**\n * A component to allow Page navigation\n */\nconst NavInstance = () =>(\n  <Nav bsStyle=\"pills\" activeKey={1}>\n    <NavItem eventKey={1} href=\"/\">Home</NavItem>\n    <NavItem eventKey={2} href=\"/addService\" title=\"Item\">Add MicroService</NavItem>\n  </Nav>\n);\n\nNavInstance.displayName = 'NavInstance';\n\nexport default NavInstance;\n",
+    "static": true,
+    "longname": "src/component/layout/Navigation.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 42,
+    "kind": "function",
+    "name": "NavInstance",
+    "memberof": "src/component/layout/Navigation.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/component/layout/Navigation.js~NavInstance",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/component/layout/Navigation.js",
+    "importStyle": "NavInstance",
+    "description": "A component to allow Page navigation",
+    "lineNumber": 7,
+    "params": []
+  },
+  {
+    "__docId__": 43,
+    "kind": "file",
+    "name": "src/component/layout/Navigation.test.js",
+    "content": "import React from 'react';\nimport { shallow } from 'enzyme';\n\nimport Navigation from './Navigation';\n\nconst wrapper = shallow(<Navigation/>);\n\ndescribe('Component : Navigation', ()=>{\n  it('Renders without crashing',()=>{\n    expect(wrapper.length).toBe(1);\n  });\n});\n",
+    "static": true,
+    "longname": "src/component/layout/Navigation.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 44,
+    "kind": "variable",
+    "name": "wrapper",
+    "memberof": "src/component/layout/Navigation.test.js",
+    "static": true,
+    "longname": "src/component/layout/Navigation.test.js~wrapper",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/component/layout/Navigation.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 45,
+    "kind": "file",
+    "name": "src/containers/DataView/DataView.js",
+    "content": "import React from 'react';\nimport {connect} from 'react-redux';\nimport 'bootstrap/dist/css/bootstrap.css';\nimport 'bootstrap/dist/css/bootstrap-theme.css';\nimport { Table } from 'react-bootstrap/lib';\nimport { LinkContainer } from 'react-router-bootstrap';\nimport { Alert } from 'react-bootstrap';\n\nimport SearchBox from '../../component/SearchBox/SearchBox'\nimport './DataView.css';\nimport DetailView from '../../component/DetailView/DetailView';\nimport {fetchMicroservices} from '../../redux/modules/catalog';\n\nimport FontAwesome from 'react-fontawesome';\n\n/**\n * CatalogDataView is Smart component\n * @param {[type]} props [description]\n */\nconst CatalogDataView = (props) => {\n    const { dispatch, catalogData, loading, filterText, errorfetching } = props;\n    let open = false;\n    let initHeight = 120;\n    let intval = null;\n    let h;\n\n    if(catalogData.length === 0 && !errorfetching){\n      dispatch(fetchMicroservices);\n    }\n\n    const slideToggle = (element) => {\n      window.clearInterval(intval);\n      let mdiv = document.getElementById('mdiv');\n      mdiv = element;\n      if(getComputedStyle(mdiv).getPropertyValue('display') === \"none\"){\n        open = false;\n      }\n      else{\n        open = true;\n      }\n      if(open) {\n        mdiv.style.visibility=\"hidden\";\n        h = mdiv.offsetHeight;\n        open = false;\n        intval = setInterval(function(){\n          h--;\n          mdiv.style.height = h + 'px';\n          if(h <= 0){\n            window.clearInterval(intval);\n            mdiv.style.display = 'none';\n          }\n        }, 1\n      );\n\n    }\n    else {\n      mdiv.style.display = 'block';\n      mdiv.style.visibility = \"visible\";\n      h = 0;\n      open = true;\n      intval = setInterval(function(){\n        h++;\n        mdiv.style.height = \"auto\";\n        if(h >= initHeight)\n        window.clearInterval(intval);\n      }, 1\n    );\n  }\n  }\n\n  const header = [{title:\"Title\", description:\"Description\", url:\"URL\", edit:\"Edit\"}];\n\n  const handleArrowClick = (event) => {\n    let classes = event.target.classList;\n    let classToAdd = 'fa-caret-down';\n    if(classes.contains('fa-caret-down')){\n      classToAdd = 'fa-caret-up';\n    }\n    classes.remove('fa-caret-down','fa-caret-up');\n    classes.add(classToAdd);\n    let element = event.target.closest('tr').nextSibling;\n    slideToggle(element);\n  }\n\n  // tableData stores the microservices catalog data\n  let tableData = [];\n\n  // populate tableData\n  tableData = catalogData.map((dataItem)=>{\n    if(filterText==='' || (filterText!=='' && (dataItem.catalog.title.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1 || dataItem.catalog.description.toUpperCase().indexOf(filterText.toUpperCase().trim())!==-1))){\n      let serviceDetails = {\n        title: dataItem.catalog.title,\n        description: dataItem.catalog.description,\n        url: dataItem.catalog.url,\n        email: dataItem.catalog.email\n      };\n      return [\n        <tr>\n          <td> {dataItem.catalog.title} </td>\n          <td> {dataItem.catalog.description}</td>\n          <td> {dataItem.catalog.url[0]}</td>\n          <td>\n            <LinkContainer to={{ pathname: '/addService', query: { id: dataItem.id } }}>\n              <FontAwesome title=\"Edit\" name=\"pencil-square-o\" className=\"fa-lg\" />\n            </LinkContainer>\n          </td>\n          <td onClick={handleArrowClick.bind(this)} > <FontAwesome title=\"Expand/Collapse\" className=\"caret-down\" name=\"caret-down\" size=\"lg\" /> </td>\n        </tr>,\n        <tr className=\"details\">\n          <td colSpan=\"4\" className=\"serviceDetails\">\n            <DetailView { ...serviceDetails }/>\n          </td>\n        </tr>\n      ];\n    }\n    else {\n      return undefined;\n    }\n  }, this)\n\n  // return the virtual DOM\n  return (\n    <div className=\"Div-container\">\n      <SearchBox {...props} />\n      {\n        loading === \"LOADING\" && catalogData.length<=0 &&\n        <FontAwesome name=\"pulse fa-spinner\" className=\"fa-4x\" />\n      }\n      {\n        errorfetching &&\n        <div>\n          <Alert bsStyle=\"danger\">\n            <strong>Sorry! Some error has occurred. Please refresh the page or try again after sometime.</strong>\n          </Alert>\n        </div>\n      }\n      {\n        loading === \"LOADED\" && catalogData.length>0 && !errorfetching &&\n        <Table responsive hover className=\"Data\">\n          <thead>\n            {\n              header.map((entry,idx) => (\n                <tr key={idx}>\n                  <th>{entry.title}</th>\n                  <th>{entry.description}</th>\n                  <th>{entry.url}</th>\n                  <th>{entry.edit}</th>\n                  <th></th>\n                </tr>\n              ))\n            }\n          </thead>\n          { catalogData.length > 0 && tableData!==undefined &&\n            <tbody>\n              { tableData }\n            </tbody>\n          }\n        </Table>\n      }\n    </div>\n  );\n}\n\nCatalogDataView.displayName = 'CatalogDataView';\n\n/**\n * Maps the Redux store state into props.\n *\n * @property  {Object} state  - The state from the Redux store.\n */\nconst mapStateToProps = (state) => {\n  return{\n    catalogData : state.catalog.catalogData,\n    loading : state.catalog.loading,\n    filterText: state.catalog.filterText,\n    errorfetching: state.catalog.errorfetching\n  }\n}\n\nexport default connect(mapStateToProps)(CatalogDataView);\n",
+    "static": true,
+    "longname": "src/containers/DataView/DataView.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 46,
+    "kind": "function",
+    "name": "CatalogDataView",
+    "memberof": "src/containers/DataView/DataView.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/containers/DataView/DataView.js~CatalogDataView",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/containers/DataView/DataView.js",
+    "importStyle": null,
+    "description": "CatalogDataView is Smart component",
+    "lineNumber": 20,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "[type]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "props",
+        "description": "[description]"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 47,
+    "kind": "function",
+    "name": "mapStateToProps",
+    "memberof": "src/containers/DataView/DataView.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/containers/DataView/DataView.js~mapStateToProps",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/containers/DataView/DataView.js",
+    "importStyle": null,
+    "description": "Maps the Redux store state into props.",
+    "lineNumber": 171,
+    "params": [
+      {
+        "name": "state",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "state",
+        "description": "The state from the Redux store."
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"catalogData\": *, \"loading\": *, \"filterText\": *, \"errorfetching\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 48,
+    "kind": "file",
+    "name": "src/containers/DataView/DataView.test.js",
+    "content": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport createLogger from 'redux-logger';\nimport { createStore, applyMiddleware } from 'redux';\nimport thunkMiddleware from 'redux-thunk';\nimport promiseMiddleware from 'redux-promise';\n\nimport DataView from './DataView';\nimport reducer from '../../redux';\n\ndescribe('Container : DataView',()=>{\n\n  it('renders without crashing', () => {\n    const div = document.createElement('div');\n    const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,thunkMiddleware,createLogger)(createStore);\n    const mockStore = createStoreWithMiddleware(reducer);\n    ReactDOM.render(<DataView store ={mockStore}/>, div);\n  });\n});\n",
+    "static": true,
+    "longname": "src/containers/DataView/DataView.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "file",
+    "name": "src/env-config.js",
+    "content": "// const prod = process.env.NODE_ENV === 'production'\nconst env = process.env.NODE_ENV;\n\nconst BACKEND_URL = env===\"production\" ? 'https://example-production-URL.com' : 'http://localhost:8081';\n\nexport default BACKEND_URL;\n",
+    "static": true,
+    "longname": "src/env-config.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 50,
+    "kind": "variable",
+    "name": "env",
+    "memberof": "src/env-config.js",
+    "static": true,
+    "longname": "src/env-config.js~env",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/env-config.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 51,
+    "kind": "variable",
+    "name": "BACKEND_URL",
+    "memberof": "src/env-config.js",
+    "static": true,
+    "longname": "src/env-config.js~BACKEND_URL",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/env-config.js",
+    "importStyle": "BACKEND_URL",
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "file",
+    "name": "src/index.js",
+    "content": "import React from 'react';\nimport ReactDOM from 'react-dom';\nimport {Provider} from 'react-redux';\nimport createLogger from 'redux-logger';\nimport { createStore, applyMiddleware } from 'redux';\nimport thunkMiddleware from 'redux-thunk';\nimport { Router , Route , IndexRoute, browserHistory } from 'react-router';\nimport promiseMiddleware from 'redux-promise';\n\nimport './index.css';\nimport reducer from './redux';\nimport App from './component/App/App';\nimport AddMicroService from './component/AddMicroservice/AddMicroServiceForm';\nimport DataView from './containers/DataView/DataView';\nimport ErrorPage from './component/Error';\n\nconst createStoreWithMiddleware = applyMiddleware(promiseMiddleware,thunkMiddleware,createLogger)(createStore);\nconst store = createStoreWithMiddleware(reducer);\n\nReactDOM.render(\n  <Provider store={store} >\n    <Router history={browserHistory}>\n      <Route path=\"/\" component={App}>\n        <IndexRoute component={DataView}></IndexRoute>\n          <Route path=\"addService\" component={AddMicroService}></Route>\n        <Route path=\"error\" component={ErrorPage}></Route>\n      </Route>\n    </Router>\n  </Provider>,\n  document.getElementById('root')\n);\n",
+    "static": true,
+    "longname": "src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 53,
+    "kind": "variable",
+    "name": "createStoreWithMiddleware",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~createStoreWithMiddleware",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 54,
+    "kind": "variable",
+    "name": "store",
+    "memberof": "src/index.js",
+    "static": true,
+    "longname": "src/index.js~store",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "file",
+    "name": "src/redux/index.js",
+    "content": "import {combineReducers} from 'redux';\nimport { reducer as reduxFormReducer } from 'redux-form';\n\nimport catalog, { CREATE_MICROSERVICE_SUCCESS } from './modules/catalog';\n\n/**\n * A helper function to join multiple reducers into a single reducing funtion that can be passed to store\n * @type {[type]}\n */\nconst appReducer = combineReducers({\n  catalog,\n  form: reduxFormReducer.plugin({\n    addMicroservice: (state, action) => { // <------ 'addMicroservice' is name of form given to reduxForm()\n      switch(action.type) {\n        case CREATE_MICROSERVICE_SUCCESS:\n          return {\n            submitSucceeded: true\n          };       // <--- blow away form data\n        default:\n          return state;\n      }\n    }\n  })\n})\n\nexport default appReducer;\n",
+    "static": true,
+    "longname": "src/redux/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 56,
+    "kind": "variable",
+    "name": "appReducer",
+    "memberof": "src/redux/index.js",
+    "static": true,
+    "longname": "src/redux/index.js~appReducer",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/redux/index.js",
+    "importStyle": "appReducer",
+    "description": "A helper function to join multiple reducers into a single reducing funtion that can be passed to store",
+    "lineNumber": 10,
+    "type": {
+      "nullable": null,
+      "types": [
+        "[type]"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "file",
+    "name": "src/redux/modules/catalog.test.js",
+    "content": "import React from 'react';\nimport thunk from 'redux-thunk';\nimport configureMockStore from 'redux-mock-store';\nimport { createLogger } from 'redux-logger';\nimport { shallow } from 'enzyme';\nimport nock from 'nock';\n\nimport * as catalog from './catalog';\nimport catalogJSONData from 'json!/../../../fixtures/catalog.json';\nimport BACKEND_URL from '../../env-config.js';\nimport reducer from './catalog';\nimport { LoadingStates } from '../../utils/common';\n\nconst reducerState = {\n  catalogData: [],\n  loading: LoadingStates.CLEAN,\n  filterText: '',\n  errorfetching: false\n}\n\ndescribe(\"actions\", () => {\n  const middlewares = [ thunk ];\n  const mockStore = configureMockStore(middlewares);\n\n  afterEach(() => {\n    nock.cleanAll();\n  })\n\n  it(\"should create an action to request catalog\", ()=> {\n    const expectedAction = {\n      type: catalog.REQUEST\n    }\n    expect(catalog.request()).toEqual(expectedAction);\n  });\n\n  // async action\n  // it(\"should create an action to receive catalog\", ()=> {\n  //   nock(BACKEND_URL).get('/catalog').reply(200, catalogJSONData);\n  //\n  //   const expectedAction = [\n  //     { type: catalog.REQUEST },\n  //     { type: catalog.RECEIVE_SUCCESS, payload: catalogJSONData }\n  //   ]\n  //   const store = mockStore({catalogData: []});\n  //\n  //   return store.dispatch(catalog.fetchMicroservices)\n  //     .then(() => {\n  //       expect(store.getActions()).toEqual(expectedAction);\n  //     })\n  // });\n  //\n  // // async action\n  // it(\"should create an action to handle errors while receiving catalog\", () => {\n  //   nock(BACKEND_URL).get('/catalog').reply(400, \"Error\");\n  //\n  //   const expectedAction = [\n  //     { type: catalog.REQUEST },\n  //     { type: catalog.RECEIVE_ERROR }\n  //   ]\n  //   const store = mockStore({catalogData: []});\n  //\n  //   return store.dispatch(catalog.fetchMicroservices)\n  //     .then(() => {\n  //       expect(store.getActions()).toEqual(expectedAction);\n  //     })\n  // })\n  //\n  // // async action\n  // it(\"should create an action to initialize the edit form\", ()=> {\n  //   let id = \"58b201896a0d9170dbb7768e\"; // sample Id of microservice\n  //   nock(BACKEND_URL).get('/catalog/'+id).reply(200, catalogJSONData);\n  //   const expectedAction = [{ type: catalog.INITIALIZE_EDIT_FORM_SUCCESS, payload: catalogJSONData }];\n  //   const store = mockStore({catalogData: []});\n  //\n  //   return store.dispatch(catalog.initializeEditForm(id))\n  //     .then(() => {\n  //       expect(store.getActions()).toEqual(expectedAction);\n  //     })\n  // });\n  //\n  // // async action\n  // it(\"should create an action to handle errors while receiving edit form contents\", () => {\n  //   let id = \"58b201896a0d9170dbb7768e\"; // sample Id of microservice\n  //   nock(BACKEND_URL).get('/catalog/'+id).reply(400, \"Error\");\n  //   const expectedAction = [{ type: catalog.INITIALIZE_EDIT_FORM_ERROR }];\n  //   const store = mockStore({catalogData: []});\n  //\n  //   return store.dispatch(catalog.initializeEditForm(id))\n  //     .then(() => {\n  //       expect(store.getActions()).toEqual(expectedAction);\n  //     })\n  // })\n\n  it(\"should create an action to filter data for search\", ()=> {\n    const payload=\"searched text\";\n    const expectedAction = {\n      type: catalog.FILTER_DATA,\n      payload\n    }\n    expect(catalog.filterText(payload)).toEqual(expectedAction);\n  });\n})\n\ndescribe(\"reducers\", () => {\n  it(\"should return the initial state\", () => {\n    expect(reducer(undefined, {})).toEqual({\n      catalogData: [],\n      loading: LoadingStates.CLEAN,\n      filterText: '',\n      errorfetching: false\n    })\n  });\n\n  it(\"should handle fetchMicroservices request calls\", () => {\n    expect(reducer({\n      catalogData: [],\n      loading: LoadingStates.CLEAN,\n      filterText: '',\n      errorfetching: false\n    }, {\n      type:catalog.REQUEST\n    })).toEqual({\n      catalogData: [],\n      loading: LoadingStates.LOADING,\n      filterText: '',\n      errorfetching: false\n    })\n  });\n\n  it(\"should handle fetchMicroservices receive reducer\", () => {\n    expect(reducer({\n      catalogData: [],\n      loading: LoadingStates.LOADING,\n      filterText: '',\n      errorfetching: false\n    }, {\n      type:catalog.RECEIVE_SUCCESS,\n      payload: catalogJSONData\n    })).toEqual({\n      catalogData: catalogJSONData._embedded.catalog.map(function(obj){\n        return {\n          id: obj._links.self.href.substring(obj._links.self.href.lastIndexOf(\"/\")+1, obj._links.self.href.length),\n          catalog: obj\n        }\n      }),\n      filterText: '',\n      loading: LoadingStates.LOADED,\n      errorfetching: false,\n    })\n  });\n\n  it(\"should handle errors in receive call\", () => {\n    expect(reducer(reducerState, {\n      type:catalog.RECEIVE_ERROR\n    })).toEqual({\n      catalogData: [],\n      filterText: '',\n      loading: LoadingStates.LOADED,\n      errorfetching: true,\n    })\n  });\n\n  it(\"should handle initializeFormHandler reducer\", () => {\n    expect(reducer(reducerState, {\n      type:catalog.INITIALIZE_EDIT_FORM_SUCCESS,\n      payload: catalogJSONData\n    })).toEqual({\n      formData: catalogJSONData,\n      errorfetching: false\n    })\n  });\n\n  it(\"should handle initializeFormErrorHandler reducer\", () => {\n    expect(reducer(reducerState, {\n      type:catalog.INITIALIZE_EDIT_FORM_ERROR\n    })).toEqual({\n      errorfetching: true\n    })\n  });\n\n  it(\"should handle filterDataHandler reducer\", () => {\n    expect(reducer(reducerState, {\n      type:catalog.FILTER_DATA,\n      payload: catalogJSONData\n    })).toEqual({\n      catalogData: [],\n      loading: LoadingStates.CLEAN,\n      errorfetching: false,\n      filterText: catalogJSONData\n    })\n  });\n})\n",
+    "static": true,
+    "longname": "src/redux/modules/catalog.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 58,
+    "kind": "variable",
+    "name": "reducerState",
+    "memberof": "src/redux/modules/catalog.test.js",
+    "static": true,
+    "longname": "src/redux/modules/catalog.test.js~reducerState",
+    "access": null,
+    "export": false,
+    "importPath": "catalog/src/redux/modules/catalog.test.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{\"catalogData\": *, \"loading\": *, \"filterText\": *, \"errorfetching\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 59,
+    "kind": "file",
+    "name": "src/utils/common.js",
+    "content": "/**\n * States cycled through when retrieving a resource\n * @enum {string}\n */\nexport const LoadingStates = {\n  CLEAN: 'CLEAN',         //// resource retrieval has not begun\n  LOADING: 'LOADING',     //// resource retrieval has begun\n  LOADED: 'LOADED'        //// resource has been retrieved\n};\n\n/**\n * Array of values of LoadingStates for use in React.PropTypes to avoid duplicating logic\n */\nexport const LoadingStatesValues = Object.keys(LoadingStates).map(key => LoadingStates[key]);\n",
+    "static": true,
+    "longname": "src/utils/common.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 60,
+    "kind": "variable",
+    "name": "LoadingStates",
+    "memberof": "src/utils/common.js",
+    "static": true,
+    "longname": "src/utils/common.js~LoadingStates",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/utils/common.js",
+    "importStyle": "{LoadingStates}",
+    "description": "States cycled through when retrieving a resource",
+    "lineNumber": 5,
+    "unknown": [
+      {
+        "tagName": "@enum",
+        "tagValue": "{string}"
+      }
+    ],
+    "type": {
+      "types": [
+        "{\"CLEAN\": string, \"LOADING\": string, \"LOADED\": string}"
+      ]
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "variable",
+    "name": "LoadingStatesValues",
+    "memberof": "src/utils/common.js",
+    "static": true,
+    "longname": "src/utils/common.js~LoadingStatesValues",
+    "access": null,
+    "export": true,
+    "importPath": "catalog/src/utils/common.js",
+    "importStyle": "{LoadingStatesValues}",
+    "description": "Array of values of LoadingStates for use in React.PropTypes to avoid duplicating logic",
+    "lineNumber": 14,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 95,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 96,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 97,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 98,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 99,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 100,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 101,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 102,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 103,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 104,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 105,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 106,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 107,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 108,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 109,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 111,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 112,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 113,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 114,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 115,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 116,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 117,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 118,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  }
+]
