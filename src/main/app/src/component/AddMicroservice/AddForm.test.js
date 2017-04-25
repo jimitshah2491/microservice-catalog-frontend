@@ -31,10 +31,11 @@ describe("Component AddForm :", () => {
     return props;
   };
 
+  const props = setup();
+  const wrapper = shallow(<AddForm {...props} />);
+
   describe("when form rendered initially", () => {
     it("should render the initial state of form correctly", ()=>{
-      const props = setup();
-      const wrapper = shallow(<AddForm {...props} />);
       const resetButton = wrapper.find('Button[type="reset"]');
       expect(wrapper.contains(<PageHeader>Add a New MicroService</PageHeader>));
       expect(wrapper.find("Jumbotron").length).toBe(1);
@@ -48,8 +49,7 @@ describe("Component AddForm :", () => {
   })
 
   describe("when form is submitting", () => {
-    it("should disable submit button", () => {
-      const props = setup();
+    it("should disable submit button", () => {      
       props.submitting=true;
       const wrapper = shallow(<AddForm {...props} />);
       const submitButton = wrapper.find('Button[type="submit"]');
@@ -71,7 +71,6 @@ describe("Component AddForm :", () => {
     });
 
     it("should display Success message on successful form submisison", ()=> {
-      const props = setup();
       props.submitSucceeded=true;
       const wrapper = shallow(<AddForm {...props} />);
       const successMessage = wrapper.find("Alert");
