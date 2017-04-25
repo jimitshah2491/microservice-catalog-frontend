@@ -1,9 +1,0 @@
-{
-  "source": "./src",
-  "destination": "./doc",
-  "lint": true,
-  "plugins": [
-    {"name": "esdoc-es7-plugin"}
-  ],
-  "excludes": ["^src/main/app/node_modules", "^target"]
-}
