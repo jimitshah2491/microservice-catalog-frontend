@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
+import FontAwesome from "react-fontawesome";
 
 import './AddService.css';
 
@@ -37,11 +38,13 @@ export const validate = values=>{
  * @return {[type]}       [description]
  */
 const renderField = (props) => {
-  let control = <div className="FieldControl">
-          <input {...props.input} test="{...props.input}" className="fieldText" placeholder={props.placeholder} type={props.type} />
-          {props.meta.touched && props.meta.error && <span className="Error">*{props.meta.error}</span>}
-         </div>;
-      return control;
+    let control = <input {...props.input} className="fieldText" placeholder={props.placeholder} type={props.type} />;
+      let type=props.input.name.toUpperCase();
+      if(type === "URL" || type === "DESCRIPTION")
+      {
+        control = <textarea {...props.input} className="fieldText" placeholder={props.placeholder} type={props.type} ></textarea>;
+      }
+      return <div className="FieldControl"> {control}{props.meta.touched && props.meta.error && <span className="Error">*{props.meta.error}</span>}</div>;
 }
 
 /**
@@ -53,19 +56,23 @@ export let formFieldsData = [
       serviceData:[
       {
         name:'title',
-        placeholder: 'Title'
+        placeholder: 'Title',
+        tooltip: 'Enter 1-50 characters'
       },
       {
         name:'url',
-        placeholder: 'URL'
+        placeholder: 'URL',
+        tooltip: 'Comma separated URL(s)'
       },
       {
         name:'email',
-        placeholder: 'Email'
+        placeholder: 'Email',
+        tooltip: 'Valid Email Address'
       },
       {
         name:'description',
-        placeholder: 'Description'
+        placeholder: 'Description',
+        tooltip: 'Enter 1-250 characters'
       }
     ]}
   ]
@@ -76,7 +83,7 @@ export let fieldHeading = formFieldsData[0].serviceData.map((data, i)=>{
 
 export let formFields = formFieldsData.map((service,i)=>{
   return  service.serviceData.map((field)=>{
-    return <div className="fieldContainer"><div key={i} className='FieldHeading'> {field.placeholder} </div>
+    return <div className="fieldContainer"><div key={i} className='FieldHeading'> {field.placeholder} <sup> <FontAwesome title={field.tooltip} name="question" /> </sup> </div>
     <Field name={field.name} type="text" component={renderField} placeholder={field.placeholder} /></div>
   })
 })

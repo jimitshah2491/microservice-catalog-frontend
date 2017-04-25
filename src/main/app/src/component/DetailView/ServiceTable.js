@@ -6,7 +6,6 @@ import './DetailView.css';
  */
 const ServiceTable = (props) => {
   const { keyVal, tableData } = props;
-  debugger;
   let trs = [];
   trs = tableData.map((url, i)=>{
     if(i===0) {

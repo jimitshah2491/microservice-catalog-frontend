@@ -8,7 +8,6 @@ import ServiceTable from './ServiceTable'
  * @param {[type]} serviceDetails [description]
  */
 const DetailView = (serviceDetails) => {
-  debugger;
   let detailHtml = [];
   let data = serviceDetails;
   let keys = Object.keys(data);

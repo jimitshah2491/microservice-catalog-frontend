@@ -56,6 +56,13 @@ export const fetchMicroservices = (dispatch) => {
 }
 
 export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.property), errors.map(e => e.message));
+export const formatValues = (values) => {
+    values.url = values.url.split(",");
+    values.url = values.url.map(function(strURL){
+      return strURL.trim();
+    })
+    return values;
+}
 
 /**
  * [submitForm description]
@@ -64,6 +71,7 @@ export const parseFormErrors = (errors) => _.zipObject(errors.map(e => e.propert
  * @return {[type]}        [description]
  */
 export const submitForm = (url, method) => (values) => {
+    values = formatValues(values);
     return new Promise((resolve, reject) => {
       fetch(url, {
             headers: {

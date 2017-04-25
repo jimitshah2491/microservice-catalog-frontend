@@ -1,10 +1,11 @@
 import React from 'react';
 import { Alert, Button , PageHeader , Jumbotron , FormGroup } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
 
 import { formFields } from './AddServiceFields';
 
 let EditForm = (props) => {
-  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting }=props;
+  const { onSubmitEdit, submitSucceeded, error, handleSubmit, pristine, reset, submitting, initialValues }=props;
 
   return(
     <div>
@@ -21,18 +22,25 @@ let EditForm = (props) => {
         </Alert>
       }
       <Jumbotron>
-          <form onSubmit={handleSubmit(onSubmitEdit)}>
-            <FormGroup  bsSize="large">
-              <div className="FieldContainer">
-                {formFields}
-              </div>
-              <div className="buttonContainer">
-                <Button className="col-md-1 text-center" type="submit" bsStyle="primary" disabled={submitting}>Submit</Button>
-                <Button className="col-md-1 text-center" type="button" bsStyle="danger">Cancel</Button>
-                <Button className="col-md-1 text-center" type="reset" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
-              </div>
-            </FormGroup>
-          </form>
+          {
+            initialValues === undefined &&
+            <FontAwesome name="pulse fa-spinner" className="fa-4x" />
+          }
+          {
+            initialValues !== undefined &&
+            <form onSubmit={handleSubmit(onSubmitEdit)}>
+              <FormGroup  bsSize="large">
+                <div className="FieldContainer">
+                  {formFields}
+                </div>
+                <div className="buttonContainer">
+                  <Button className="col-md-1 text-center" type="submit" bsStyle="primary" disabled={submitting}>Submit</Button>
+                  <Button className="col-md-1 text-center" type="button" bsStyle="danger">Cancel</Button>
+                  <Button className="col-md-1 text-center" type="reset" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
+                </div>
+              </FormGroup>
+            </form>
+          }
      </Jumbotron>
     </div>
   );
