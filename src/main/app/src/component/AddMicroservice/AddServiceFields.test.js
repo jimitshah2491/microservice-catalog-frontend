@@ -1,13 +1,10 @@
 import { validate } from './AddServiceFields'
 
 let fieldValues ={};
-const init = () =>{
-  fieldValues.email= "joesmith@domain.com";
-  fieldValues.description= "Description";
-  fieldValues.url= "http://sample.com";
-  fieldValues.title= "Title";
-};
+
 describe("AddServiceFields functions", () => {
+
+  let fieldValues = { title:"", description: "", email: "", url: ""};
   const invalidEmails = [
     "plainaddress",
     "#@%^%#$@#$@#.com",
@@ -20,14 +17,19 @@ describe("AddServiceFields functions", () => {
     "email@111.222.333.44444"
   ]
 
+  const validData = () => {
+    fieldValues = {
+      email: "joesmith@domain.com",
+      description: "Description",
+      url: "http://sample.com",
+      title: "Title"
+    };
+    return fieldValues;
+  }
+
   describe("validate() ", () => {
     it("should return error for empty fields", () => {
-      // Empty form field values
-      fieldValues.title = "";
-      fieldValues.email = "";
-      fieldValues.description = "";
-      fieldValues.url = "";
-      // errors that should be displayed
+      // errors that should be displayed for empty field values
       let errors = {}
       errors.title = "Required";
       errors.email = "Required";
@@ -37,9 +39,7 @@ describe("AddServiceFields functions", () => {
     });
 
     it("should return error for invalid email field", () => {
-      fieldValues.title= "Title";
-      fieldValues.description= "Description";
-      fieldValues.url= "http://sample.com";
+      fieldValues = validData();
       let errors = {}
       errors.email = "Invalid email address";
       for (let i = 0; i < invalidEmails.length; i++) {
@@ -49,7 +49,7 @@ describe("AddServiceFields functions", () => {
     });
 
     it("should return error if title is more than 50 characters", () => {
-      init();
+      fieldValues = validData();
       let errors = {}
       errors.title = "Enter 50 characters or less";
       for(let i=0; i < 11; i++) {
@@ -59,7 +59,7 @@ describe("AddServiceFields functions", () => {
     });
 
     it("should return error if description is more than 250 characters", () => {
-      init();
+      fieldValues = validData();
       let errors = {}
       errors.description = "Must be 250 characters or less";
       for(let i=0; i < 23; i++) {
