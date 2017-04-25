@@ -4,6 +4,15 @@ import FontAwesome from "react-fontawesome";
 
 import './AddService.css';
 
+const setError = (fieldObj, errObj, msg)=>{
+  if(!fieldObj) {
+    errObj = "Required";
+  } else {
+    errObj = msg;
+  }
+  return errObj;
+};
+
 /**
  * A helper function to validate the various form fields
  * @param  {Object} values - A object that comprises of the values of the details entered in the add new Microservice form.
@@ -11,23 +20,18 @@ import './AddService.css';
  */
 export const validate = values=>{
   const errors = {}
-  if (!values.title) {
-    errors.title = 'Required'
-  } else if (values.title !== undefined && values.title.length > 50) {
-    errors.title = 'Enter 50 characters or less'
+  errors.title = setError(values.title, errors.title);
+  errors.email = setError(values.email, errors.email);
+  errors.description = setError(values.description, errors.description);
+  errors.url = setError(values.url, errors.url);
+  if (values.title !== undefined && values.title.length > 50) {
+    errors.title = setError(values.title, errors.title, 'Enter 50 characters or less');
   }
-  if (!values.email) {
-    errors.email = 'Required'
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address'
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = setError(values.email, errors.email, "Invalid email address");
   }
-  if (!values.description) {
-    errors.description = 'Required'
-  } else if (values.description !== undefined && values.description.length > 250) {
-    errors.description = 'Must be 250 characters or less'
-  }
-  if (!values.url) {
-    errors.url = 'Required'
+  if (values.description !== undefined && values.description.length > 250) {
+    errors.description = setError(values.description, errors.description, "Must be 250 characters or less");
   }
   return errors
 }
