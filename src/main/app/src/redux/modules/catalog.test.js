@@ -11,6 +11,13 @@ import BACKEND_URL from '../../env-config.js';
 import reducer from './catalog';
 import { LoadingStates } from '../../utils/common';
 
+const reducerState = {
+  catalogData: [],
+  loading: LoadingStates.CLEAN,
+  filterText: '',
+  errorfetching: false
+}
+
 describe("actions", () => {
   const middlewares = [ thunk ];
   const mockStore = configureMockStore(middlewares);
@@ -143,12 +150,7 @@ describe("reducers", () => {
   });
 
   it("should handle errors in receive call", () => {
-    expect(reducer({
-      catalogData: [],
-      loading: LoadingStates.LOADING,
-      filterText: '',
-      errorfetching: false
-    }, {
+    expect(reducer(reducerState, {
       type:catalog.RECEIVE_ERROR
     })).toEqual({
       catalogData: [],
@@ -159,12 +161,7 @@ describe("reducers", () => {
   });
 
   it("should handle initializeFormHandler reducer", () => {
-    expect(reducer({
-      catalogData: [],
-      loading: LoadingStates.CLEAN,
-      filterText: '',
-      errorfetching: false
-    }, {
+    expect(reducer(reducerState, {
       type:catalog.INITIALIZE_EDIT_FORM_SUCCESS,
       payload: catalogJSONData
     })).toEqual({
@@ -174,12 +171,7 @@ describe("reducers", () => {
   });
 
   it("should handle initializeFormErrorHandler reducer", () => {
-    expect(reducer({
-      catalogData: [],
-      loading: LoadingStates.CLEAN,
-      filterText: '',
-      errorfetching: false
-    }, {
+    expect(reducer(reducerState, {
       type:catalog.INITIALIZE_EDIT_FORM_ERROR
     })).toEqual({
       errorfetching: true
@@ -187,12 +179,7 @@ describe("reducers", () => {
   });
 
   it("should handle filterDataHandler reducer", () => {
-    expect(reducer({
-      catalogData: [],
-      loading: LoadingStates.CLEAN,
-      filterText: '',
-      errorfetching: false
-    }, {
+    expect(reducer(reducerState, {
       type:catalog.FILTER_DATA,
       payload: catalogJSONData
     })).toEqual({

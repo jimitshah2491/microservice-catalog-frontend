@@ -1,6 +1,9 @@
 import { validate } from './AddServiceFields'
 
+let fieldValues ={};
+
 describe("AddServiceFields functions", () => {
+
   let fieldValues = { title:"", description: "", email: "", url: ""};
   const invalidEmails = [
     "plainaddress",
