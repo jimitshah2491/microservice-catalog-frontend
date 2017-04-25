@@ -34,7 +34,7 @@ describe("EditForm component", () => {
       }
     }
     return props;
-  }
+  };
 
   describe("when form rendered initially", () => {
     it("should render the initial state of form correctly", ()=>{
@@ -45,11 +45,6 @@ describe("EditForm component", () => {
       expect(wrapper.find("Jumbotron").length).toBe(1);
       expect(wrapper.find("FormGroup").length).toBe(1);
       expect(wrapper.find("Button").length).toBe(3);
-      // console.log(wrapper.find('input[name="title"]').text());
-      // expect(wrapper.find('input[name="title"]').text()).toBe(initialValues.name);
-      // expect(wrapper.find('input[name="description"]').text()).toBe(initialValues.description);
-      // expect(wrapper.find('input[name="url"]').text()).toBe(initialValues.url);
-      // expect(wrapper.find('input[name="email"]').text()).toBe(initialValues.email);
       // Initially No Alerts
       expect(wrapper.find("Alert").length).toBe(0);
       // Initially Clear button is disabled as pristine is true and submitting is false
@@ -78,11 +73,6 @@ describe("EditForm component", () => {
           }
         }
       }
-
-      // const wrapper = mount(<Provider store={store}>
-      //                        <AddMicroServiceForm {...props} />
-      //                       </Provider>);
-      // wrapper.find('form').simulate("submit");
     });
 
     it("should display Success message on successful form submisison", ()=> {
