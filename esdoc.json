@@ -1,0 +1,6 @@
+{
+  "source": "./src",
+  "destination": "./doc",
+  "lint": false,
+  "excludes": ["^node_modules"]
+}
