@@ -48,4 +48,6 @@ Click the "Generate" button
 
 View documentation on: https://doc.esdoc.org/github.com/p632-sp-2017/microservice-catalog-frontend/
 
+# Wiki Documentation
+
 To view a complete detailed documentation about the project : https://github.com/p632-sp-2017/microservice-catalog-frontend/wiki
