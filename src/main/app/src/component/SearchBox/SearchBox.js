@@ -6,14 +6,10 @@ import '../Fonts.css';
 import {filterText} from '../../redux/modules/catalog';
 
 /**
- * [SearchBox description]
+ * Searchbox Component Used to filter data and search microservice.
  */
 const SearchBox = (props) =>  {
   const {dispatch} = props;
-  // const handleChange = (e) => {
-  //   this.setState({ value: e.target.value });
-  // }
-
   const handleKeyPress = (e) => {
     dispatch(filterText(e.target.value));
   }

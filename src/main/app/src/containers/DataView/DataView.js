@@ -15,7 +15,7 @@ import FontAwesome from 'react-fontawesome';
 
 /**
  * CatalogDataView is Smart component
- * @param {[type]} props [description]
+ * @param {Object} props Varrious props passed by different components
  */
 const CatalogDataView = (props) => {
     const { dispatch, catalogData, loading, filterText, errorfetching } = props;

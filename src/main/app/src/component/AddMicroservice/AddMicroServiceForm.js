@@ -39,15 +39,6 @@ export const AddMicroServiceForm = (props, submitSucceeded, error, handleSubmit,
 
 AddMicroServiceForm.displayName = 'AddMicroServiceForm';
 
-// AddMicroServiceForm.propTypes = {
-//   submitSucceeded: PropTypes.object.isRequired,
-//   error: PropTypes.string,
-//   handleSubmit: PropTypes.string,
-//   pristine: PropTypes.string,
-//   reset: PropTypes.bool,
-//   submitting: PropTypes.string
-// };
-
 const AddMicroServiceReduxForm = reduxForm({
   form:'addMicroservice',
   enableReinitialize : true,

@@ -33,64 +33,6 @@ describe("actions", () => {
     expect(catalog.request()).toEqual(expectedAction);
   });
 
-  // async action
-  // it("should create an action to receive catalog", ()=> {
-  //   nock(BACKEND_URL).get('/catalog').reply(200, catalogJSONData);
-  //
-  //   const expectedAction = [
-  //     { type: catalog.REQUEST },
-  //     { type: catalog.RECEIVE_SUCCESS, payload: catalogJSONData }
-  //   ]
-  //   const store = mockStore({catalogData: []});
-  //
-  //   return store.dispatch(catalog.fetchMicroservices)
-  //     .then(() => {
-  //       expect(store.getActions()).toEqual(expectedAction);
-  //     })
-  // });
-  //
-  // // async action
-  // it("should create an action to handle errors while receiving catalog", () => {
-  //   nock(BACKEND_URL).get('/catalog').reply(400, "Error");
-  //
-  //   const expectedAction = [
-  //     { type: catalog.REQUEST },
-  //     { type: catalog.RECEIVE_ERROR }
-  //   ]
-  //   const store = mockStore({catalogData: []});
-  //
-  //   return store.dispatch(catalog.fetchMicroservices)
-  //     .then(() => {
-  //       expect(store.getActions()).toEqual(expectedAction);
-  //     })
-  // })
-  //
-  // // async action
-  // it("should create an action to initialize the edit form", ()=> {
-  //   let id = "58b201896a0d9170dbb7768e"; // sample Id of microservice
-  //   nock(BACKEND_URL).get('/catalog/'+id).reply(200, catalogJSONData);
-  //   const expectedAction = [{ type: catalog.INITIALIZE_EDIT_FORM_SUCCESS, payload: catalogJSONData }];
-  //   const store = mockStore({catalogData: []});
-  //
-  //   return store.dispatch(catalog.initializeEditForm(id))
-  //     .then(() => {
-  //       expect(store.getActions()).toEqual(expectedAction);
-  //     })
-  // });
-  //
-  // // async action
-  // it("should create an action to handle errors while receiving edit form contents", () => {
-  //   let id = "58b201896a0d9170dbb7768e"; // sample Id of microservice
-  //   nock(BACKEND_URL).get('/catalog/'+id).reply(400, "Error");
-  //   const expectedAction = [{ type: catalog.INITIALIZE_EDIT_FORM_ERROR }];
-  //   const store = mockStore({catalogData: []});
-  //
-  //   return store.dispatch(catalog.initializeEditForm(id))
-  //     .then(() => {
-  //       expect(store.getActions()).toEqual(expectedAction);
-  //     })
-  // })
-
   it("should create an action to filter data for search", ()=> {
     const payload="searched text";
     const expectedAction = {
